@@ -1,26 +1,30 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { calculateEquivalents } from './calculator';
 
 function App() {
+  const usage = 100;
+  const data = calculateEquivalents(usage);
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      {data.equivalents.map(stat => {
+          <div key={stat.name} >
+            <p>
+            {stat.name}
+            {stat.desc}
+            {stat.value}
+            </p>
+          </div>
+        })}
     </div>
   );
 }
 
 export default App;
+
+
+
+
