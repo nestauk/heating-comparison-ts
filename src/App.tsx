@@ -1,15 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import { calculateEquivalents } from './calculator';
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import  React from "react";
+import { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Button, FormControl, Input, InputLabel, MenuItem, Select } from '@mui/material';
 
 export default function App() {
+  const [ usageUnits, setUsageUnits ] = useState(0);
   return (
     <Router>
       <div>
@@ -27,17 +25,20 @@ export default function App() {
             <li>
               <Link to="/estimate">Estimate</Link>
             </li>
+            <li>
+              <Link to="/report">Report</Link>
+            </li>
           </ul>
         </nav>
         <Switch>
           <Route path="/ask">
-            <Input />
+            <Ask />
           </Route>
           <Route path="/input">
-            <Input />
+            <InputUsage />
           </Route>
           <Route path="/estimate">
-            <Estimate />
+            <EstimateUsage />
           </Route>
           <Route path="/report">
             <Report />
@@ -59,6 +60,7 @@ function Start() {
       </div>
       <div className="App-body">
         <p>Do you know how much carbon your home gas heating is producing?</p>
+        <Button variant="contained" href="/ask">Start</Button>
       </div>
     </div>
   );
@@ -72,16 +74,46 @@ function Ask() {
       </div>
       <div className="App-body">
         <p>Do you know how much energy you currently use to heat your home?</p>
+        <Button variant="contained" href="/input">Yes</Button>
+        <Button variant="contained" href="/estimate">No</Button>
       </div>
     </div>
   );
 }
 
-function Input() {
-  return <h2>Input</h2>;
+function InputUsage() {
+  const [ usageUnits, setUsageUnits ] = useState(0);
+  const [ usagePeriod, setUsagePeriod ] = useState("Monthly");
+  const [ usageValue, setUsageValue ] = useState(0);
+
+  return (
+    <div>
+      <div className="App-header">
+        
+      </div>
+      <div className="App-body">
+        <p>What's your typical gas bill?</p>
+        <FormControl fullWidth>
+          <InputLabel id="usage-units-label" sx={{ m: 1, minWidth: 50 }} >
+            Usage
+          </InputLabel>
+          <Select
+            labelId="usage-units-label"
+            id="usage-units-select"
+            value={usageUnits}
+            label="Units"
+          >
+            <MenuItem value="gbp">£</MenuItem>
+            <MenuItem value="kwh">kWh</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="contained" href="/input">Next</Button>
+      </div>
+    </div>
+  );
 }
 
-function Estimate() {
+function EstimateUsage() {
   return (
     <div>
       <div className="App-header">
