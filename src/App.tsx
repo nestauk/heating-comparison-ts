@@ -4,7 +4,7 @@ import { calculateEquivalents } from './calculator';
 import  React from "react";
 import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Button, FormControl, Input, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button, FormControl, TextField, InputLabel, MenuItem, Select } from '@mui/material';
 
 export default function App() {
   const [ usageUnits, setUsageUnits ] = useState(0);
@@ -93,7 +93,16 @@ function InputUsage() {
       </div>
       <div className="App-body">
         <p>What's your typical gas bill?</p>
-        <FormControl fullWidth>
+        <FormControl>
+          <InputLabel id="usage-value-label" sx={{ m: 1, minWidth: 50 }} >
+            Usage
+          </InputLabel>
+          <TextField
+            id="usage-value-input" 
+            label="Usage" 
+            type="text" />
+        </FormControl>
+        <FormControl>
           <InputLabel id="usage-units-label" sx={{ m: 1, minWidth: 50 }} >
             Usage
           </InputLabel>
@@ -107,7 +116,24 @@ function InputUsage() {
             <MenuItem value="kwh">kWh</MenuItem>
           </Select>
         </FormControl>
-        <Button variant="contained" href="/input">Next</Button>
+        <FormControl fullWidth>
+          <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
+            Every
+          </InputLabel>
+          <Select
+            labelId="usage-period-label"
+            id="usage-period-select"
+            value={usagePeriod}
+            label="Every"
+          >
+            <MenuItem value="daily">Day</MenuItem>
+            <MenuItem value="weekly">Week</MenuItem>
+            <MenuItem value="monthly">Month</MenuItem>
+            <MenuItem value="quarterly">Quarter</MenuItem>
+            <MenuItem value="annual">Year</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="contained" href="/report">Submit</Button>
       </div>
     </div>
   );
