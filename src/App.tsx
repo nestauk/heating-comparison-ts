@@ -4,7 +4,8 @@ import { calculateEquivalents } from './calculator';
 import  React from "react";
 import { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Button, FormControl, TextField, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, Button, FormControl, Grid, TextField, InputLabel, MenuItem, Select } 
+  from '@mui/material';
 
 export default function App() {
   const [ usageUnits, setUsageUnits ] = useState(0);
@@ -82,9 +83,19 @@ function Ask() {
 }
 
 function InputUsage() {
-  const [ usageUnits, setUsageUnits ] = useState(0);
-  const [ usagePeriod, setUsagePeriod ] = useState("Monthly");
+  const [ usageUnits, setUsageUnits ] = useState('');
+  const [ usagePeriod, setUsagePeriod ] = useState('');
   const [ usageValue, setUsageValue ] = useState(0);
+
+  const handleChangeUnits = (event: any) => {
+    setUsageUnits(event.target.value);
+  };
+  const handleChangeUsage = (event: any ) => {
+    setUsageValue(event.target.value);
+  };
+  const handleChangePeriod = (event: any) => {
+    setUsagePeriod(event.target.value);
+  };
 
   return (
     <div>
@@ -93,46 +104,65 @@ function InputUsage() {
       </div>
       <div className="App-body">
         <p>What's your typical gas bill?</p>
-        <FormControl>
-          <InputLabel id="usage-value-label" sx={{ m: 1, minWidth: 50 }} >
-            Usage
-          </InputLabel>
-          <TextField
-            id="usage-value-input" 
-            label="Usage" 
-            type="text" />
-        </FormControl>
-        <FormControl>
-          <InputLabel id="usage-units-label" sx={{ m: 1, minWidth: 50 }} >
-            Usage
-          </InputLabel>
-          <Select
-            labelId="usage-units-label"
-            id="usage-units-select"
-            value={usageUnits}
-            label="Units"
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
           >
-            <MenuItem value="gbp">£</MenuItem>
-            <MenuItem value="kwh">kWh</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
-            Every
-          </InputLabel>
-          <Select
-            labelId="usage-period-label"
-            id="usage-period-select"
-            value={usagePeriod}
-            label="Every"
-          >
-            <MenuItem value="daily">Day</MenuItem>
-            <MenuItem value="weekly">Week</MenuItem>
-            <MenuItem value="monthly">Month</MenuItem>
-            <MenuItem value="quarterly">Quarter</MenuItem>
-            <MenuItem value="annual">Year</MenuItem>
-          </Select>
-        </FormControl>
+          <Grid container>
+            <Grid item xs={6}>
+              <FormControl sx={{ m: 1, minWidth: 50 }}>
+                <TextField
+                  id="usage-value-input" 
+                  label="Usage" 
+                  type="text"
+                  onChange={handleChangeUsage} />
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+            <FormControl sx={{ m: 1, minWidth: 50 }}>
+              {/* <InputLabel id="usage-units-label" sx={{ m: 1, minWidth: 50 }} >
+                Units
+              </InputLabel> */}
+                <Select
+                  // labelId="usage-units-label"
+                  id="usage-units-select"
+                  value={usageUnits}
+                  label="Units"
+                  onChange={handleChangeUnits}
+                >
+                  <MenuItem value="gbp">£</MenuItem>
+                  <MenuItem value="kwh">kWh</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <FormControl sx={{ m: 1, minWidth: 50 }}>
+                {/* <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
+                  Every
+                </InputLabel> */}
+                <Select
+                  // labelId="usage-period-label"
+                  id="usage-period-select"
+                  value={usagePeriod}
+                  label="Every"
+                  onChange={handleChangePeriod}
+                >
+                  <MenuItem value="daily">Day</MenuItem>
+                  <MenuItem value="weekly">Week</MenuItem>
+                  <MenuItem value="monthly">Month</MenuItem>
+                  <MenuItem value="quarterly">Quarter</MenuItem>
+                  <MenuItem value="annual">Year</MenuItem>
+                </Select>
+              </FormControl>
+          </Grid>
+          </Grid>
+        </Box>
         <Button variant="contained" href="/report">Submit</Button>
       </div>
     </div>
