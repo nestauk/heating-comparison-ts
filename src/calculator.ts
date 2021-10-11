@@ -1,18 +1,26 @@
-type Equivalent = {
-    name: string;
-    desc: string;
-    value: number;
-};
-
 export const calculateEquivalents = (usage: number) => {
-    // const { data, error, loading } = getEquivalents();
+    
     console.log(`Calculating equivalents for ${usage}`);
     const data = { 
         equivalents: [
-          { name: "C02", desc: "Tonnes CO2 Emissions", value: 20 } ,
-          { name: "Flights", desc: "Transatlantic flights", value: 11 },
-          { name: "Lightbulbs", desc: "Lightbulbs running for an hour", value: 1000},
+          { name: "C02", desc: "Tonnes CO2 Emissions",
+             value: 20, iconCount: 5, iconChar: '🔥'  },
+          { name: "Flights", desc: "transatlantic flights",
+            value: 3, iconCount: 3, iconChar: '✈️' },
+          { name: "Lightbulbs", desc: "lightbulbs running for an hour",
+            value: 1000, iconCount: 7, iconChar: '💡' },
+          { name: "Trees", desc: "newly planted trees needed to offset",
+            value: 1000, iconCount: 25, iconChar: '🌳' }, 
         ],
+    };
+    return data;
+};
+
+export const calculateCarbon = (usage: number) => {
+    console.log(`Calculating carbon for ${usage}`);
+    const data = { 
+        name: "C02", desc: "Tonnes CO2 Emissions",
+        value: 20, iconCount: 5, iconChar: '🔥' ,
     };
     return data;
 };

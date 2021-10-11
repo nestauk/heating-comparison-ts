@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { calculateEquivalents } from './calculator';
+import { calculateEquivalents, calculateCarbon } from './calculator';
 import  React from "react";
 import { useState } from "react";
+import Emoji from 'a11y-react-emoji';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Box, Button, FormControl, Grid, TextField, InputLabel, MenuItem, Select } 
   from '@mui/material';
@@ -12,25 +13,6 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Start</Link>
-            </li>
-            <li>
-              <Link to="/ask">Ask</Link>
-            </li>
-            <li>
-              <Link to="/input">Input</Link>
-            </li>
-            <li>
-              <Link to="/estimate">Estimate</Link>
-            </li>
-            <li>
-              <Link to="/report">Report</Link>
-            </li>
-          </ul>
-        </nav>
         <Switch>
           <Route path="/ask">
             <Ask />
@@ -104,14 +86,14 @@ function InputUsage() {
       </div>
       <div className="App-body">
         <p>What's your typical gas bill?</p>
-          <Box
-            component="form"
-            sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
-          >
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
           <Grid container>
             <Grid item xs={6}>
               <FormControl sx={{ m: 1, minWidth: 50 }}>
@@ -133,6 +115,7 @@ function InputUsage() {
                   value={usageUnits}
                   label="Units"
                   onChange={handleChangeUnits}
+                  displayEmpty={true}
                 >
                   <MenuItem value="gbp">£</MenuItem>
                   <MenuItem value="kwh">kWh</MenuItem>
@@ -152,6 +135,7 @@ function InputUsage() {
                   value={usagePeriod}
                   label="Every"
                   onChange={handleChangePeriod}
+                  displayEmpty={true}
                 >
                   <MenuItem value="daily">Day</MenuItem>
                   <MenuItem value="weekly">Week</MenuItem>
@@ -186,16 +170,33 @@ function EstimateUsage() {
 function Report() {
   const usage = 100;
   const data = calculateEquivalents(usage);
+  const carbonStat = calculateCarbon(usage);
   console.log(`Data ${data}`);
   return (
-    <div className="body">
+    <div className="body">    
+      <div >
+        <p>  
+        Your gas boiler produces approx
+        {` ${carbonStat.value} `}
+        tonnes of C0<sub>2</sub> per year
+        </p>
+      </div>
+      That's equivalent to
       {data.equivalents.map(stat => {
         return (
           <div key={stat.name} >
             <p>
-            {stat.name}
+            {[
+              ...Array(stat.iconCount),
+            ].map((value: undefined, index: number) => 
+               <Emoji label={stat.name} symbol={stat.iconChar}/>
+              // <Image id={index + 1} key={index} src={`../icons/${stat.iconImg}`}/>
+            )}
+            </p>
+            <p>
+            {`${stat.value} `}
             {stat.desc}
-            {stat.value}
+            , every year
             </p>
           </div>);
         })}
