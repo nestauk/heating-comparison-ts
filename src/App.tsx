@@ -1,15 +1,31 @@
-import logo from './logo.svg';
+
 import './App.css';
-import { calculateEquivalents, calculateCarbon } from './calculator';
+import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo } from './calculator';
 import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Box, Button, FormControl, Grid, TextField, InputLabel, MenuItem, Select } 
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, IconButton } 
   from '@mui/material';
+import { faAngleLeft } from  '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 export default function App() {
-  const [ usageUnits, setUsageUnits ] = useState(0);
+  const [ usageUnits, setUsageUnits ] = useState('');
+  const [ usagePeriod, setUsagePeriod ] = useState('');
+  const [ usageValue, setUsageValue ] = useState(0);
+
+  const handleChangeUnits = (event: any) => {
+    setUsageUnits(event.target.value);
+  };
+  const handleChangeUsage = (event: any ) => {
+    setUsageValue(event.target.value);
+  };
+  const handleChangePeriod = (event: any) => {
+    setUsagePeriod(event.target.value);
+  };
+
   return (
     <Router>
       <div>
@@ -18,13 +34,21 @@ export default function App() {
             <Ask />
           </Route>
           <Route path="/input">
-            <InputUsage />
+            <InputUsage 
+              handleChangeUnits={handleChangeUnits}
+              handleChangeUsage={handleChangeUsage}
+              handleChangePeriod={handleChangePeriod} 
+            />
           </Route>
           <Route path="/estimate">
             <EstimateUsage />
           </Route>
           <Route path="/report">
-            <Report />
+            <Report 
+              usageUnits={usageUnits}
+              usagePeriod={usagePeriod}
+              usageValue={usageValue}
+            />
           </Route>
           <Route path="/">
             <Start />
@@ -54,6 +78,10 @@ function Ask() {
     <div>
       <div className="App-header">
         About you
+        <IconButton href="/report">
+          <FontAwesomeIcon icon={faAngleLeft} />
+        Back
+        </IconButton>
       </div>
       <div className="App-body">
         <p>Do you know how much energy you currently use to heat your home?</p>
@@ -64,21 +92,12 @@ function Ask() {
   );
 }
 
-function InputUsage() {
-  const [ usageUnits, setUsageUnits ] = useState('');
-  const [ usagePeriod, setUsagePeriod ] = useState('');
-  const [ usageValue, setUsageValue ] = useState(0);
-
-  const handleChangeUnits = (event: any) => {
-    setUsageUnits(event.target.value);
-  };
-  const handleChangeUsage = (event: any ) => {
-    setUsageValue(event.target.value);
-  };
-  const handleChangePeriod = (event: any) => {
-    setUsagePeriod(event.target.value);
-  };
-
+function InputUsage(props: any) {
+  const { 
+    usageUnits, usagePeriod, usageValue,
+    handleChangeUnits, handleChangePeriod, handleChangeValue
+  } = props;
+  
   return (
     <div>
       <div className="App-header">
@@ -101,7 +120,8 @@ function InputUsage() {
                   id="usage-value-input" 
                   label="Usage" 
                   type="text"
-                  onChange={handleChangeUsage} />
+                  defaultValue={usageValue}
+                  onChange={handleChangeValue} />
               </FormControl>
             </Grid>
             <Grid item xs={6}>
@@ -153,7 +173,32 @@ function InputUsage() {
   );
 }
 
-function EstimateUsage() {
+function EstimateUsage(props: any) {
+  const { setUsageUnits, setUsagePeriod, setUsageValue } = props;
+  const [ premisesInfo, setPremisesInfo ] = useState({} as PremisesInfo);
+
+  const runEstimate = () => {
+    const usageEstimate = estimateUsage(premisesInfo);
+    setUsageUnits(usageEstimate.units);
+    setUsageValue(usageEstimate.value);
+    setUsagePeriod(usageEstimate.period);
+  }
+  const handleChangePremType = (event: any) => {
+    const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
+    setPremisesInfo(newPremisesInfo);
+  };
+  const handleChangePremAge = (event: any) => {
+    const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
+    setPremisesInfo(newPremisesInfo);
+    setPremisesInfo(newPremisesInfo);
+  };
+  const handleChangeNumRooms = (event: any) => {
+    const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
+    setPremisesInfo(newPremisesInfo);
+    setPremisesInfo(newPremisesInfo);
+  };
+
+
   return (
     <div>
       <div className="App-header">
@@ -167,9 +212,13 @@ function EstimateUsage() {
 }
 
 
-function Report() {
+function Report(props: any) {
+  const { 
+    // usageUnits, usagePeriod, 
+    usageValue 
+  } = props;
   const usage = 100;
-  const data = calculateEquivalents(usage);
+  const data = calculateEquivalents(usageValue);
   const carbonStat = calculateCarbon(usage);
   console.log(`Data ${data}`);
   return (

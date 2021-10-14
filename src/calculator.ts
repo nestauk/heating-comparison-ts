@@ -1,3 +1,35 @@
+export enum Period {
+  Year,
+  Quarter,
+  Month,
+  Week,
+  Day
+}
+
+export enum Unit {
+  kWh,
+  GBP,
+}
+
+export enum PremiseType {
+  house,
+  flat,
+  maisonette,
+}
+
+export enum PremiseAge {
+  "Pre 1900",
+  "1900 - 1945",
+  "1950s 1960s",
+  "1970s 1980s",
+  "1990 +"
+}
+
+export type PremisesInfo = {
+  type: PremiseType,
+  age: PremiseAge,
+  numRooms: number,
+}
 export const calculateEquivalents = (usage: number) => {
     
     console.log(`Calculating equivalents for ${usage}`);
@@ -24,3 +56,11 @@ export const calculateCarbon = (usage: number) => {
     };
     return data;
 };
+
+export const estimateUsage = (premisesInfo: any) => {
+    
+  console.log(`Estimating usage for ${premisesInfo}`);
+  const usage = { value: 100, units: Unit.kWh, period: Period.Year};
+  return usage;
+};
+
