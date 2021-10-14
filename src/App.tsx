@@ -5,7 +5,7 @@ import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, IconButton } 
+import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, IconButton, InputLabel } 
   from '@mui/material';
 import { faAngleLeft } from  '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -126,11 +126,7 @@ function InputUsage(props: any) {
             </Grid>
             <Grid item xs={6}>
             <FormControl sx={{ m: 1, minWidth: 50 }}>
-              {/* <InputLabel id="usage-units-label" sx={{ m: 1, minWidth: 50 }} >
-                Units
-              </InputLabel> */}
                 <Select
-                  // labelId="usage-units-label"
                   id="usage-units-select"
                   value={usageUnits}
                   label="Units"
@@ -146,11 +142,11 @@ function InputUsage(props: any) {
           <Grid container>
             <Grid item xs={12}>
               <FormControl sx={{ m: 1, minWidth: 50 }}>
-                {/* <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
+                <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
                   Every
-                </InputLabel> */}
+                </InputLabel>
                 <Select
-                  // labelId="usage-period-label"
+                  labelId="usage-period-label"
                   id="usage-period-select"
                   value={usagePeriod}
                   label="Every"
@@ -188,13 +184,11 @@ function EstimateUsage(props: any) {
     setPremisesInfo(newPremisesInfo);
   };
   const handleChangePremAge = (event: any) => {
-    const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
-    setPremisesInfo(newPremisesInfo);
+    const newPremisesInfo = {  ...premisesInfo, age: event.target.value };
     setPremisesInfo(newPremisesInfo);
   };
   const handleChangeNumRooms = (event: any) => {
-    const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
-    setPremisesInfo(newPremisesInfo);
+    const newPremisesInfo = {  ...premisesInfo, numRooms: event.target.value };
     setPremisesInfo(newPremisesInfo);
   };
 
@@ -206,6 +200,39 @@ function EstimateUsage(props: any) {
       </div>
       <div className="body">
         <p>Do you know how much carbon your home gas heating is producing?</p>
+        <Select
+          id="premise-type-select"
+          value={premisesInfo.type}
+          label="Home Type"
+          onChange={handleChangePremType}
+          displayEmpty={true}
+          defaultValue={"SemiDetatched"}
+        >
+          <MenuItem value="Detatched">Detatched</MenuItem>
+          <MenuItem value="SemiDetatched">Semi-Detatched</MenuItem>
+          <MenuItem value="Terraced">Terraced</MenuItem>
+          <MenuItem value="Flat">Flat</MenuItem>
+        </Select>
+        <Select
+          id="premise-type-select"
+          value={premisesInfo.age}
+          label="Home Type"
+          onChange={handleChangePremAge}
+          defaultValue={"Band4"}
+          displayEmpty={true}
+        >
+          <MenuItem value="Band1">Pre 1900</MenuItem>
+          <MenuItem value="Band2">1900 - 1945</MenuItem>
+          <MenuItem value="Band3">1950s 1960s</MenuItem>
+          <MenuItem value="Band4">1970s 1980s</MenuItem>
+          <MenuItem value="Band5">1990 +</MenuItem>
+        </Select>
+        <TextField
+          id="premise-rooms"
+          label="Rooms"
+          helperText="Bedrooms plus Receptions"
+          defaultValue={4}
+        />
       </div>
     </div>
   );

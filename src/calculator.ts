@@ -11,25 +11,13 @@ export enum Unit {
   GBP,
 }
 
-export enum PremiseType {
-  house,
-  flat,
-  maisonette,
-}
-
-export enum PremiseAge {
-  "Pre 1900",
-  "1900 - 1945",
-  "1950s 1960s",
-  "1970s 1980s",
-  "1990 +"
-}
 
 export type PremisesInfo = {
-  type: PremiseType,
-  age: PremiseAge,
+  type: string,
+  age: string,
   numRooms: number,
 }
+
 export const calculateEquivalents = (usage: number) => {
     
     console.log(`Calculating equivalents for ${usage}`);
