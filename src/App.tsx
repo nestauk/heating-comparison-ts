@@ -1,6 +1,6 @@
 
 import './App.css';
-import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo } from './calculator';
+import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period } from './calculator';
 import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
@@ -12,8 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export default function App() {
-  const [ usageUnits, setUsageUnits ] = useState('');
-  const [ usagePeriod, setUsagePeriod ] = useState('');
+  const [ usageUnits, setUsageUnits ] = useState({} as Unit);
+  const [ usagePeriod, setUsagePeriod ] = useState('Month' as unknown as Period);
   const [ usageValue, setUsageValue ] = useState(0);
 
   const handleChangeUnits = (event: any) => {
@@ -26,6 +26,14 @@ export default function App() {
     setUsagePeriod(event.target.value);
   };
 
+  const handleSubmitPremisesInfo = (premisesInfo: PremisesInfo) => {
+    console.log(`Got premises info ${JSON.stringify(premisesInfo)}, calling estimator for usage`);
+    const usageEstimate = estimateUsage(premisesInfo);
+    setUsageUnits(usageEstimate.units);
+    setUsageValue(usageEstimate.value);
+    setUsagePeriod(usageEstimate.period);
+  };
+
   return (
     <Router>
       <div>
@@ -34,20 +42,23 @@ export default function App() {
             <Ask />
           </Route>
           <Route path="/input">
-            <InputUsage 
+            <InputUsage
+              usageUnits={usageUnits}
+              usageValue={usageValue}
+              usagePeriod={usagePeriod}
               handleChangeUnits={handleChangeUnits}
               handleChangeUsage={handleChangeUsage}
               handleChangePeriod={handleChangePeriod} 
             />
           </Route>
           <Route path="/estimate">
-            <EstimateUsage />
+            <EstimateUsage onSubmit={handleSubmitPremisesInfo}/>
           </Route>
           <Route path="/report">
             <Report 
-              usageUnits={usageUnits}
-              usagePeriod={usagePeriod}
-              usageValue={usageValue}
+              usageValue={100}
+              // TODO - remove hard code value
+              // usageValue={usageValue}
             />
           </Route>
           <Route path="/">
@@ -77,7 +88,6 @@ function Ask() {
   return (
     <div>
       <div className="App-header">
-        About you
         <IconButton href="/report">
           <FontAwesomeIcon icon={faAngleLeft} />
         Back
@@ -101,7 +111,10 @@ function InputUsage(props: any) {
   return (
     <div>
       <div className="App-header">
-        
+        <IconButton href="/ask">
+          <FontAwesomeIcon icon={faAngleLeft} />
+        Back
+        </IconButton>
       </div>
       <div className="App-body">
         <p>What's your typical gas bill?</p>
@@ -170,15 +183,9 @@ function InputUsage(props: any) {
 }
 
 function EstimateUsage(props: any) {
-  const { setUsageUnits, setUsagePeriod, setUsageValue } = props;
+  const { onSubmit } = props;
   const [ premisesInfo, setPremisesInfo ] = useState({} as PremisesInfo);
 
-  const runEstimate = () => {
-    const usageEstimate = estimateUsage(premisesInfo);
-    setUsageUnits(usageEstimate.units);
-    setUsageValue(usageEstimate.value);
-    setUsagePeriod(usageEstimate.period);
-  }
   const handleChangePremType = (event: any) => {
     const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
     setPremisesInfo(newPremisesInfo);
@@ -196,10 +203,13 @@ function EstimateUsage(props: any) {
   return (
     <div>
       <div className="App-header">
+        <IconButton href="/ask">
+          <FontAwesomeIcon icon={faAngleLeft} />
+        Back
+        </IconButton>
         Estimate your usage
       </div>
       <div className="body">
-        <p>Do you know how much carbon your home gas heating is producing?</p>
         <Select
           id="premise-type-select"
           value={premisesInfo.type}
@@ -211,6 +221,7 @@ function EstimateUsage(props: any) {
           <MenuItem value="Detatched">Detatched</MenuItem>
           <MenuItem value="SemiDetatched">Semi-Detatched</MenuItem>
           <MenuItem value="Terraced">Terraced</MenuItem>
+          <MenuItem value="Bungalow">Flat</MenuItem>
           <MenuItem value="Flat">Flat</MenuItem>
         </Select>
         <Select
@@ -232,7 +243,11 @@ function EstimateUsage(props: any) {
           label="Rooms"
           helperText="Bedrooms plus Receptions"
           defaultValue={4}
+          onChange={handleChangeNumRooms}
         />
+        <Button onClick={() => onSubmit(premisesInfo)}>
+          Submit
+        </Button>
       </div>
     </div>
   );
@@ -244,39 +259,45 @@ function Report(props: any) {
     // usageUnits, usagePeriod, 
     usageValue 
   } = props;
-  const usage = 100;
+
   const data = calculateEquivalents(usageValue);
-  const carbonStat = calculateCarbon(usage);
+  const carbonStat = calculateCarbon(usageValue);
   console.log(`Data ${data}`);
   return (
-    <div className="body">    
-      <div >
-        <p>  
-        Your gas boiler produces approx
-        {` ${carbonStat.value} `}
-        tonnes of C0<sub>2</sub> per year
-        </p>
-      </div>
-      That's equivalent to
-      {data.equivalents.map(stat => {
-        return (
-          <div key={stat.name} >
+    <>
+      <div className="App-header">
+        <IconButton href="/report">
+          <FontAwesomeIcon icon={faAngleLeft} />
+          Back
+        </IconButton>
+      </div><div className="body">
+          <div>
             <p>
-            {[
-              ...Array(stat.iconCount),
-            ].map((value: undefined, index: number) => 
-               <Emoji label={stat.name} symbol={stat.iconChar}/>
-              // <Image id={index + 1} key={index} src={`../icons/${stat.iconImg}`}/>
-            )}
+              Your gas boiler produces approx
+              {` ${carbonStat.value} `}
+              tonnes of C0<sub>2</sub> per year
             </p>
-            <p>
-            {`${stat.value} `}
-            {stat.desc}
-            , every year
-            </p>
-          </div>);
-        })}
-    </div>
+          </div>
+          That's equivalent to
+          {data.equivalents.map(stat => {
+            return (
+              <div key={stat.name}>
+                <p>
+                  {[
+                    ...Array(stat.iconCount),
+                  ].map((value: undefined, index: number) => <Emoji label={stat.name} symbol={stat.iconChar} />
+                    // <Image id={index + 1} key={index} src={`../icons/${stat.iconImg}`}/>
+                  )}
+                </p>
+                <p>
+                  {`${stat.value} `}
+                  {stat.desc}
+                  , every year
+                </p>
+              </div>);
+          })}
+        </div>
+      </>
   );
 }
 
