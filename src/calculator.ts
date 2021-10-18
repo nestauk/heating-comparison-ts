@@ -1,14 +1,14 @@
 export enum Period {
-  Year,
-  Quarter,
-  Month,
-  Week,
-  Day
+  Year = 'Year',
+  Quarter = 'Quarter',
+  Month = 'Month',
+  Week = 'Week',
+  Day = 'Day',
 }
 
 export enum Unit {
-  kWh,
-  GBP,
+  kWh = 'kWh',
+  GBP = 'GBP',
 }
 
 
@@ -47,8 +47,9 @@ export const calculateCarbon = (usage: number) => {
 
 export const estimateUsage = (premisesInfo: any) => {
     
-  console.log(`Estimating usage for ${premisesInfo}`);
+  // TODO - replace with actual estimating logic
   const usage = { value: 100, units: Unit.kWh, period: Period.Year};
+  console.log(`Estimated usage for ${JSON.stringify(premisesInfo)} at ${JSON.stringify(usage)}`);
   return usage;
 };
 

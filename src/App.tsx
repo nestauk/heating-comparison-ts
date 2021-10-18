@@ -4,18 +4,16 @@ import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Uni
 import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, IconButton, InputLabel } 
+import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel } 
   from '@mui/material';
-import { faAngleLeft } from  '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 export default function App() {
   const [ usageUnits, setUsageUnits ] = useState({} as Unit);
   const [ usagePeriod, setUsagePeriod ] = useState('Month' as unknown as Period);
   const [ usageValue, setUsageValue ] = useState(0);
-
+  const [ usageUnknown, setUsageUnknown ] = useState(false);
+  
   const handleChangeUnits = (event: any) => {
     setUsageUnits(event.target.value);
   };
@@ -32,75 +30,55 @@ export default function App() {
     setUsageUnits(usageEstimate.units);
     setUsageValue(usageEstimate.value);
     setUsagePeriod(usageEstimate.period);
+    console.log('Redirecting');
+    setUsageUnknown(false);
+ 
+  };
+
+  const flagUsageUnknown = () => {
+    setUsageUnknown(true);
   };
 
   return (
-    <Router>
-      <div>
-        <Switch>
-          <Route path="/ask">
-            <Ask />
-          </Route>
-          <Route path="/input">
-            <InputUsage
-              usageUnits={usageUnits}
-              usageValue={usageValue}
-              usagePeriod={usagePeriod}
-              handleChangeUnits={handleChangeUnits}
-              handleChangeUsage={handleChangeUsage}
-              handleChangePeriod={handleChangePeriod} 
-            />
-          </Route>
-          <Route path="/estimate">
-            <EstimateUsage onSubmit={handleSubmitPremisesInfo}/>
-          </Route>
-          <Route path="/report">
-            <Report 
-              usageValue={100}
-              // TODO - remove hard code value
-              // usageValue={usageValue}
-            />
-          </Route>
-          <Route path="/">
-            <Start />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+    <>
+    {/* If user has stated they dont know usage, collect premise info */}
+      { (usageUnknown) 
+        ?
+        <EstimateUsage onSubmit={handleSubmitPremisesInfo}/>
+        : null
+      }
+      {/* If usage is not yet known, nor flagged unknown, collect usage info */}
+      { (!usageUnknown && (!usageValue || usageValue === 0)) 
+        ?
+        <>
+          <p>Do you know how much carbon your home gas heating is producing?</p>
+          <p>How much energy do you currently use to heat your home?</p>
+          <InputUsage
+            usageUnits={usageUnits}
+            usageValue={usageValue}
+            usagePeriod={usagePeriod}
+            handleChangeUnits={handleChangeUnits}
+            handleChangeUsage={handleChangeUsage}
+            handleChangePeriod={handleChangePeriod} 
+          />
+        <Button variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
+        </>
+        : null
+      }
+      {/* Once usageValue is present (either estimated or entered) show report */}
+      { (usageValue && usageValue > 0) 
+        ?
+        <Report 
+          usageValue={100}
+          // TODO - remove hard code value
+          // usageValue={usageValue}
+        />
+        : null 
+      }
+    </>
+  ); 
 }
 
-function Start() {
-  return (
-    <div>
-      <div className="App-header">
-        Welcome
-      </div>
-      <div className="App-body">
-        <p>Do you know how much carbon your home gas heating is producing?</p>
-        <Button variant="contained" href="/ask">Start</Button>
-      </div>
-    </div>
-  );
-}
-
-function Ask() {
-  return (
-    <div>
-      <div className="App-header">
-        <IconButton href="/report">
-          <FontAwesomeIcon icon={faAngleLeft} />
-        Back
-        </IconButton>
-      </div>
-      <div className="App-body">
-        <p>Do you know how much energy you currently use to heat your home?</p>
-        <Button variant="contained" href="/input">Yes</Button>
-        <Button variant="contained" href="/estimate">No</Button>
-      </div>
-    </div>
-  );
-}
 
 function InputUsage(props: any) {
   const { 
@@ -110,12 +88,12 @@ function InputUsage(props: any) {
   
   return (
     <div>
-      <div className="App-header">
+      {/* <div className="App-header">
         <IconButton href="/ask">
           <FontAwesomeIcon icon={faAngleLeft} />
         Back
         </IconButton>
-      </div>
+      </div> */}
       <div className="App-body">
         <p>What's your typical gas bill?</p>
         <Box
@@ -202,14 +180,14 @@ function EstimateUsage(props: any) {
 
   return (
     <div>
-      <div className="App-header">
+      {/* <div className="App-header">
         <IconButton href="/ask">
           <FontAwesomeIcon icon={faAngleLeft} />
         Back
         </IconButton>
         Estimate your usage
       </div>
-      <div className="body">
+      <div className="body"> */}
         <Select
           id="premise-type-select"
           value={premisesInfo.type}
@@ -248,7 +226,7 @@ function EstimateUsage(props: any) {
         <Button onClick={() => onSubmit(premisesInfo)}>
           Submit
         </Button>
-      </div>
+      {/* </div> */}
     </div>
   );
 }
@@ -260,17 +238,18 @@ function Report(props: any) {
     usageValue 
   } = props;
 
+  // TODO - cater for units and period not the defaults - adjust here or (better) in calculator 
   const data = calculateEquivalents(usageValue);
   const carbonStat = calculateCarbon(usageValue);
   console.log(`Data ${data}`);
   return (
     <>
-      <div className="App-header">
+      {/* <div className="App-header">
         <IconButton href="/report">
           <FontAwesomeIcon icon={faAngleLeft} />
           Back
         </IconButton>
-      </div><div className="body">
+      </div><div className="body"> */}
           <div>
             <p>
               Your gas boiler produces approx
@@ -296,7 +275,7 @@ function Report(props: any) {
                 </p>
               </div>);
           })}
-        </div>
+        {/* </div> */}
       </>
   );
 }
