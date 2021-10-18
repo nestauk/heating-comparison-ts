@@ -1,6 +1,6 @@
 
 import './App.css';
-import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period } from './calculator';
+import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period, UsageInfo, Stat } from './calculator';
 import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
@@ -9,10 +9,13 @@ import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel
 
 
 export default function App() {
-  const [ usageUnits, setUsageUnits ] = useState({} as Unit);
+  const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
   const [ usagePeriod, setUsagePeriod ] = useState('Month' as unknown as Period);
   const [ usageValue, setUsageValue ] = useState(0);
   const [ usageUnknown, setUsageUnknown ] = useState(false);
+  const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
+  const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
+
   
   const handleChangeUnits = (event: any) => {
     setUsageUnits(event.target.value);
@@ -26,7 +29,7 @@ export default function App() {
 
   const handleSubmitPremisesInfo = (premisesInfo: PremisesInfo) => {
     console.log(`Got premises info ${JSON.stringify(premisesInfo)}, calling estimator for usage`);
-    const usageEstimate = estimateUsage(premisesInfo);
+    const usageEstimate: UsageInfo = estimateUsage(premisesInfo);
     setUsageUnits(usageEstimate.units);
     setUsageValue(usageEstimate.value);
     setUsagePeriod(usageEstimate.period);
@@ -39,16 +42,35 @@ export default function App() {
     setUsageUnknown(true);
   };
 
+  const reset = () => {
+    setUsageUnknown(false);
+    setUsageUnits(Unit.kWh);
+    setUsageValue(0);
+    setUsagePeriod(Period.Month);
+    setEquivalents(null);
+    setCarbonStat(null);
+  };
+
+
+  const handleSubmitUsageInfo = (usage: UsageInfo) => {
+    //TODO - remove setting of units and period if no longer holding at App level - hardcoded now anyway
+    setUsageUnits(Unit.kWh);
+    setUsageValue(0);
+    setUsagePeriod(Period.Month);
+    const carbonStat = 
+      calculateCarbon(usage.value);
+    console.log(JSON.stringify(carbonStat));
+    setCarbonStat(carbonStat);
+    const equivalents = 
+      calculateEquivalents(usage.value);
+    console.log(JSON.stringify(equivalents));
+    setEquivalents(equivalents);
+  }
+
   return (
     <>
-    {/* If user has stated they dont know usage, collect premise info */}
-      { (usageUnknown) 
-        ?
-        <EstimateUsage onSubmit={handleSubmitPremisesInfo}/>
-        : null
-      }
-      {/* If usage is not yet known, nor flagged unknown, collect usage info */}
-      { (!usageUnknown && (!usageValue || usageValue === 0)) 
+      {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
+      { (!carbonStat && !usageUnknown)
         ?
         <>
           <p>Do you know how much carbon your home gas heating is producing?</p>
@@ -60,18 +82,25 @@ export default function App() {
             handleChangeUnits={handleChangeUnits}
             handleChangeUsage={handleChangeUsage}
             handleChangePeriod={handleChangePeriod} 
+            handleSubmitUsageInfo={handleSubmitUsageInfo}
           />
         <Button variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
         </>
+        : 
+        <Button variant="contained" onClick={() => reset()}>Start again</Button>
+      }
+      {/* If user has stated they dont know usage, collect premise info */}
+      { (usageUnknown) 
+        ?
+        <EstimateUsage onSubmit={handleSubmitPremisesInfo}/>
         : null
       }
-      {/* Once usageValue is present (either estimated or entered) show report */}
-      { (usageValue && usageValue > 0) 
+      {/* Once stats are present show report */}
+      { (equivalents && carbonStat) 
         ?
         <Report 
-          usageValue={100}
-          // TODO - remove hard code value
-          // usageValue={usageValue}
+          equivalents={equivalents}
+          carbonStat={carbonStat}
         />
         : null 
       }
@@ -83,17 +112,11 @@ export default function App() {
 function InputUsage(props: any) {
   const { 
     usageUnits, usagePeriod, usageValue,
-    handleChangeUnits, handleChangePeriod, handleChangeValue
+    handleChangeUnits, handleChangePeriod, handleChangeValue,
+    handleSubmitUsageInfo,
   } = props;
   
   return (
-    <div>
-      {/* <div className="App-header">
-        <IconButton href="/ask">
-          <FontAwesomeIcon icon={faAngleLeft} />
-        Back
-        </IconButton>
-      </div> */}
       <div className="App-body">
         <p>What's your typical gas bill?</p>
         <Box
@@ -125,7 +148,7 @@ function InputUsage(props: any) {
                   displayEmpty={true}
                 >
                   <MenuItem value="gbp">£</MenuItem>
-                  <MenuItem value="kwh">kWh</MenuItem>
+                  <MenuItem value="kWh">kWh</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -144,19 +167,26 @@ function InputUsage(props: any) {
                   onChange={handleChangePeriod}
                   displayEmpty={true}
                 >
-                  <MenuItem value="daily">Day</MenuItem>
-                  <MenuItem value="weekly">Week</MenuItem>
-                  <MenuItem value="monthly">Month</MenuItem>
-                  <MenuItem value="quarterly">Quarter</MenuItem>
-                  <MenuItem value="annual">Year</MenuItem>
+                  <MenuItem value="Day">Day</MenuItem>
+                  <MenuItem value="Week">Week</MenuItem>
+                  <MenuItem value="Month">Month</MenuItem>
+                  <MenuItem value="Quarter">Quarter</MenuItem>
+                  <MenuItem value="Year">Year</MenuItem>
                 </Select>
               </FormControl>
           </Grid>
           </Grid>
         </Box>
-        <Button variant="contained" href="/report">Submit</Button>
+        <Button variant="contained" 
+          onClick={() => handleSubmitUsageInfo({
+                           period: usagePeriod, 
+                           units: usageUnits,
+                           value: usageValue
+                          } as UsageInfo
+          )}>
+          Submit
+        </Button>
       </div>
-    </div>
   );
 }
 
@@ -232,24 +262,14 @@ function EstimateUsage(props: any) {
 }
 
 
-function Report(props: any) {
+function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
   const { 
-    // usageUnits, usagePeriod, 
-    usageValue 
+    equivalents, carbonStat
   } = props;
 
-  // TODO - cater for units and period not the defaults - adjust here or (better) in calculator 
-  const data = calculateEquivalents(usageValue);
-  const carbonStat = calculateCarbon(usageValue);
-  console.log(`Data ${data}`);
+  console.log(`Equivalents ${equivalents}`);
   return (
     <>
-      {/* <div className="App-header">
-        <IconButton href="/report">
-          <FontAwesomeIcon icon={faAngleLeft} />
-          Back
-        </IconButton>
-      </div><div className="body"> */}
           <div>
             <p>
               Your gas boiler produces approx
@@ -258,14 +278,13 @@ function Report(props: any) {
             </p>
           </div>
           That's equivalent to
-          {data.equivalents.map(stat => {
+          {equivalents.map(stat => {
             return (
               <div key={stat.name}>
                 <p>
                   {[
                     ...Array(stat.iconCount),
                   ].map((value: undefined, index: number) => <Emoji label={stat.name} symbol={stat.iconChar} />
-                    // <Image id={index + 1} key={index} src={`../icons/${stat.iconImg}`}/>
                   )}
                 </p>
                 <p>
@@ -275,7 +294,6 @@ function Report(props: any) {
                 </p>
               </div>);
           })}
-        {/* </div> */}
       </>
   );
 }

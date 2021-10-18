@@ -18,22 +18,34 @@ export type PremisesInfo = {
   numRooms: number,
 }
 
-export const calculateEquivalents = (usage: number) => {
+export type UsageInfo = {
+  units: Unit,
+  period: Period,
+  value: number,
+}
+
+export type Stat = {
+  name: string,
+  desc: string,
+  value: number,
+  iconCount: number,
+  iconChar: string,
+}
+
+
+export const calculateEquivalents = (usage: number): Stat[] => {
     
     console.log(`Calculating equivalents for ${usage}`);
-    const data = { 
-        equivalents: [
+    return [
           { name: "C02", desc: "Tonnes CO2 Emissions",
-             value: 20, iconCount: 5, iconChar: '🔥'  },
+             value: 20, iconCount: 5, iconChar: '🔥'  } as Stat,
           { name: "Flights", desc: "transatlantic flights",
             value: 3, iconCount: 3, iconChar: '✈️' },
           { name: "Lightbulbs", desc: "lightbulbs running for an hour",
             value: 1000, iconCount: 7, iconChar: '💡' },
           { name: "Trees", desc: "newly planted trees needed to offset",
             value: 1000, iconCount: 25, iconChar: '🌳' }, 
-        ],
-    };
-    return data;
+        ] as Stat[];
 };
 
 export const calculateCarbon = (usage: number) => {
@@ -45,7 +57,7 @@ export const calculateCarbon = (usage: number) => {
     return data;
 };
 
-export const estimateUsage = (premisesInfo: any) => {
+export const estimateUsage = (premisesInfo: PremisesInfo): UsageInfo => {
     
   // TODO - replace with actual estimating logic
   const usage = { value: 100, units: Unit.kWh, period: Period.Year};
