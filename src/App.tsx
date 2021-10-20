@@ -4,11 +4,13 @@ import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Uni
 import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
-import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel } 
+import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel, RadioGroup, Radio, FormControlLabel } 
   from '@mui/material';
 
 
 export default function App() {
+
+  //TODO - move usage state down into input and just keep calculated info at app level
   const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
   const [ usagePeriod, setUsagePeriod ] = useState('Month' as unknown as Period);
   const [ usageValue, setUsageValue ] = useState(0);
@@ -16,7 +18,7 @@ export default function App() {
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
 
-  
+  //TODO - move usage state down into input and just keep calculated info at app level
   const handleChangeUnits = (event: any) => {
     setUsageUnits(event.target.value);
   };
@@ -30,12 +32,8 @@ export default function App() {
   const handleSubmitPremisesInfo = (premisesInfo: PremisesInfo) => {
     console.log(`Got premises info ${JSON.stringify(premisesInfo)}, calling estimator for usage`);
     const usageEstimate: UsageInfo = estimateUsage(premisesInfo);
-    setUsageUnits(usageEstimate.units);
-    setUsageValue(usageEstimate.value);
-    setUsagePeriod(usageEstimate.period);
-    console.log('Redirecting');
+    handleSubmitUsageInfo(usageEstimate);
     setUsageUnknown(false);
- 
   };
 
   const flagUsageUnknown = () => {
@@ -122,14 +120,14 @@ function InputUsage(props: any) {
         <Box
           component="form"
           sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
+            '& .MuiTextField-root': { m: 1, width: '15ch' },
           }}
           noValidate
           autoComplete="off"
         >
           <Grid container>
             <Grid item xs={6}>
-              <FormControl sx={{ m: 1, minWidth: 50 }}>
+              <FormControl sx={{ m: 1, minWidth: 20 }}>
                 <TextField
                   id="usage-value-input" 
                   label="Usage" 
@@ -139,7 +137,7 @@ function InputUsage(props: any) {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-            <FormControl sx={{ m: 1, minWidth: 50 }}>
+            {/* <FormControl sx={{ m: 1, minWidth: 50 }}>
                 <Select
                   id="usage-units-select"
                   value={usageUnits}
@@ -150,7 +148,21 @@ function InputUsage(props: any) {
                   <MenuItem value="gbp">£</MenuItem>
                   <MenuItem value="kWh">kWh</MenuItem>
                 </Select>
-              </FormControl>
+            </FormControl> */}
+            <FormControl component="fieldset">
+            {/* <FormLabel component="legend">Units</FormLabel> */}
+              <RadioGroup
+                row
+                aria-label="usage-units"
+                defaultValue="gbp"
+                value={usageUnits}
+                name="usage-units-radio-group"
+                onChange={handleChangeUnits}
+              >
+                <FormControlLabel value="gbp" control={<Radio />} label="Price (£)" />
+                <FormControlLabel value="kWh" control={<Radio />} label="kWh" />
+              </RadioGroup>
+            </FormControl>
             </Grid>
           </Grid>
           <Grid container>
@@ -174,18 +186,22 @@ function InputUsage(props: any) {
                   <MenuItem value="Year">Year</MenuItem>
                 </Select>
               </FormControl>
-          </Grid>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant="contained" 
+                  onClick={() => handleSubmitUsageInfo({
+                                  period: usagePeriod, 
+                                  units: usageUnits,
+                                  value: usageValue
+                                  } as UsageInfo
+                  )}>
+                  Submit
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+            </Grid>
           </Grid>
         </Box>
-        <Button variant="contained" 
-          onClick={() => handleSubmitUsageInfo({
-                           period: usagePeriod, 
-                           units: usageUnits,
-                           value: usageValue
-                          } as UsageInfo
-          )}>
-          Submit
-        </Button>
       </div>
   );
 }
@@ -294,6 +310,11 @@ function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
                 </p>
               </div>);
           })}
+          <div>
+          <Button onClick={() => {}}>
+          Share
+          </Button>
+          </div>
       </>
   );
 }
