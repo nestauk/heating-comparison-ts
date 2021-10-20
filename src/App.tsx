@@ -5,6 +5,8 @@ import Emoji from 'a11y-react-emoji';
 import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel, RadioGroup, Radio, FormControlLabel } 
   from '@mui/material';
 import SocialMediaButtons from './SocialMediaButtons';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 
 
@@ -17,6 +19,8 @@ export default function App() {
   const [ usageUnknown, setUsageUnknown ] = useState(false);
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
+
+  const history = createBrowserHistory();
 
   //TODO - move usage state down into input and just keep calculated info at app level
   const handleChangeUnits = (event: any) => {
@@ -66,7 +70,8 @@ export default function App() {
   }
 
   return (
-    <>
+    <> 
+    <Router {...{ history }}>
       {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
       { (!carbonStat && !usageUnknown)
         ?
@@ -102,6 +107,7 @@ export default function App() {
         />
         : null 
       }
+    </Router>
     </>
   ); 
 }

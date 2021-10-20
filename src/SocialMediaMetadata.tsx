@@ -1,8 +1,7 @@
-import React from "react";
 import { Helmet } from "react-helmet";
 import { useLocation } from "react-router-dom";
 
-export default function HelmetMetaData(props) {
+export default function SocialMediaMetaData(props: any) {
    let location = useLocation();
    let currentUrl = "http://www.nesta.org.uk" + location.pathname;
    let quote = props.quote !== undefined ? props.quote : "";
