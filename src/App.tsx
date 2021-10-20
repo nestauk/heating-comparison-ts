@@ -1,11 +1,11 @@
-
 import './App.css';
 import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period, UsageInfo, Stat } from './calculator';
-import  React from "react";
 import { useState } from "react";
 import Emoji from 'a11y-react-emoji';
 import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel, RadioGroup, Radio, FormControlLabel } 
   from '@mui/material';
+import SocialMediaButtons from './SocialMediaButtons';
+
 
 
 export default function App() {
@@ -314,9 +314,11 @@ function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
           <Button onClick={() => {}}>
           Share
           </Button>
+          <SocialMediaButtons />
           </div>
       </>
   );
+
 }
 
 
