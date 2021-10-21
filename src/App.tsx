@@ -1,37 +1,24 @@
 import './App.css';
+import React from "react";
 import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period, UsageInfo, Stat } from './calculator';
 import { useState } from "react";
-import Emoji from 'a11y-react-emoji';
-import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel, RadioGroup, Radio, FormControlLabel } 
+import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel, RadioGroup, Radio, FormControlLabel, Alert } 
   from '@mui/material';
 import SocialMediaButtons from './SocialMediaButtons';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { EquivalentsSlider } from './EquivalentsSlider';
 
 
 
 export default function App() {
 
-  //TODO - move usage state down into input and just keep calculated info at app level
-  const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
-  const [ usagePeriod, setUsagePeriod ] = useState('Month' as unknown as Period);
-  const [ usageValue, setUsageValue ] = useState(0);
   const [ usageUnknown, setUsageUnknown ] = useState(false);
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
+  const [ error, setError ] = useState(null as string | null);
 
   const history = createBrowserHistory();
-
-  //TODO - move usage state down into input and just keep calculated info at app level
-  const handleChangeUnits = (event: any) => {
-    setUsageUnits(event.target.value);
-  };
-  const handleChangeUsage = (event: any ) => {
-    setUsageValue(event.target.value);
-  };
-  const handleChangePeriod = (event: any) => {
-    setUsagePeriod(event.target.value);
-  };
 
   const handleSubmitPremisesInfo = (premisesInfo: PremisesInfo) => {
     console.log(`Got premises info ${JSON.stringify(premisesInfo)}, calling estimator for usage`);
@@ -46,32 +33,54 @@ export default function App() {
 
   const reset = () => {
     setUsageUnknown(false);
-    setUsageUnits(Unit.kWh);
-    setUsageValue(0);
-    setUsagePeriod(Period.Month);
     setEquivalents(null);
     setCarbonStat(null);
   };
 
 
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
-    //TODO - remove setting of units and period if no longer holding at App level - hardcoded now anyway
-    setUsageUnits(Unit.kWh);
-    setUsageValue(0);
-    setUsagePeriod(Period.Month);
+
+    console.log(`Got usage: ${JSON.stringify(usage)}`);
+    if (!usage.value && !(usage.value > 0) ) {
+      setError('Invalid usage value. Return to input and enter a non-zero value');
+      // TODO - error needs to be cleared somewhere
+      return;
+    }
+    let usageVal;
+    switch (usage.period) {
+       case Period.Week: {
+          usageVal = usage.value * 52;
+          break;
+       }
+       case Period.Month: {
+         usageVal = usage.value * 12;
+         break;
+       }
+       case Period.Year: {
+          usageVal = usage.value;
+          break;
+       }
+       default: {
+          setError('Invalid usage period. Return to input and select a value');
+          // TODO - error needs to be cleared somewhere
+          return;
+       }
+    }
     const carbonStat = 
-      calculateCarbon(usage.value);
+      calculateCarbon(usageVal);
     console.log(JSON.stringify(carbonStat));
     setCarbonStat(carbonStat);
     const equivalents = 
-      calculateEquivalents(usage.value);
+      calculateEquivalents(usageVal);
     console.log(JSON.stringify(equivalents));
     setEquivalents(equivalents);
+    setError(null);
   }
 
   return (
     <> 
     <Router {...{ history }}>
+      {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
       { (!carbonStat && !usageUnknown)
         ?
@@ -79,12 +88,6 @@ export default function App() {
           <p>Do you know how much carbon your home gas heating is producing?</p>
           <p>How much energy do you currently use to heat your home?</p>
           <InputUsage
-            usageUnits={usageUnits}
-            usageValue={usageValue}
-            usagePeriod={usagePeriod}
-            handleChangeUnits={handleChangeUnits}
-            handleChangeUsage={handleChangeUsage}
-            handleChangePeriod={handleChangePeriod} 
             handleSubmitUsageInfo={handleSubmitUsageInfo}
           />
         <Button variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
@@ -114,11 +117,25 @@ export default function App() {
 
 
 function InputUsage(props: any) {
+
   const { 
-    usageUnits, usagePeriod, usageValue,
-    handleChangeUnits, handleChangePeriod, handleChangeValue,
     handleSubmitUsageInfo,
   } = props;
+
+  const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
+  const [ usagePeriod, setUsagePeriod ] = useState(Period.Month);
+  const [ usageValue, setUsageValue ] = useState(0);
+
+  const handleChangeUnits = (event: any) => {
+    setUsageUnits(event.target.value);
+  };
+  const handleChangeValue = (event: any ) => {
+    setUsageValue(event.target.value);
+  };
+  const handleChangePeriod = (event: any) => {
+    setUsagePeriod(event.target.value);
+  };
+
   
   return (
       <div className="App-body">
@@ -299,23 +316,10 @@ function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
               tonnes of C0<sub>2</sub> per year
             </p>
           </div>
+          <div>
           That's equivalent to
-          {equivalents.map(stat => {
-            return (
-              <div key={stat.name}>
-                <p>
-                  {[
-                    ...Array(stat.iconCount),
-                  ].map((value: undefined, index: number) => <Emoji label={stat.name} symbol={stat.iconChar} />
-                  )}
-                </p>
-                <p>
-                  {`${stat.value} `}
-                  {stat.desc}
-                  , every year
-                </p>
-              </div>);
-          })}
+          <EquivalentsSlider equivalents={equivalents} />
+          </div>
           <div>
           <Button onClick={() => {}}>
           Share

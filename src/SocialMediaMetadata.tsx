@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import { useLocation } from "react-router-dom";
+import React from "react";
 
 export default function SocialMediaMetaData(props: any) {
    let location = useLocation();

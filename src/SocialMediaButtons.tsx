@@ -1,4 +1,5 @@
 import { Popper } from "@mui/material";
+import React from "react";
 import SocialMediaMetaData from './SocialMediaMetadata';
 import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
       
