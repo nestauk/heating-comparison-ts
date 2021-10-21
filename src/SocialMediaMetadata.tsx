@@ -9,7 +9,7 @@ export default function SocialMediaMetaData(props: any) {
    let title = props.title !== undefined ? props.title : "Nesta - A Sustainable Future";
    let image = props.image !== undefined ? props.image : "./logo.svg";
    let description = props.description !== undefined ? props.description  : "Wow I had no idea what a big impact my gas heating has on climate change";
-   let hashtag = props.hashtag !== undefined ? props.hashtag : "#gasheatingclimatechange";
+   let hashtag = props.hashtag !== undefined ? props.hashtag : "#gasheatingbigimpact";
 return (
  <Helmet>
      <title>{title}</title>

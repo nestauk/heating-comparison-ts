@@ -17,6 +17,7 @@ export default function App() {
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
   const [ error, setError ] = useState(null as string | null);
+ 
 
   const history = createBrowserHistory();
 
@@ -124,7 +125,8 @@ function InputUsage(props: any) {
 
   const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
   const [ usagePeriod, setUsagePeriod ] = useState(Period.Month);
-  const [ usageValue, setUsageValue ] = useState(0);
+  // TODO - remove hardcoded starter value
+  const [ usageValue, setUsageValue ] = useState(1000);
 
   const handleChangeUnits = (event: any) => {
     setUsageUnits(event.target.value);
@@ -306,27 +308,28 @@ function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
     equivalents, carbonStat
   } = props;
 
+  const [ shareEnabled, setShareEnabled ] = useState(false);
+
   console.log(`Equivalents ${equivalents}`);
   return (
     <>
-          <div>
-            <p>
-              Your gas boiler produces approx
-              {` ${carbonStat.value} `}
-              tonnes of C0<sub>2</sub> per year
-            </p>
-          </div>
-          <div>
-          That's equivalent to
-          <EquivalentsSlider equivalents={equivalents} />
-          </div>
-          <div>
-          <Button onClick={() => {}}>
-          Share
-          </Button>
-          <SocialMediaButtons />
-          </div>
-      </>
+      <div>
+        <p>
+          Your gas boiler produces approx
+          {` ${carbonStat.value} `}
+          tonnes of C0<sub>2</sub> per year
+        </p>
+      </div>
+      <div>
+      That's equivalent to
+      <EquivalentsSlider equivalents={equivalents} shareEnabled={shareEnabled} />
+      </div>
+      <div>
+      <Button variant="contained"  onClick={() => setShareEnabled(true)}>
+      Share
+      </Button>
+      </div>
+    </>
   );
 
 }
