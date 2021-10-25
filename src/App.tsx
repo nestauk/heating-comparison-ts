@@ -272,9 +272,9 @@ function EstimateUsage(props: any) {
           defaultValue={"SemiDetatched"}
         >
           <MenuItem value="Detatched">Detatched</MenuItem>
-          <MenuItem value="SemiDetatched">Semi-Detatched</MenuItem>
+          <MenuItem value="Semi-Detatched">Semi-Detatched</MenuItem>
           <MenuItem value="Terraced">Terraced</MenuItem>
-          <MenuItem value="Bungalow">Flat</MenuItem>
+          <MenuItem value="Bungalow">Bungalow</MenuItem>
           <MenuItem value="Flat">Flat</MenuItem>
         </Select>
         <Select
@@ -286,10 +286,10 @@ function EstimateUsage(props: any) {
           displayEmpty={true}
         >
           <MenuItem value="Band1">Pre 1900</MenuItem>
-          <MenuItem value="Band2">1900 - 1945</MenuItem>
-          <MenuItem value="Band3">1950s 1960s</MenuItem>
-          <MenuItem value="Band4">1970s 1980s</MenuItem>
-          <MenuItem value="Band5">1990 +</MenuItem>
+          <MenuItem value="Band2">1900 - 1950</MenuItem>
+          <MenuItem value="Band3">1950-1975</MenuItem>
+          <MenuItem value="Band4">1976-1990</MenuItem>
+          <MenuItem value="Band5">1990 onwards</MenuItem>
         </Select>
         <TextField
           id="premise-rooms"

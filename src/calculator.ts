@@ -11,11 +11,34 @@ export enum Unit {
   GBP = 'GBP',
 }
 
+export enum NumRooms {
+small = '1-2 rooms',
+medium = '3-4 rooms',
+large = '5-6 rooms',
+huge = '7-9 rooms',
+palatial = '10+ rooms'
+}
+
+export enum PremiseType {
+  Detached = "Detached",
+  SemiDetached = "Semi-Detached",
+  Terraced = "Terraced",
+  Bungalow = "Bungalow",
+  Flat = "Flat",
+}
+
+export enum PremiseAge {
+  Band1 = 'Pre 1900',
+  Band2 = '1900-1950',
+  Band3 = '1950-1975',
+  Band4 = '1976-1990',
+  Band5 = 'Post 1990',
+}
 
 export type PremisesInfo = {
-  type: string,
-  age: string,
-  numRooms: number,
+  type: PremiseType,
+  age: PremiseAge,
+  numRooms: NumRooms,
 }
 
 export type UsageInfo = {
