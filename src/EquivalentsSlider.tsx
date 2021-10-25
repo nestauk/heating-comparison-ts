@@ -28,13 +28,11 @@ export function EquivalentsSlider(props: { equivalents: Stat[], shareEnabled: bo
                   {`${stat.value} `}
                   {stat.desc}
                 </div>
-                <div>
+                <div className="icons">
                   {[
                     ...Array(stat.iconCount),
                   ].map((value: undefined, index: number) => 
-                  <span className="icon">
-                      <Emoji key={stat.name} label={stat.name} symbol={stat.iconChar}/>
-                  </span>
+                    <Emoji key={stat.name} label={stat.name} symbol={stat.iconChar}/>
                   )}
                   </div>
                   <div>

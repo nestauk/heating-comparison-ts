@@ -8,6 +8,7 @@ import SocialMediaButtons from './SocialMediaButtons';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { EquivalentsSlider } from './EquivalentsSlider';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 
 
@@ -79,7 +80,8 @@ export default function App() {
   }
 
   return (
-    <> 
+    <>
+    <StyledEngineProvider injectFirst>
     <Router {...{ history }}>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
@@ -91,10 +93,10 @@ export default function App() {
           <InputUsage
             handleSubmitUsageInfo={handleSubmitUsageInfo}
           />
-        <Button variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
+        <Button className="btn" variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
         </>
         : 
-        <Button variant="contained" onClick={() => reset()}>Start again</Button>
+        <Button className="btn" variant="contained" onClick={() => reset()}>Start again</Button>
       }
       {/* If user has stated they dont know usage, collect premise info */}
       { (usageUnknown) 
@@ -112,6 +114,7 @@ export default function App() {
         : null 
       }
     </Router>
+    </StyledEngineProvider>
     </>
   ); 
 }
@@ -213,7 +216,7 @@ function InputUsage(props: any) {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <Button variant="contained" 
+              <Button className="btn" variant="contained" 
                   onClick={() => handleSubmitUsageInfo({
                                   period: usagePeriod, 
                                   units: usageUnits,
@@ -294,7 +297,7 @@ function EstimateUsage(props: any) {
           defaultValue={4}
           onChange={handleChangeNumRooms}
         />
-        <Button onClick={() => onSubmit(premisesInfo)}>
+        <Button className="btn" onClick={() => onSubmit(premisesInfo)}>
           Submit
         </Button>
       {/* </div> */}
@@ -325,7 +328,7 @@ function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
       <EquivalentsSlider equivalents={equivalents} shareEnabled={shareEnabled} />
       </div>
       <div>
-      <Button variant="contained"  onClick={() => setShareEnabled(true)}>
+      <Button className="btn" variant="contained"  onClick={() => setShareEnabled(true)}>
       Share
       </Button>
       </div>
