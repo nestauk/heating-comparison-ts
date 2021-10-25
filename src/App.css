@@ -143,7 +143,7 @@
   display: inline-block;
 }
 
-@font-face {
+/* @font-face {
   font-family:'Averta';
   font-weight:700;
   font-style:italic;
@@ -156,7 +156,6 @@
   src:url("../fonts/3215B3_1_0.8f33eefdc716.eot");
   src:url("../fonts/3215B3_1_0.8f33eefdc716.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_1_0.cf4692e55a59.woff2") format("woff2"),url("../fonts/3215B3_1_0.209d762b56bc.woff") format("woff"),url("../fonts/3215B3_1_0.21f332c68c2d.ttf") format("truetype")
 }
-  
 @font-face {
   font-family:'Averta';
   font-weight:300;
@@ -170,23 +169,18 @@
   src:url("../fonts/3215B3_3_0.a66eb0f2a40c.eot");
   src:url("../fonts/3215B3_3_0.a66eb0f2a40c.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_3_0.b952ad40800a.woff2") format("woff2"),url("../fonts/3215B3_3_0.96728e8916ba.woff") format("woff"),url("../fonts/3215B3_3_0.f8a8b316927c.ttf") format("truetype")
 }
+
 @font-face {
   font-family:'Averta';
   font-weight:500;
   src:url("../fonts/3215B3_4_0.9054214f7565.eot");
   src:url("../fonts/3215B3_4_0.9054214f7565.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_4_0.9342434d4665.woff2") format("woff2"),url("../fonts/3215B3_4_0.a48f9be3e1d8.woff") format("woff"),url("../fonts/3215B3_4_0.74498ff93534.ttf") format("truetype")
-}
-@font-face {
-  font-family:'Averta-RegularItalic';
-  font-weight:500;
-  font-style:italic;
-  src:url("../fonts/3215B3_5_0.97695f6284b4.eot");
-  src:url("../fonts/3215B3_5_0.97695f6284b4.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_5_0.294a6adf568c.woff2") format("woff2"),url("../fonts/3215B3_5_0.7760a24a9730.woff") format("woff"),url("../fonts/3215B3_5_0.9efa35e211f8.ttf") format("truetype")
-}
+} */
+
 @font-face {
   font-family:'zosia';
-  src:url("./fonts/zosia-display-webfont.e951b4a92c27.eot");
-  src:url("./fonts/zosia-display-webfont.e951b4a92c27.eot?#iefix") format("embedded-opentype"),url("./fonts/zosia-display-webfont.6e6a36493090.woff2") format("woff2"),url("./fonts/zosia-display-webfont.9ff04a286df3.woff") format("woff"),url("./fonts/zosia-display-webfont.f67b10800fca.ttf") format("truetype"),url("./fonts/zosia-display-webfont.26768b87375d.svg#zosiadisplay") format("svg");
+  src:url("./fonts/Zosia-Display.eot");
+  src:url("./fonts/Zosia-Display.woff2") format("woff2"),url("./fonts/Zosia-Display.woff") format("woff"),url("./fonts/Zosia-Display.ttf") format("truetype"), url("./fonts/Zosia-Display.svg") format("svg");
   font-weight:normal;
   font-style:normal
 }
