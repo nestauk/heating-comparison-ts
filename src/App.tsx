@@ -234,7 +234,11 @@ function InputUsage(props: any) {
 
 function EstimateUsage(props: any) {
   const { onSubmit } = props;
-  const [ premisesInfo, setPremisesInfo ] = useState({} as PremisesInfo);
+  const defaultPrem =  { type: "Terrace",
+  age: "1900-1950",
+  numRooms: "3-4 rooms"};
+  //const defaultPrem = { numRooms: '3-4 rooms', age:'Post 1990', type: 'Semi-Detached'} as PremisesInfo;
+  const [ premisesInfo, setPremisesInfo ] = useState(defaultPrem);
 
   const handleChangePremType = (event: any) => {
     const newPremisesInfo = {  ...premisesInfo, type: event.target.value };
@@ -252,13 +256,6 @@ function EstimateUsage(props: any) {
 
   return (
     <div>
-      {/* <div className="App-header">
-        <IconButton href="/ask">
-          <FontAwesomeIcon icon={faAngleLeft} />
-        Back
-        </IconButton>
-        Estimate your usage
-      </div>*/}
       <div className="body"> 
         <Select
           id="premise-type-select"
@@ -266,11 +263,11 @@ function EstimateUsage(props: any) {
           label="Home Type"
           onChange={handleChangePremType}
           displayEmpty={true}
-          defaultValue={"Semi-Detached"}
+          defaultValue={defaultPrem.type}
         >
           <MenuItem value="Detached">Detached</MenuItem>
           <MenuItem value="Semi-Detached">Semi-Detached</MenuItem>
-          <MenuItem value="Terraced">Terraced</MenuItem>
+          <MenuItem value="Terrace">Terrace</MenuItem>
           <MenuItem value="Bungalow">Bungalow</MenuItem>
           <MenuItem value="Flat">Flat</MenuItem>
         </Select>
@@ -279,22 +276,29 @@ function EstimateUsage(props: any) {
           value={premisesInfo.age}
           label="Home Type"
           onChange={handleChangePremAge}
-          defaultValue={"Band4"}
+          defaultValue={defaultPrem.age}
           displayEmpty={true}
         >
-          <MenuItem value="Band1">Pre 1900</MenuItem>
-          <MenuItem value="Band2">1900 - 1950</MenuItem>
-          <MenuItem value="Band3">1950-1975</MenuItem>
-          <MenuItem value="Band4">1976-1990</MenuItem>
-          <MenuItem value="Band5">1990 onwards</MenuItem>
+          <MenuItem value="Pre 1900">Pre 1900</MenuItem>
+          <MenuItem value="1900-1950">1900-1950</MenuItem>
+          <MenuItem value="1950-1975">1950-1975</MenuItem>
+          <MenuItem value="1976-1990">1976-1990</MenuItem>
+          <MenuItem value="Post 1990">Post 1990</MenuItem>
         </Select>
-        <TextField
-          id="premise-rooms"
-          label="Rooms"
-          helperText="Bedrooms plus Receptions"
-          defaultValue={4}
+        <Select
+          id="premise-rooms-select"
+          value={premisesInfo.numRooms}
+          label="Bedrooms plus Receptions"
           onChange={handleChangeNumRooms}
-        />
+          defaultValue={defaultPrem.numRooms}
+          displayEmpty={true}
+        >
+          <MenuItem value="1-2 rooms">1-2 rooms</MenuItem>
+          <MenuItem value="3-4 rooms">3-4 rooms</MenuItem>
+          <MenuItem value="5-6 rooms">5-6 rooms</MenuItem>
+          <MenuItem value="7-9 rooms">7-9 rooms</MenuItem>
+          <MenuItem value="10+ rooms">10+ rooms</MenuItem>
+        </Select>
         <Button className="btn" onClick={() => onSubmit(premisesInfo)}>
           Submit
         </Button>

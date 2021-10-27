@@ -37,10 +37,16 @@ export enum PremiseAge {
   Band5 = 'Post 1990',
 }
 
+// export type PremisesInfo = {
+//   type: PremiseType,
+//   age: PremiseAge,
+//   numRooms: NumRooms,
+// }
+
 export type PremisesInfo = {
-  type: PremiseType,
-  age: PremiseAge,
-  numRooms: NumRooms,
+  type: string,
+  age: string,
+  numRooms: string,
 }
 
 export type UsageInfo = {
@@ -94,7 +100,7 @@ export const calculateEquivalents = (usage: number): Stat[] => {
 
 export const calculateCarbon = (usage: number) => {
     console.log(`Calculating carbon for ${usage}`);
-    const carbon = Math.round(usage*0.18316);
+    const carbon = Math.round(usage*0.18316)/1000;
     const data = { 
         name: "C02", desc: "Tonnes CO2 Emissions",
         value: carbon, iconCount: getIconCount(carbon), iconChar: '🔥' ,
@@ -108,7 +114,7 @@ export const estimateUsage = async (premisesInfo: PremisesInfo): Promise<UsageIn
   // as now not estimating usage, only emissions directly
   const emissions = await estimateEmissions(premisesInfo);
   console.log(`Estimated emissions for ${JSON.stringify(premisesInfo)} at ${JSON.stringify(emissions)}`);
-  const usage = emissions/0.18316;
+  const usage = emissions * 1000/0.18316;
   return { value: usage, units: Unit.kWh, period: Period.Year };
 };
 
