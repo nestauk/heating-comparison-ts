@@ -10,9 +10,6 @@ import { createBrowserHistory } from 'history';
 import { EquivalentsSlider } from './EquivalentsSlider';
 import { StyledEngineProvider } from '@mui/material/styles';
 
-
-
-
 export default function App() {
 
   const [ usageUnknown, setUsageUnknown ] = useState(false);
@@ -23,9 +20,9 @@ export default function App() {
 
   const history = createBrowserHistory();
 
-  const handleSubmitPremisesInfo = (premisesInfo: PremisesInfo) => {
+  const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
     console.log(`Got premises info ${JSON.stringify(premisesInfo)}, calling estimator for usage`);
-    const usageEstimate: UsageInfo = estimateUsage(premisesInfo);
+    const usageEstimate: UsageInfo = await estimateUsage(premisesInfo);
     handleSubmitUsageInfo(usageEstimate);
     setUsageUnknown(false);
   };
@@ -261,18 +258,18 @@ function EstimateUsage(props: any) {
         Back
         </IconButton>
         Estimate your usage
-      </div>
-      <div className="body"> */}
+      </div>*/}
+      <div className="body"> 
         <Select
           id="premise-type-select"
           value={premisesInfo.type}
           label="Home Type"
           onChange={handleChangePremType}
           displayEmpty={true}
-          defaultValue={"SemiDetatched"}
+          defaultValue={"Semi-Detached"}
         >
-          <MenuItem value="Detatched">Detatched</MenuItem>
-          <MenuItem value="Semi-Detatched">Semi-Detatched</MenuItem>
+          <MenuItem value="Detached">Detached</MenuItem>
+          <MenuItem value="Semi-Detached">Semi-Detached</MenuItem>
           <MenuItem value="Terraced">Terraced</MenuItem>
           <MenuItem value="Bungalow">Bungalow</MenuItem>
           <MenuItem value="Flat">Flat</MenuItem>
@@ -301,7 +298,7 @@ function EstimateUsage(props: any) {
         <Button className="btn" onClick={() => onSubmit(premisesInfo)}>
           Submit
         </Button>
-      {/* </div> */}
+        </div>
     </div>
   );
 }
@@ -321,18 +318,21 @@ function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
         <p>
           Your gas boiler produces approx
           {` ${carbonStat.value} `}
-          tonnes of C0<sub>2</sub> per year
+          tonnes of CO<sub>2</sub> per year
         </p>
       </div>
       <div>
       That's equivalent to
       <EquivalentsSlider equivalents={equivalents} shareEnabled={shareEnabled} />
       </div>
+      { !shareEnabled 
+      ?
       <div>
       <Button className="btn" variant="contained"  onClick={() => setShareEnabled(true)}>
       Share
       </Button>
       </div>
+      : null }
     </>
   );
 

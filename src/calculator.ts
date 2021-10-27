@@ -1,3 +1,5 @@
+import { estimateEmissions } from './estimateEmissions';
+
 export enum Period {
   Year = 'Year',
   Quarter = 'Quarter',
@@ -66,7 +68,7 @@ export const calculateEquivalents = (usage: number): Stat[] => {
     const lights = Math.round((usage/0.00181)/24);
     const burgers = Math.round(usage/1.74);
     const fridge = Math.round(usage/1670);
-    return [
+    const stats = [
           { name: "Flights", desc: "Transatlantic flights",
             value: flights, iconCount: flights, iconChar: '✈️' },
           { name: "Drives", desc: "Drives from Lands End to John O'Groats",
@@ -79,9 +81,15 @@ export const calculateEquivalents = (usage: number): Stat[] => {
             value: lights, iconCount: getIconCount(lights), iconChar: '💡' },
           { name: "Burgers", desc: "Quarter-pounders",
             value: burgers, iconCount: getIconCount(burgers), iconChar: '🍔' },
-          { name: "Fridge", desc: "Lifetimes of a fridge",
-            value: fridge, iconCount: getIconCount(fridge), iconChar: '❄️' },
         ] as Stat[];
+    if (fridge > 0) {
+      stats.push({ 
+        name: "Fridge", desc: "Lifetimes of a fridge",
+        value: fridge, iconCount: getIconCount(fridge), iconChar: '❄️' 
+      });
+    } 
+    // TODO - swap the fridge test out for a filter that removes any stats that come out with zero value
+    return stats;
 };
 
 export const calculateCarbon = (usage: number) => {
@@ -94,17 +102,21 @@ export const calculateCarbon = (usage: number) => {
     return data;
 };
 
-export const estimateUsage = (premisesInfo: PremisesInfo): UsageInfo => {
+export const estimateUsage = async (premisesInfo: PremisesInfo): Promise<UsageInfo> => {
     
-  // TODO - replace with actual estimating logic
-  const usage = { value: 100, units: Unit.kWh, period: Period.Year};
-  console.log(`Estimated usage for ${JSON.stringify(premisesInfo)} at ${JSON.stringify(usage)}`);
-  return usage;
+  // TODO - tidy up and remove this reverse engineering 
+  // as now not estimating usage, only emissions directly
+  const emissions = await estimateEmissions(premisesInfo);
+  console.log(`Estimated emissions for ${JSON.stringify(premisesInfo)} at ${JSON.stringify(emissions)}`);
+  const usage = emissions/0.18316;
+  return { value: usage, units: Unit.kWh, period: Period.Year };
 };
 
 const getIconCount = (value: number) => {
-  const icons = Math.round( value / ((Math.pow(10, Math.round(Math.log10(value))))/10));
+  const divider = ((Math.pow(10, Math.round(Math.log10(value))))/10);
+  const icons = divider > 0 ? Math.round( value / divider) : 1;
   console.log(`value: ${value}, icons: ${icons}`);
   return icons; 
 }
+
 
