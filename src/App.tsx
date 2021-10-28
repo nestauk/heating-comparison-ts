@@ -1,14 +1,13 @@
 import './App.css';
 import React from "react";
-import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period, UsageInfo, Stat } from './calculator';
+import { calculateEquivalents, calculateCarbon, PremisesInfo,
+           Unit, Period, UsageInfo, Stat } from './calculator';
 import { useState } from "react";
 import { Box, Button, FormControl, Grid, TextField, MenuItem, 
-  Select, InputLabel, RadioGroup, Radio, FormControlLabel, Alert, FormLabel } 
+  Select, InputLabel, Alert, RadioGroup, FormControlLabel, Radio } 
   from '@mui/material';
-import SocialMediaButtons from './SocialMediaButtons';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { EquivalentsSlider } from './EquivalentsSlider';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Report, ReportReduction } from './Report';
 import { estimateEmissions } from 'estimateEmissions';
@@ -50,45 +49,42 @@ export default function App() {
 
 
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
-
-    console.log(`Got usage: ${JSON.stringify(usage)}`);
+    setError(null);
     if (!usage.value && !(usage.value > 0) ) {
       setError('Invalid usage value. Return to input and enter a non-zero value');
-      // TODO - error needs to be cleared somewhere
-      return;
-    }
-    let usageVal;
-    switch (usage.period) {
-       case Period.Week: {
-          usageVal = usage.value * 52;
+    } else { 
+      let usageVal;
+      switch (usage.period) {
+        case Period.Week: {
+            usageVal = usage.value * 52;
+            break;
+        }
+        case Period.Month: {
+          usageVal = usage.value * 12;
           break;
-       }
-       case Period.Month: {
-         usageVal = usage.value * 12;
-         break;
-       }
-       case Period.Year: {
-          usageVal = usage.value;
-          break;
-       }
-       default: {
-          setError('Invalid usage period. Return to input and select a value');
-          // TODO - error needs to be cleared somewhere
-          return;
-       }
+        }
+        case Period.Year: {
+            usageVal = usage.value;
+            break;
+        }
+        default: {
+            setError('Invalid usage period. Return to input and select a value');
+            return;
+        }
+      }
+      const carbon = 
+        calculateCarbon(usageVal);
+      console.log(JSON.stringify(carbon));
+      setCarbon(carbon);
+      const equivalents = 
+        calculateEquivalents(carbon);
+      console.log(JSON.stringify(equivalents));
+      setApplyReduction(false);
+      setEquivalents(equivalents);
+      setError(null);
+      console.log(`Got usage info ${JSON.stringify(usage)}
+      , set carbon ${carbon} and equivalents ${JSON.stringify(equivalents)}`);
     }
-    const carbon = 
-      calculateCarbon(usageVal);
-    console.log(JSON.stringify(carbon));
-    setCarbon(carbon);
-    const equivalents = 
-      calculateEquivalents(carbon);
-    console.log(JSON.stringify(equivalents));
-    setApplyReduction(false);
-    setEquivalents(equivalents);
-    setError(null);
-    console.log(`Got usage info ${JSON.stringify(usage)}
-    , set carbon ${carbon} and equivalents ${JSON.stringify(equivalents)}`);
   }
 
   return (
@@ -100,7 +96,6 @@ export default function App() {
       { (!carbon && !usageUnknown)
         ?
         <>
-        
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <h1>How much gas do you use?</h1>
@@ -177,8 +172,10 @@ function InputUsage(props: any) {
         >
           <Grid container>
             <Grid item xs={12}>
+              What's your typical bill?
+            </Grid>
               <FormControl component="fieldset">
-                {/* <RadioGroup
+                <RadioGroup
                   row
                   aria-label="usage-units"
                   defaultValue="gbp"
@@ -186,35 +183,28 @@ function InputUsage(props: any) {
                   name="usage-units-radio-group"
                   onChange={handleChangeUnits}
                 >
-                  <FormControlLabel value="gbp" control={<Radio />} label="Typical bill (£)" />
-                  <FormControlLabel value="kWh" control={<Radio />} label="Typical usage (kWh)" />
-                </RadioGroup> */}
-                What's your typical bill?
+                  <FormControlLabel value={Unit.GBP} control={<Radio />} label="£" />
+                  <FormControlLabel value={Unit.kWh} control={<Radio />} label="kWh" />
+                </RadioGroup>
               </FormControl>
-            </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={12}>
               <FormControl sx={{ m: 1, minWidth: 20 }}>
-                <FormLabel>£</FormLabel>
-                <TextField
-                  id="usage-value-input" 
-                  label="Bill Amount (£)" 
-                  type="text"
-                  defaultValue={usageValue}
-                  onChange={handleChangeValue} />
-              </FormControl>
-            </Grid>
-            <Grid item xs={2}>
-              or
-            </Grid>
-            <Grid item xs={5}>
-              <FormControl sx={{ m: 1, minWidth: 20 }}>
-                <TextField
-                  id="usage-value-input" 
-                  label="Usage (kWh)" 
-                  type="text"
-                  defaultValue={usageValue}
-                  onChange={handleChangeValue} />
-                  kWh
+                { usageUnits === Unit.GBP 
+                ?
+                  <TextField
+                    id="usage-value-input-gbp" 
+                    label='Bill Amount (£)'
+                    type="text"
+                    onChange={handleChangeValue} 
+                  />   
+                :
+                  <TextField
+                    id="usage-value-input-kwh" 
+                    label='Usage (kWh)'
+                    type="text"
+                    onChange={handleChangeValue} 
+                  /> 
+                }
               </FormControl>
             </Grid>
             <Grid item xs={12}>
@@ -230,8 +220,6 @@ function InputUsage(props: any) {
                   onChange={handleChangePeriod}
                   displayEmpty={true}
                 >
-                  <MenuItem value="Day">Day</MenuItem>
-                  <MenuItem value="Week">Week</MenuItem>
                   <MenuItem value="Month">Month</MenuItem>
                   <MenuItem value="Quarter">Quarter</MenuItem>
                   <MenuItem value="Year">Year</MenuItem>

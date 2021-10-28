@@ -1,8 +1,7 @@
-import { Popper } from "@mui/material";
 import React from "react";
-import SocialMediaMetaData from './SocialMediaMetadata';
-import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
-import { Stat } from "./calculator";
+import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, 
+    WhatsappIcon, WhatsappShareButton } from "react-share";
+
       
 export default function SocialMediaButtons( props: { image?: string, description?: string }) { 
     const { image, description } = props; 

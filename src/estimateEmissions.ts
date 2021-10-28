@@ -1,6 +1,4 @@
-import { Period, PremisesInfo, PremiseType, Unit, UsageInfo } from './calculator'
-import  fs, { PathLike, readFileSync } from 'fs';
-import Papa, { ParseConfig }  from 'papaparse';
+import { PremisesInfo } from './calculator'
 
 export const estimateEmissions = async (premisesInfo: PremisesInfo): Promise<number> => {
   

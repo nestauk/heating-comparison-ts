@@ -1,10 +1,10 @@
 import Slider from "react-slick";
-import React from "react";
 import Emoji from 'a11y-react-emoji';
 import { Stat } from './calculator';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SocialMediaButtons from "./SocialMediaButtons";
+import React from "react";
 
 export function EquivalentsSlider(props: { equivalents: Stat[], applyReduction: boolean, shareEnabled: boolean }) {
   const { 
