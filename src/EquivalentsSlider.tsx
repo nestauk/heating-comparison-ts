@@ -29,12 +29,17 @@ export function EquivalentsSlider(props: { equivalents: Stat[], applyReduction: 
                   {stat.desc}
                 </div>
                 <div className="icons">
-                  {[
-                    ...Array(stat.iconCount),
+                  {
+                  
+                  [
+                    ...Array(stat.iconCountTotal),
                   ].map((value: undefined, index: number) => 
+                    (applyReduction && index >= stat.iconCountActive) ?
                     <span className="shadeOut">
                       <Emoji key={stat.name} label={stat.name} symbol={stat.iconChar} />
                     </span>
+                    : 
+                      <Emoji key={stat.name} label={stat.name} symbol={stat.iconChar} />
                   )}
                   </div>
                   <div className="shareBar">

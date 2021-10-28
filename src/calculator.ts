@@ -37,12 +37,6 @@ export enum PremiseAge {
   Band5 = 'Post 1990',
 }
 
-// export type PremisesInfo = {
-//   type: PremiseType,
-//   age: PremiseAge,
-//   numRooms: NumRooms,
-// }
-
 export type PremisesInfo = {
   type: string,
   age: string,
@@ -59,39 +53,47 @@ export type Stat = {
   name: string,
   desc: string,
   value: number,
-  iconCount: number,
+  iconCountTotal: number,
+  iconCountActive: number,
   iconChar: string,
 }
 
 
-export const calculateEquivalents = (usage: number): Stat[] => {
+export const calculateEquivalents = (carbonKg: number): Stat[] => {
     
-    console.log(`Calculating equivalents for ${usage}`);
-    const flights = Math.round(usage/926);
-    const netflix = Math.round(usage/0.056);
-    const drives = Math.round(usage/165);
-    const recycling = Math.round((usage/2.9)/52);
-    const lights = Math.round((usage/0.00181)/24);
-    const burgers = Math.round(usage/1.74);
-    const fridge = Math.round(usage/1670);
+    console.log(`Calculating equivalents for ${carbonKg}`);
+    const flights = Math.round(carbonKg/926);
+    const netflix = Math.round( (((carbonKg/0.056)/24) /365) );
+    const drives = Math.round(carbonKg/165);
+    const recycling = Math.round( ((carbonKg/2.9)/52) );
+    const lights = Math.round( ((carbonKg/0.00181)/24)/365);
+    const burgers = Math.round(carbonKg/1.74);
+    const fridge = Math.round(carbonKg/1670);
     const stats = [
           { name: "Flights", desc: "Transatlantic flights",
-            value: flights, iconCount: flights, iconChar: '✈️' },
+            value: flights, iconCountTotal: flights, 
+            iconChar: '✈️' , iconCountActive: getIconCountActive(flights) },
           { name: "Drives", desc: "Drives from Lands End to John O'Groats",
-            value: drives, iconCount: getIconCount(drives), iconChar: '🚘' },
-          { name: "Netflix", desc: "Hours of TV streaming",
-            value: netflix, iconCount: getIconCount(netflix), iconChar: '📺' },
+            value: drives, iconCountTotal: getIconCountTotal(drives), 
+            iconChar: '🚘' , iconCountActive: getIconCountActive(drives) },
+          { name: "Netflix", desc: "Years of TV streaming",
+            value: netflix, iconCountTotal: getIconCountTotal(netflix), 
+            iconChar: '📺', iconCountActive: getIconCountActive(netflix) },
           { name: "Recycling", desc: "Years of recycling packaging",
-            value: recycling, iconCount: getIconCount(recycling), iconChar: '♻️' },
-          { name: "Lightbulbs", desc: "Lightbulbs running for an hour",
-            value: lights, iconCount: getIconCount(lights), iconChar: '💡' },
+            value: recycling, iconCountTotal: getIconCountTotal(recycling), 
+            iconChar: '♻️', iconCountActive: getIconCountActive(recycling) },
+          { name: "Lightbulbs", desc: "Years of running a 10w lightbulb",
+            value: lights, iconCountTotal: getIconCountTotal(lights), 
+            iconChar: '💡', iconCountActive: getIconCountActive(lights) },
           { name: "Burgers", desc: "Quarter-pounders",
-            value: burgers, iconCount: getIconCount(burgers), iconChar: '🍔' },
+            value: burgers, iconCountTotal: getIconCountTotal(burgers), 
+            iconChar: '🍔', iconCountActive: getIconCountActive(burgers)},
         ] as Stat[];
     if (fridge > 0) {
       stats.push({ 
         name: "Fridge", desc: "Lifetimes of a fridge",
-        value: fridge, iconCount: getIconCount(fridge), iconChar: '❄️' 
+        value: fridge, iconCountTotal: getIconCountTotal(fridge), 
+        iconChar: '❄️' , iconCountActive: getIconCountActive(fridge)
       });
     } 
     // TODO - swap the fridge test out for a filter that removes any stats that come out with zero value
@@ -99,13 +101,10 @@ export const calculateEquivalents = (usage: number): Stat[] => {
 };
 
 export const calculateCarbon = (usage: number) => {
-    console.log(`Calculating carbon for ${usage}`);
-    const carbon = Math.round(usage*0.18316)/1000;
-    const data = { 
-        name: "C02", desc: "Tonnes CO2 Emissions",
-        value: carbon, iconCount: getIconCount(carbon), iconChar: '🔥' ,
-    };
-    return data;
+
+    const carbon = Math.round(usage*0.18316);
+    console.log(`Calculated carbon emissions in kg for ${usage} as ${JSON.stringify(carbon)}`);
+    return carbon;
 };
 
 export const estimateUsage = async (premisesInfo: PremisesInfo): Promise<UsageInfo> => {
@@ -118,11 +117,15 @@ export const estimateUsage = async (premisesInfo: PremisesInfo): Promise<UsageIn
   return { value: usage, units: Unit.kWh, period: Period.Year };
 };
 
-const getIconCount = (value: number) => {
+const getIconCountTotal = (value: number) => {
   const divider = ((Math.pow(10, Math.round(Math.log10(value))))/10);
   const icons = divider > 0 ? Math.round( value / divider) : 1;
   console.log(`value: ${value}, icons: ${icons}`);
   return icons; 
+}
+
+const getIconCountActive = (value: number) => {
+    return Math.round(getIconCountTotal(value)*0.25);
 }
 
 

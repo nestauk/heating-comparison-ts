@@ -11,12 +11,13 @@ import { createBrowserHistory } from 'history';
 import { EquivalentsSlider } from './EquivalentsSlider';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Report, ReportReduction } from './Report';
+import { estimateEmissions } from 'estimateEmissions';
 
 export default function App() {
 
   const [ usageUnknown, setUsageUnknown ] = useState(false);
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
-  const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
+  const [ carbon, setCarbon ] = useState(null as number | null );
   const [ error, setError ] = useState(null as string | null);
   const [ applyReduction, setApplyReduction ] = useState(false);
  
@@ -24,10 +25,16 @@ export default function App() {
   const history = createBrowserHistory();
 
   const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
-    console.log(`Got premises info ${JSON.stringify(premisesInfo)}, calling estimator for usage`);
-    const usageEstimate: UsageInfo = await estimateUsage(premisesInfo);
-    handleSubmitUsageInfo(usageEstimate);
+    const carbon = await estimateEmissions(premisesInfo);
+    setCarbon(carbon);
+    const equivalents = 
+      calculateEquivalents(carbon);
+    setApplyReduction(false);
+    setEquivalents(equivalents);
+    setError(null);
     setUsageUnknown(false);
+    console.log(`Got premises info ${JSON.stringify(premisesInfo)}
+      , set carbon ${carbon} and equivalents ${JSON.stringify(equivalents)}`);
   };
 
   const flagUsageUnknown = () => {
@@ -36,8 +43,9 @@ export default function App() {
 
   const reset = () => {
     setUsageUnknown(false);
+    setApplyReduction(false);
     setEquivalents(null);
-    setCarbonStat(null);
+    setCarbon(null);
   };
 
 
@@ -69,15 +77,18 @@ export default function App() {
           return;
        }
     }
-    const carbonStat = 
+    const carbon = 
       calculateCarbon(usageVal);
-    console.log(JSON.stringify(carbonStat));
-    setCarbonStat(carbonStat);
+    console.log(JSON.stringify(carbon));
+    setCarbon(carbon);
     const equivalents = 
-      calculateEquivalents(usageVal);
+      calculateEquivalents(carbon);
     console.log(JSON.stringify(equivalents));
+    setApplyReduction(false);
     setEquivalents(equivalents);
     setError(null);
+    console.log(`Got usage info ${JSON.stringify(usage)}
+    , set carbon ${carbon} and equivalents ${JSON.stringify(equivalents)}`);
   }
 
   return (
@@ -86,7 +97,7 @@ export default function App() {
     <Router {...{ history }}>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
-      { (!carbonStat && !usageUnknown)
+      { (!carbon && !usageUnknown)
         ?
         <>
         
@@ -113,19 +124,18 @@ export default function App() {
         : null
       }
       {/* Once stats are present show report */}
-      { (equivalents && carbonStat) 
+      { (equivalents && carbon) 
         ?
         /* Once user has clicked to apply the reduction show report with reduction */
         (!applyReduction) ?
         <Report 
           equivalents={equivalents}
-          carbonStat={carbonStat}
+          carbon={carbon}
           setApplyReduction={setApplyReduction}
         />
         :
         <ReportReduction 
           equivalents={equivalents}
-          carbonStat={carbonStat}
         />
       : null 
       }

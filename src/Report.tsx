@@ -4,12 +4,12 @@ import { Button, Grid } from '@mui/material';
 import { EquivalentsSlider } from './EquivalentsSlider';
 
 export function Report( props: 
-    { equivalents: Stat[]; carbonStat: Stat; 
+    { equivalents: Stat[]; carbon: number; 
       setApplyReduction: React.Dispatch<React.SetStateAction<boolean>> }
     ) {
   
     const { 
-      equivalents, carbonStat, setApplyReduction,
+      equivalents, carbon, setApplyReduction,
     } = props;
   
     const [ shareEnabled, setShareEnabled ] = useState(true);
@@ -22,7 +22,7 @@ export function Report( props:
   
           <h2>
             Your gas heating produces approx
-            <ul>{` ${carbonStat.value} `}
+            <ul>{` ${carbon} `}
             kg</ul> of CO<sub>2</sub> per year
           </h2>
           <h3>That's as much carbon as..</h3>
@@ -49,9 +49,9 @@ export function Report( props:
   }
 
   
-  export function ReportReduction(props: { equivalents: Stat[]; carbonStat: Stat; }) {
+  export function ReportReduction(props: { equivalents: Stat[] }) {
     const { 
-      equivalents, carbonStat
+      equivalents,
     } = props;
   
     const [ shareEnabled, setShareEnabled ] = useState(false);
