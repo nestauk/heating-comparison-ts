@@ -10,7 +10,7 @@
   font-size:18px;
   font-weight:500;
   line-height:1.8;
-  color:#0f294a;
+  color:blue;
   -webkit-font-smoothing:antialiased;
 }
 
@@ -188,5 +188,14 @@
   /* *,*::before,*::after{-webkit-box-sizing:border-box;box-sizing:border-box}html{-webkit-text-size-adjust:100%}img,svg{vertical-align:top}html,body{background-color:#fff}html.fixed,body.fixed{overflow:hidden}body{
     font-family:"Averta",sans-serif;font-size:18px;font-weight:500;line-height:1.8;color:#0f294a;-webkit-font-smoothing:antialiased
   } */
+
+.shareBar {
+  background-color: yellow;
+}
+
+.shadeOut {
+  color:grey; 
+  filter: grayscale(100%);
+}
 
 

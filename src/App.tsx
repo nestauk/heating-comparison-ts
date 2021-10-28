@@ -2,13 +2,15 @@ import './App.css';
 import React from "react";
 import { calculateEquivalents, calculateCarbon, estimateUsage, PremisesInfo, Unit, Period, UsageInfo, Stat } from './calculator';
 import { useState } from "react";
-import { Box, Button, FormControl, Grid, TextField, MenuItem, Select, InputLabel, RadioGroup, Radio, FormControlLabel, Alert } 
+import { Box, Button, FormControl, Grid, TextField, MenuItem, 
+  Select, InputLabel, RadioGroup, Radio, FormControlLabel, Alert, FormLabel } 
   from '@mui/material';
 import SocialMediaButtons from './SocialMediaButtons';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { EquivalentsSlider } from './EquivalentsSlider';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { Report, ReportReduction } from './Report';
 
 export default function App() {
 
@@ -16,6 +18,7 @@ export default function App() {
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbonStat, setCarbonStat ] = useState(null as Stat | null);
   const [ error, setError ] = useState(null as string | null);
+  const [ applyReduction, setApplyReduction ] = useState(false);
  
 
   const history = createBrowserHistory();
@@ -86,12 +89,19 @@ export default function App() {
       { (!carbonStat && !usageUnknown)
         ?
         <>
-          <p>Do you know how much carbon your home gas heating is producing?</p>
-          <p>How much energy do you currently use to heat your home?</p>
-          <InputUsage
-            handleSubmitUsageInfo={handleSubmitUsageInfo}
-          />
-        <Button className="btn" variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
+        
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <h1>How much gas do you use?</h1>
+            <h2>Enter the information from your latest bill or smart meter</h2>
+            <Button className="btn" variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
+          </Grid>
+          <Grid item xs={6}>
+              <InputUsage
+                  handleSubmitUsageInfo={handleSubmitUsageInfo}
+                />
+          </Grid>
+        </Grid>
         </>
         : 
         <Button className="btn" variant="contained" onClick={() => reset()}>Start again</Button>
@@ -105,11 +115,19 @@ export default function App() {
       {/* Once stats are present show report */}
       { (equivalents && carbonStat) 
         ?
+        /* Once user has clicked to apply the reduction show report with reduction */
+        (!applyReduction) ?
         <Report 
           equivalents={equivalents}
           carbonStat={carbonStat}
+          setApplyReduction={setApplyReduction}
         />
-        : null 
+        :
+        <ReportReduction 
+          equivalents={equivalents}
+          carbonStat={carbonStat}
+        />
+      : null 
       }
     </Router>
     </StyledEngineProvider>
@@ -126,8 +144,8 @@ function InputUsage(props: any) {
 
   const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
   const [ usagePeriod, setUsagePeriod ] = useState(Period.Month);
-  // TODO - remove hardcoded starter value
-  const [ usageValue, setUsageValue ] = useState(1000);
+
+  const [ usageValue, setUsageValue ] = useState(0);
 
   const handleChangeUnits = (event: any) => {
     setUsageUnits(event.target.value);
@@ -141,57 +159,54 @@ function InputUsage(props: any) {
 
   
   return (
-      <div className="App-body">
-        <p>What's your typical gas bill?</p>
         <Box
           component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '15ch' },
-          }}
           noValidate
           autoComplete="off"
+          border={2} borderColor="blue"
         >
           <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
+              <FormControl component="fieldset">
+                {/* <RadioGroup
+                  row
+                  aria-label="usage-units"
+                  defaultValue="gbp"
+                  value={usageUnits}
+                  name="usage-units-radio-group"
+                  onChange={handleChangeUnits}
+                >
+                  <FormControlLabel value="gbp" control={<Radio />} label="Typical bill (£)" />
+                  <FormControlLabel value="kWh" control={<Radio />} label="Typical usage (kWh)" />
+                </RadioGroup> */}
+                What's your typical bill?
+              </FormControl>
+            </Grid>
+            <Grid item xs={5}>
               <FormControl sx={{ m: 1, minWidth: 20 }}>
+                <FormLabel>£</FormLabel>
                 <TextField
                   id="usage-value-input" 
-                  label="Usage" 
+                  label="Bill Amount (£)" 
                   type="text"
                   defaultValue={usageValue}
                   onChange={handleChangeValue} />
               </FormControl>
             </Grid>
-            <Grid item xs={6}>
-            {/* <FormControl sx={{ m: 1, minWidth: 50 }}>
-                <Select
-                  id="usage-units-select"
-                  value={usageUnits}
-                  label="Units"
-                  onChange={handleChangeUnits}
-                  displayEmpty={true}
-                >
-                  <MenuItem value="gbp">£</MenuItem>
-                  <MenuItem value="kWh">kWh</MenuItem>
-                </Select>
-            </FormControl> */}
-            <FormControl component="fieldset">
-            {/* <FormLabel component="legend">Units</FormLabel> */}
-              <RadioGroup
-                row
-                aria-label="usage-units"
-                defaultValue="gbp"
-                value={usageUnits}
-                name="usage-units-radio-group"
-                onChange={handleChangeUnits}
-              >
-                <FormControlLabel value="gbp" control={<Radio />} label="Price (£)" />
-                <FormControlLabel value="kWh" control={<Radio />} label="kWh" />
-              </RadioGroup>
-            </FormControl>
+            <Grid item xs={2}>
+              or
             </Grid>
-          </Grid>
-          <Grid container>
+            <Grid item xs={5}>
+              <FormControl sx={{ m: 1, minWidth: 20 }}>
+                <TextField
+                  id="usage-value-input" 
+                  label="Usage (kWh)" 
+                  type="text"
+                  defaultValue={usageValue}
+                  onChange={handleChangeValue} />
+                  kWh
+              </FormControl>
+            </Grid>
             <Grid item xs={12}>
               <FormControl sx={{ m: 1, minWidth: 50 }}>
                 <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
@@ -213,7 +228,7 @@ function InputUsage(props: any) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Button className="btn" variant="contained" 
                   onClick={() => handleSubmitUsageInfo({
                                   period: usagePeriod, 
@@ -224,20 +239,18 @@ function InputUsage(props: any) {
                   Submit
               </Button>
             </Grid>
-            <Grid item xs={6}>
-            </Grid>
           </Grid>
         </Box>
-      </div>
   );
 }
 
 function EstimateUsage(props: any) {
   const { onSubmit } = props;
-  const defaultPrem =  { type: "Terrace",
-  age: "1900-1950",
-  numRooms: "3-4 rooms"};
-  //const defaultPrem = { numRooms: '3-4 rooms', age:'Post 1990', type: 'Semi-Detached'} as PremisesInfo;
+  const defaultPrem =  { 
+    type: "Terrace",
+    age: "1900-1950",
+    numRooms: "3-4 rooms"
+  };
   const [ premisesInfo, setPremisesInfo ] = useState(defaultPrem);
 
   const handleChangePremType = (event: any) => {
@@ -306,43 +319,5 @@ function EstimateUsage(props: any) {
     </div>
   );
 }
-
-
-function Report(props: { equivalents: Stat[]; carbonStat: Stat; }) {
-  const { 
-    equivalents, carbonStat
-  } = props;
-
-  const [ shareEnabled, setShareEnabled ] = useState(false);
-
-  console.log(`Equivalents ${equivalents}`);
-  return (
-    <>
-      <div>
-        <p>
-          Your gas boiler produces approx
-          {` ${carbonStat.value} `}
-          tonnes of CO<sub>2</sub> per year
-        </p>
-      </div>
-      <div>
-      That's equivalent to
-      <EquivalentsSlider equivalents={equivalents} shareEnabled={shareEnabled} />
-      </div>
-      { !shareEnabled 
-      ?
-      <div>
-      <Button className="btn" variant="contained"  onClick={() => setShareEnabled(true)}>
-      Share
-      </Button>
-      </div>
-      : null }
-    </>
-  );
-
-}
-
-
-
 
 
