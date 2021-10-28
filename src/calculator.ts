@@ -61,14 +61,13 @@ export type Stat = {
 
 export const calculateEquivalents = (carbonKg: number): Stat[] => {
     
-    console.log(`Calculating equivalents for ${carbonKg}`);
     const flights = Math.round(carbonKg/926);
     const netflix = Math.round( (((carbonKg/0.056)/24) /365) );
     const drives = Math.round(carbonKg/165);
     const recycling = Math.round( ((carbonKg/2.9)/52) );
     const lights = Math.round( ((carbonKg/0.00181)/24)/365);
     const burgers = Math.round(carbonKg/1.74);
-    const fridge = Math.round(carbonKg/1670);
+    // const fridge = Math.round(carbonKg/1670);
     const stats = [
           { name: "Flights", desc: "Transatlantic flights",
             value: flights, iconCountTotal: flights, 
@@ -89,13 +88,13 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
             value: burgers, iconCountTotal: getIconCountTotal(burgers), 
             iconChar: '🍔', iconCountActive: getIconCountActive(burgers)},
         ] as Stat[];
-    if (fridge > 0) {
-      stats.push({ 
-        name: "Fridge", desc: "Lifetimes of a fridge",
-        value: fridge, iconCountTotal: getIconCountTotal(fridge), 
-        iconChar: '❄️' , iconCountActive: getIconCountActive(fridge)
-      });
-    } 
+    // if (fridge > 0) {
+    //   stats.push({ 
+    //     name: "Fridge", desc: "Lifetimes of a fridge",
+    //     value: fridge, iconCountTotal: getIconCountTotal(fridge), 
+    //     iconChar: '❄️' , iconCountActive: getIconCountActive(fridge)
+    //   });
+    // } 
     // TODO - swap the fridge test out for a filter that removes any stats that come out with zero value
     return stats;
 };
@@ -107,15 +106,6 @@ export const calculateCarbon = (usage: number) => {
     return carbon;
 };
 
-export const estimateUsage = async (premisesInfo: PremisesInfo): Promise<UsageInfo> => {
-    
-  // TODO - tidy up and remove this reverse engineering 
-  // as now not estimating usage, only emissions directly
-  const emissions = await estimateEmissions(premisesInfo);
-  console.log(`Estimated emissions for ${JSON.stringify(premisesInfo)} at ${JSON.stringify(emissions)}`);
-  const usage = emissions * 1000/0.18316;
-  return { value: usage, units: Unit.kWh, period: Period.Year };
-};
 
 const getIconCountTotal = (value: number) => {
   const divider = ((Math.pow(10, Math.round(Math.log10(value))))/10);

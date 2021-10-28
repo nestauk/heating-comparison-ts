@@ -16,18 +16,17 @@ export function Report( props:
   
     console.log(`Equivalents ${equivalents}`);
     return (
-      <>
         <Grid container>
-          <Grid item xs={6}>
-  
-          <h2>
+            <Grid item xs={6}>
+
+            <h2>
             Your gas heating produces approx
             <ul>{` ${carbon} `}
             kg</ul> of CO<sub>2</sub> per year
-          </h2>
-          <h3>That's as much carbon as..</h3>
-          </Grid>
-          <Grid item xs={6}>
+            </h2>
+            <h3>That's as much carbon as..</h3>
+            </Grid>
+            <Grid item xs={6} width="100%" >
             That's equivalent to
             <EquivalentsSlider equivalents={equivalents} 
                     shareEnabled={shareEnabled} applyReduction={false} />
@@ -39,12 +38,15 @@ export function Report( props:
             </Button>
             </div>
             : null }
-            <Button className="btn" variant="contained"  onClick={() => setApplyReduction(true)}>
-            What can I do?
-            </Button>
-          </Grid>
+            </Grid>
+            <Grid item xs={12} justifyContent="flex-end">
+                <div>
+                    <Button className="btn" variant="contained"   onClick={() => setApplyReduction(true)}>
+                        What can I do?
+                    </Button>
+                </div>
+            </Grid>
         </Grid>
-      </>
     );
   }
 
@@ -68,9 +70,9 @@ export function Report( props:
           </h2>
           <h3>A low carbon heating system - such as a heat pump - could reduce this by 75%. By 2035, this should move towards 100% as the UK transitions to fully renewable electricity</h3>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} width="100%">
             <div>
-            With a heat pump that would equal..
+            With a heat pump this would equal..
             <EquivalentsSlider equivalents={equivalents} shareEnabled={shareEnabled} applyReduction={true}/>
             </div>
             { !shareEnabled 
