@@ -6,8 +6,6 @@ import { useState } from "react";
 import { Box, Button, FormControl, Grid, TextField, MenuItem, 
   Select, InputLabel, Alert, RadioGroup, FormControlLabel, Radio } 
   from '@mui/material';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Report, ReportReduction } from './Report';
 import { estimateEmissions } from 'estimateEmissions';
@@ -19,9 +17,6 @@ export default function App() {
   const [ carbon, setCarbon ] = useState(null as number | null );
   const [ error, setError ] = useState(null as string | null);
   const [ applyReduction, setApplyReduction ] = useState(false);
- 
-
-  const history = createBrowserHistory();
 
   const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
     const carbon = await estimateEmissions(premisesInfo);
@@ -90,7 +85,6 @@ export default function App() {
   return (
     <>
     <StyledEngineProvider injectFirst>
-    <Router {...{ history }}>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
       { (!carbon && !usageUnknown)
@@ -134,7 +128,6 @@ export default function App() {
         />
       : null 
       }
-    </Router>
     </StyledEngineProvider>
     </>
   ); 
