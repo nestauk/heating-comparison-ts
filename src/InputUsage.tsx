@@ -32,7 +32,7 @@ export function InputUsage(props: any) {
                 
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset">
+                <FormControl component="fieldset" sx={{ m: 1, minWidth: 20 }}>
                   <RadioGroup
                     row
                     aria-label="usage-units"
@@ -68,7 +68,7 @@ export function InputUsage(props: any) {
               </Grid>
               <Grid item xs={12}>
                 <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
-                  <InputLabel id="usage-period-label" sx={{ m: 1, minWidth: 50 }} >
+                  <InputLabel id="usage-period-label" >
                     Every
                   </InputLabel>
                   <Select

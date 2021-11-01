@@ -27,7 +27,7 @@ export function EstimateUsage(props: any) {
     return (
         <Grid container>
             <Grid item xs={12}>
-                <FormControl component="fieldset">
+                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
                     <Select
                         id="premise-type-select"
                         value={premisesInfo.type}
@@ -45,7 +45,7 @@ export function EstimateUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" >
+                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
                     <Select
                         id="premise-type-select"
                         value={premisesInfo.age}
@@ -63,7 +63,7 @@ export function EstimateUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" >
+                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
                     <Select
                         id="premise-rooms-select"
                         value={premisesInfo.numRooms}
