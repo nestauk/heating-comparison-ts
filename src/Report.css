@@ -3,14 +3,22 @@
   }
   
 .shadeOut {
-color:grey; 
-filter: grayscale(100%);
+    color:grey; 
+    filter: grayscale(100%);
 }
 
-.Report {
+.darkBackground {
     background-color: #18A48c;
+    color: white;
 }
 
-.ReportReduced {
-    background-color: #18A48c;
+.lightBackground {
+    background-color: white;
+    color: #0f294a;
+}
+.icons {
+    font-size: 32px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
 }

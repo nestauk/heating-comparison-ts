@@ -91,7 +91,7 @@ export function EstimateUsage(props: any) {
               </Grid>
               <Grid item xs={12}>
                 <Button className="btn btn--primary" onClick={() => onSubmit(premisesInfo)}>
-                    Submit
+                    See my total
                 </Button>
               </Grid>
             </Grid>

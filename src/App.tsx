@@ -117,7 +117,6 @@ export default function App() {
             </Grid>
         : 
         <>
-          <Button className="btn btn--primary" variant="contained" onClick={() => reset()}>Start again</Button>
           {/* Once stats are present show report */}
           { (equivalents)
           ?
@@ -127,10 +126,12 @@ export default function App() {
               equivalents={equivalents}
               carbon={carbon}
               setApplyReduction={setApplyReduction}
+              reset={reset}
             />
             :
             <ReportReduction 
               equivalents={equivalents}
+              reset={reset}
             />
           : <Alert severity="error">Could not generated comparisons for these carbon emissions</Alert>}
         </>

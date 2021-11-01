@@ -7,9 +7,12 @@ import SocialMediaButtons from "./SocialMediaButtons";
 import React from "react";
 import { Grid } from "@mui/material";
 
-export function EquivalentsSlider(props: { equivalents: Stat[], applyReduction: boolean, shareEnabled: boolean }) {
+export function EquivalentsSlider(
+  props: { equivalents: Stat[], applyReduction: boolean, banner: string
+            shareEnabled: boolean, className: string }
+            ) {
   const { 
-    equivalents, shareEnabled, applyReduction,
+    equivalents, shareEnabled, applyReduction, className, banner
   } = props;
   const settings = {
     dots: true,
@@ -23,15 +26,16 @@ export function EquivalentsSlider(props: { equivalents: Stat[], applyReduction: 
       <Slider {...settings} >
         { equivalents.map(stat => {
             return (
-              <Grid container key={stat.name}>
-                <Grid item xs={12}>
-                  <div>
-                    {`${stat.value} `}
-                    {stat.desc}
-                  </div>
+              <Grid container key={stat.name} className={className}>
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {banner}
+                </Grid>
+                <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {`${stat.value} `}{stat.desc}
+                </Grid>
+                <Grid item xs={12}  sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <div className="icons">
-                    {
-                    
+                    {      
                     [
                       ...Array(stat.iconCountTotal),
                     ].map((value: undefined, index: number) => 
