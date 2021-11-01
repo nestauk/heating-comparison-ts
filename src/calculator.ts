@@ -68,7 +68,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
     // const fridge = Math.round(carbonKg/1670);
     const stats = [
           { name: "Flights", desc: "Transatlantic flights",
-            value: flights, iconCountTotal: flights, 
+            value: flights, iconCountTotal: getIconCountTotal(flights), 
             iconChar: '✈️' , iconCountActive: getIconCountActive(flights) },
           { name: "Drives", desc: "Drives from Lands End to John O'Groats",
             value: drives, iconCountTotal: getIconCountTotal(drives), 
