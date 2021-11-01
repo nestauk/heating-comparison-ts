@@ -8,7 +8,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { Report, ReportReduction } from './Report';
 import { EstimateUsage } from './EstimateUsage';
 import { InputUsage } from './InputUsage';
-import { estimateEmissions } from 'estimateEmissions';
+import { estimateEmissions } from './estimateEmissions';
 
 export default function App() {
 

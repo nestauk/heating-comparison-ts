@@ -1,5 +1,3 @@
-import { estimateEmissions } from './estimateEmissions';
-
 export enum Period {
   Year = 'Year',
   Quarter = 'Quarter',

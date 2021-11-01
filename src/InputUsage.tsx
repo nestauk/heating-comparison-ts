@@ -32,7 +32,7 @@ export function InputUsage(props: any) {
                 
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ m: 1, minWidth: 20 }}>
+                <FormControl component="fieldset" className="formControl">
                   <RadioGroup
                     row
                     aria-label="usage-units"
@@ -47,7 +47,7 @@ export function InputUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ m: 1, minWidth: 20 }}>
+                <FormControl component="fieldset" className="formControl">
                   { usageUnits === Unit.GBP 
                   ?
                     <TextField
@@ -67,7 +67,7 @@ export function InputUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
+                <FormControl component="fieldset" className="formControl">
                   <InputLabel id="usage-period-label" >
                     Every
                   </InputLabel>

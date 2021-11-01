@@ -44,6 +44,11 @@ p {
   margin-top: auto;
 }
 
+.formControl {
+  display: flex;
+  margin: 5px;
+}
+
 
 .btn {
   padding:7px 21px 7px 21px;

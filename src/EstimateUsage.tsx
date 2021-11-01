@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FormControl, Grid, MenuItem, Select } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 
 export function EstimateUsage(props: any) {
     const { onSubmit } = props;
@@ -27,7 +27,10 @@ export function EstimateUsage(props: any) {
     return (
         <Grid container>
             <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
+                <FormControl component="fieldset" className="formControl">
+                    <InputLabel id="premise-age-label" >
+                        Type
+                    </InputLabel>
                     <Select
                         id="premise-type-select"
                         value={premisesInfo.type}
@@ -45,7 +48,10 @@ export function EstimateUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
+                <FormControl component="fieldset" className="formControl">
+                    <InputLabel id="premise-age-label">
+                        Age
+                    </InputLabel>
                     <Select
                         id="premise-type-select"
                         value={premisesInfo.age}
@@ -63,7 +69,10 @@ export function EstimateUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl component="fieldset" sx={{ m: 1, minWidth: 50 }}>
+                <FormControl component="fieldset" className="formControl">
+                    <InputLabel id="premise-rooms-label" >
+                        Beds + Receptions
+                    </InputLabel>
                     <Select
                         id="premise-rooms-select"
                         value={premisesInfo.numRooms}
