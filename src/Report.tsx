@@ -12,10 +12,7 @@ export function Report( props:
     const { 
       equivalents, carbon, setApplyReduction, reset,
     } = props;
-  
-    const [ shareEnabled, setShareEnabled ] = useState(true);
-  
-    console.log(`Equivalents ${equivalents}`);
+
     return (
       <div className="lightBackground">
         <Button className="btn btn--primary" variant="contained" onClick={() => reset()}>Start again</Button>
@@ -29,15 +26,7 @@ export function Report( props:
             </Grid>
             <Grid item xs={6} width="100%" sx={{ overflowX: "hidden" }}>
             <EquivalentsSlider equivalents={equivalents} banner="That's as much carbon as"
-                    shareEnabled={shareEnabled} applyReduction={false} className="darkBackground" />
-            { !shareEnabled 
-            ?
-            <div>
-            <Button className="btn btn--primary" variant="contained"  onClick={() => setShareEnabled(true)}>
-            Share
-            </Button>
-            </div>
-            : null }
+                    shareEnabled={true} applyReduction={false} className="darkBackground" />
             </Grid>
             <Grid item xs={12} sx={{ justifyContent: "flex-end" }}>
                 <div>
@@ -56,12 +45,9 @@ export function Report( props:
     const { 
       equivalents, reset
     } = props;
-  
-    const [ shareEnabled, setShareEnabled ] = useState(false);
 
     const redirectUrl = process.env.redirectUrl ? process.env.redirectUrl : 'www.nesta.org.uk';
   
-    console.log(`Equivalents ${equivalents}`);
     return (
       <div className="darkBackground">
         <Button className="btn btn--primary" variant="contained" onClick={() => reset()}>Start again</Button>
@@ -74,15 +60,7 @@ export function Report( props:
           </Grid>
           <Grid item xs={6} width="100%" sx={{ overflowX: "hidden" }}>
             <EquivalentsSlider equivalents={equivalents}  banner="With a heat pump that would equal"
-                shareEnabled={shareEnabled} applyReduction={true} className="lightBackground"/>
-            { !shareEnabled 
-            ?
-            <div>
-            <Button className="btn btn--primary" variant="contained"  onClick={() => setShareEnabled(true)}>
-            Share
-            </Button>
-            </div>
-            : null }
+                shareEnabled={true} applyReduction={true} className="lightBackground"/>
           </Grid>
           <Grid item xs={12} justifyContent="flex-end" alignItems="flex-end">
             <Button className="btn btn--primary" variant="contained" href={redirectUrl}>
