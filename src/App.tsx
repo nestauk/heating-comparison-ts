@@ -3,7 +3,7 @@ import React from "react";
 import { calculateEquivalents, calculateCarbon, PremisesInfo,
            Unit, Period, UsageInfo, Stat } from './calculator';
 import { useState } from "react";
-import { Box, Button, FormControl, Grid, TextField, MenuItem, 
+import { Button, FormControl, Grid, TextField, MenuItem, 
   Select, InputLabel, Alert, RadioGroup, FormControlLabel, Radio } 
   from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -82,21 +82,21 @@ export default function App() {
     }
   }
 
-  return (
-    <>
+  return ( 
     <StyledEngineProvider injectFirst>
+      <div className="App">
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If usage is not yet known, nor flagged unknown, this is the start - collect usage info, else allow restart */}
       { (!carbon && !usageUnknown)
         ?
         <>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
+        <Grid container flexWrap='wrap'>
+          <Grid item xs={12} sm={6}>
             <h1>How much gas do you use?</h1>
-            <h2>Enter the information from your latest bill or smart meter</h2>
-            <Button className="btn" variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
+            <h3>Enter the information from your latest bill or smart meter</h3>
+            <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown()}>Help me estimate</Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
               <InputUsage
                   handleSubmitUsageInfo={handleSubmitUsageInfo}
                 />
@@ -104,7 +104,7 @@ export default function App() {
         </Grid>
         </>
         : 
-        <Button className="btn" variant="contained" onClick={() => reset()}>Start again</Button>
+        <Button className="btn btn--primary" variant="contained" onClick={() => reset()}>Start again</Button>
       }
       {/* If user has stated they dont know usage, collect premise info */}
       { (usageUnknown) 
@@ -128,8 +128,8 @@ export default function App() {
         />
       : null 
       }
-    </StyledEngineProvider>
-    </>
+    </div>
+    </StyledEngineProvider> 
   ); 
 }
 
@@ -157,16 +157,17 @@ function InputUsage(props: any) {
 
   
   return (
-        <Box
-          component="form"
-          noValidate
-          autoComplete="off"
-          border={2} borderColor="blue"
-        >
+        // <Box
+        //   component="form"
+        //   noValidate
+        //   autoComplete="off"
+        //   border={2} borderColor="blue"
+        // >
           <Grid container>
             <Grid item xs={12}>
-              What's your typical bill?
+              
             </Grid>
+            <Grid item xs={12}>
               <FormControl component="fieldset">
                 <RadioGroup
                   row
@@ -180,6 +181,7 @@ function InputUsage(props: any) {
                   <FormControlLabel value={Unit.kWh} control={<Radio />} label="kWh" />
                 </RadioGroup>
               </FormControl>
+            </Grid>
             <Grid item xs={12}>
               <FormControl sx={{ m: 1, minWidth: 20 }}>
                 { usageUnits === Unit.GBP 
@@ -220,7 +222,7 @@ function InputUsage(props: any) {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button className="btn" variant="contained" 
+              <Button className="btn btn--primary" variant="contained" 
                   onClick={() => handleSubmitUsageInfo({
                                   period: usagePeriod, 
                                   units: usageUnits,
@@ -231,7 +233,7 @@ function InputUsage(props: any) {
               </Button>
             </Grid>
           </Grid>
-        </Box>
+        // </Box>
   );
 }
 

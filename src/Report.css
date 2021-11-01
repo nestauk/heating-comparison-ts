@@ -1,0 +1,16 @@
+.shareBar {
+    background-color: yellow;
+  }
+  
+.shadeOut {
+color:grey; 
+filter: grayscale(100%);
+}
+
+.Report {
+    background-color: #18A48c;
+}
+
+.ReportReduced {
+    background-color: #18A48c;
+}

@@ -1,17 +1,43 @@
-.App {
-  text-align: center;
+.App, .root {
   background-color:#fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   font-family:"Averta",sans-serif;
   font-size:18px;
-  font-weight:500;
   line-height:1.8;
-  color:blue;
+  color:#0f294a;
   -webkit-font-smoothing:antialiased;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-family: "zosia";
+  color:blue;
+}
+h2 {
+  font-size: 1.4em;
+  font-family: "zosia";
+  color:blue;
+}
+h3 {
+  font-size: 1em;
+  color:blue;
+}
+p {
+  font-size: 1em;
+}
+
+/* Increase font sizes by 1.5x on bigger screens */
+@media (min-width: 48rem) {
+  h1 {
+    font-size: 3em;
+  }
+  h2 {
+    font-size: 2.25em;
+  }
+  p {
+    font-size: 1.5em;
+  }
 }
 
 .App-logo {
@@ -42,7 +68,6 @@
   padding:7px 21px 7px 21px;
   font-size:21px;
   font-size:1.16667rem;
-  font-weight:500;
   text-align:center;
   vertical-align:top;
   text-decoration:none;
@@ -143,39 +168,12 @@
   display: inline-block;
 }
 
-/* @font-face {
-  font-family:'Averta';
-  font-weight:700;
-  font-style:italic;
-  src:url("../fonts/3215B3_0_0.180253901e7a.eot");
-  src:url("../fonts/3215B3_0_0.180253901e7a.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_0_0.0e942b00acf3.woff2") format("woff2"),url("../fonts/3215B3_0_0.648878f37210.woff") format("woff"),url("../fonts/3215B3_0_0.ac956f9256bf.ttf") format("truetype")
-}
-@font-face {
-  font-family:'Averta';
-  font-weight:700;
-  src:url("../fonts/3215B3_1_0.8f33eefdc716.eot");
-  src:url("../fonts/3215B3_1_0.8f33eefdc716.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_1_0.cf4692e55a59.woff2") format("woff2"),url("../fonts/3215B3_1_0.209d762b56bc.woff") format("woff"),url("../fonts/3215B3_1_0.21f332c68c2d.ttf") format("truetype")
-}
-@font-face {
-  font-family:'Averta';
-  font-weight:300;
-  src:url("../fonts/3215B3_2_0.0fc94a56c709.eot");
-  src:url("../fonts/3215B3_2_0.0fc94a56c709.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_2_0.2ab5d58436af.woff2") format("woff2"),url("../fonts/3215B3_2_0.9ee9a9433d82.woff") format("woff"),url("../fonts/3215B3_2_0.0750070a5ef0.ttf") format("truetype")
-}
-@font-face {
-  font-family:'Averta';
-  font-weight:300;
-  font-style:italic;
-  src:url("../fonts/3215B3_3_0.a66eb0f2a40c.eot");
-  src:url("../fonts/3215B3_3_0.a66eb0f2a40c.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_3_0.b952ad40800a.woff2") format("woff2"),url("../fonts/3215B3_3_0.96728e8916ba.woff") format("woff"),url("../fonts/3215B3_3_0.f8a8b316927c.ttf") format("truetype")
-}
 
 @font-face {
   font-family:'Averta';
-  font-weight:500;
-  src:url("../fonts/3215B3_4_0.9054214f7565.eot");
-  src:url("../fonts/3215B3_4_0.9054214f7565.eot?#iefix") format("embedded-opentype"),url("../fonts/3215B3_4_0.9342434d4665.woff2") format("woff2"),url("../fonts/3215B3_4_0.a48f9be3e1d8.woff") format("woff"),url("../fonts/3215B3_4_0.74498ff93534.ttf") format("truetype")
-} */
+  src:url("./fonts/AvertaDemoPE-Regular.eot");
+  src:url("./fonts/AvertaDemoPE-Regular.woff2") format("woff2"),url("./fonts/AvertaDemoPE-Regular.woff") format("woff")
+} 
 
 @font-face {
   font-family:'zosia';
@@ -185,17 +183,7 @@
   font-style:normal
 }
   
-  /* *,*::before,*::after{-webkit-box-sizing:border-box;box-sizing:border-box}html{-webkit-text-size-adjust:100%}img,svg{vertical-align:top}html,body{background-color:#fff}html.fixed,body.fixed{overflow:hidden}body{
-    font-family:"Averta",sans-serif;font-size:18px;font-weight:500;line-height:1.8;color:#0f294a;-webkit-font-smoothing:antialiased
-  } */
 
-.shareBar {
-  background-color: yellow;
-}
 
-.shadeOut {
-  color:grey; 
-  filter: grayscale(100%);
-}
 
 

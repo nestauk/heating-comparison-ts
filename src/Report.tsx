@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Stat } from './calculator';
 import { Button, Grid } from '@mui/material';
 import { EquivalentsSlider } from './EquivalentsSlider';
+import './Report.css';
 
 export function Report( props: 
     { equivalents: Stat[]; carbon: number; 
@@ -16,7 +17,7 @@ export function Report( props:
   
     console.log(`Equivalents ${equivalents}`);
     return (
-        <Grid container>
+        <Grid container className="Report">
             <Grid item xs={6}>
 
             <h2>
@@ -63,7 +64,7 @@ export function Report( props:
     console.log(`Equivalents ${equivalents}`);
     return (
       <>
-        <Grid container>
+        <Grid container className="ReportReduced">
           <Grid item xs={6}>
           <h2>
           You could reduce this by 75%
