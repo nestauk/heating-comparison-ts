@@ -51,6 +51,7 @@ export type Stat = {
   name: string,
   desc: string,
   value: number,
+  raw: number,
   iconCountTotal: number,
   iconCountActive: number,
   iconChar: string,
@@ -59,33 +60,37 @@ export type Stat = {
 
 export const calculateEquivalents = (carbonKg: number): Stat[] => {
     
-    const flights = Math.round(carbonKg/926);
-    const netflix = Math.round( (((carbonKg/0.056)/24) /365) );
-    const drives = Math.round(carbonKg/165);
-    const recycling = Math.round( ((carbonKg/2.9)/52) );
-    const lights = Math.round( ((carbonKg/0.00181)/24)/365);
-    const burgers = Math.round(carbonKg/1.74);
-    // const fridge = Math.round(carbonKg/1670);
+    const flights = carbonKg/926;
+    const netflix =  (((carbonKg/0.056)/24) /365);
+    const drives = carbonKg/165;
+    const recycling =  ((carbonKg/2.9)/52);
+    const lights =  ((carbonKg/0.00181)/24)/365;
+    const burgers = carbonKg/1.74;
+    // const fridge = carbonKg/1670;
     const stats = [
           { name: "Flights", desc: "Transatlantic flights",
-            value: flights, iconCountTotal: getIconCountTotal(flights), 
-            iconChar: '✈️' , iconCountActive: getIconCountActive(flights) },
+            raw: flights,
+            iconChar: '✈️' },
           { name: "Drives", desc: "Drives from Lands End to John O'Groats",
-            value: drives, iconCountTotal: getIconCountTotal(drives), 
-            iconChar: '🚘' , iconCountActive: getIconCountActive(drives) },
+            raw: drives,  
+            iconChar: '🚘'},
           { name: "Netflix", desc: "Years of TV streaming",
-            value: netflix, iconCountTotal: getIconCountTotal(netflix), 
-            iconChar: '📺', iconCountActive: getIconCountActive(netflix) },
+            raw: netflix,  
+            iconChar: '📺' },
           { name: "Recycling", desc: "Years of recycling packaging",
-            value: recycling, iconCountTotal: getIconCountTotal(recycling), 
-            iconChar: '♻️', iconCountActive: getIconCountActive(recycling) },
+            raw: recycling,
+            iconChar: '♻️' },
           { name: "Lightbulbs", desc: "Years of running a 10w lightbulb",
-            value: lights, iconCountTotal: getIconCountTotal(lights), 
-            iconChar: '💡', iconCountActive: getIconCountActive(lights) },
+            raw: lights, 
+            iconChar: '💡', },
           { name: "Burgers", desc: "Quarter-pounders",
-            value: burgers, iconCountTotal: getIconCountTotal(burgers), 
-            iconChar: '🍔', iconCountActive: getIconCountActive(burgers)},
+            raw: burgers,  
+            iconChar: '🍔' },
         ] as Stat[];
+    const allStats = stats.map(stat => {
+      const icons = getIconCounts(stat.raw);
+      return { ...stat, value: Math.round(stat.raw), ...icons };
+    });
     // if (fridge > 0) {
     //   stats.push({ 
     //     name: "Fridge", desc: "Lifetimes of a fridge",
@@ -94,7 +99,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
     //   });
     // } 
     // TODO - swap the fridge test out for a filter that removes any stats that come out with zero value
-    return stats;
+    return allStats;
 };
 
 export const calculateCarbon = (usage: number) => {
@@ -105,15 +110,17 @@ export const calculateCarbon = (usage: number) => {
 };
 
 
-const getIconCountTotal = (value: number) => {
-  const divider = ((Math.pow(10, Math.round(Math.log10(value))))/10);
-  const icons = divider > 0 ? Math.round( value / divider) : 1;
-  console.log(`value: ${value}, icons: ${icons}`);
-  return icons; 
-}
-
-const getIconCountActive = (value: number) => {
-    return Math.round(getIconCountTotal(value)*0.25);
+const getIconCounts = (value: number): { } => {
+  let icons;
+  if (value >= 10)  {
+    const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
+    icons = Math.round( value / divisor);
+  } else {
+    icons = value;
+  }
+  const withReduction = icons * 0.25;
+  const activeIcons = ( withReduction > 1) ? Math.round(withReduction) : 1;  
+  return { iconCountActive: activeIcons, iconCountTotal: Math.round(icons)};
 }
 
 
