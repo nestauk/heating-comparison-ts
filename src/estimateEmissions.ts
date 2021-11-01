@@ -3,8 +3,8 @@ import { PremisesInfo } from './calculator'
 export const estimateEmissions = async (premisesInfo: PremisesInfo): Promise<number> => {
   
   try {
-    const value = data.filter(data=> data.PremiseType === premisesInfo.type)[0].EmissionsMean;
-    console.debug(`Got emissions estimate of: ${JSON.stringify(value)}`);
+    const value = data.filter(data=> data.PremiseType === premisesInfo.type)[0].EmissionsMean * 1000;
+    console.debug(`Got emissions estimate of: ${JSON.stringify(value)} kg`);
 
     return value;
   } catch (err) {
