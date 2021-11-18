@@ -2,16 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  .input-text,
+  .input-select {
+    @apply border-2 border-black px-2 py-1;
+  }
+  .input-radio + label {
+    @apply ml-1 mr-5;
+  }
+  .input-radio:checked + label {
+    @apply font-bold;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+:root {
+  --bg: #fdf7f7;
+  --black: #0f294a;
+}
+
+body {
+  font-family: "Averta", sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--black);
+  font-size: 16px;
 }
