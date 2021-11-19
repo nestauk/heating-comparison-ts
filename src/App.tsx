@@ -92,7 +92,7 @@ export default function App() {
   return (
     <StyledEngineProvider injectFirst>
       <div className="App">
-        <main className="max-w-screen-md mx-auto mb-8 md:mb-0 px-5 flex-1 flex flex-col justify-center md:pt-0 pt-8">
+        <main className="max-w-screen-md w-full mx-auto mb-8 md:mb-0 px-5 flex-1 flex flex-col justify-center md:pt-0 pt-8">
           {error ? (
             <div className="mb-6 text-md bg-red-100 text-red-700 px-4 py-3 w-full">
               <strong>Oops!</strong> {error}

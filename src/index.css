@@ -13,6 +13,22 @@
   .input-radio:checked + label {
     @apply font-bold;
   }
+
+  /* Slick Carousel Overrides =============================================== */
+  /* TODO: not working in production */
+  .slick-dots button::before {
+    @apply text-sm !important;
+  }
+
+  .slick-active button::before,
+  .slick-dots button:hover::before {
+    @apply text-brand-blue !important;
+  }
+
+  .slick-prev::before,
+  .slick-next::before {
+    @apply text-gray-400 !important;
+  }
 }
 
 :root {
@@ -25,6 +41,7 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background: var(--bg);
   color: var(--black);
   font-size: 16px;
