@@ -60,7 +60,12 @@ export function EquivalentsSlider(props: {
                     )}
                   </div>
 
-                  <p className="text-2xl text-center font-bold {{className === 'bg-white' ? 'text-base' : 'text-white' }}">
+                  <p
+                    className={
+                      "text-2xl text-center font-bold " +
+                      (className === "bg-white" ? "text-base" : "text-white")
+                    }
+                  >
                     {`${stat.value} ${stat.desc}`}
                   </p>
                 </div>
