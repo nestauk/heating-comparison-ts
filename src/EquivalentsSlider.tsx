@@ -19,6 +19,7 @@ export function EquivalentsSlider(props: {
     arrows: true,
     dots: true,
     infinite: true,
+    autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
@@ -35,6 +36,7 @@ export function EquivalentsSlider(props: {
                 }
               >
                 <div className="w-full">
+                  {banner === "" ? null : <div className="mb-2">{banner}</div>}
                   <div className="text-3xl text-center mb-2">
                     {[...Array(stat.iconCountTotal)].map(
                       (value: undefined, index: number) =>
@@ -44,6 +46,7 @@ export function EquivalentsSlider(props: {
                               key={`${stat.name}-${index}`}
                               label={stat.name}
                               symbol={stat.iconChar}
+                              className="mr-2 inline-block"
                             />
                           </span>
                         ) : (
@@ -57,7 +60,7 @@ export function EquivalentsSlider(props: {
                     )}
                   </div>
 
-                  <p className="text-2xl text-white text-center font-bold">
+                  <p className="text-2xl text-center font-bold {{className === 'bg-white' ? 'text-base' : 'text-white' }}">
                     {`${stat.value} ${stat.desc}`}
                   </p>
                 </div>

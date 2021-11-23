@@ -36,7 +36,7 @@ export function Report(props: {
         <div className="md:w-7/12 w-full md:pl-12 px-7">
           <EquivalentsSlider
             equivalents={equivalents}
-            banner="That's as much carbon as"
+            banner=""
             shareEnabled={true}
             applyReduction={false}
             className="bg-brand-green"
@@ -67,33 +67,35 @@ export function ReportReduction(props: {
     : "www.nesta.org.uk";
 
   return (
-    <div className="darkBackground">
-      <Button
+    <div className="bg-brand-green">
+      {/* <Button
         className="btn btn--primary"
         variant="contained"
         onClick={() => reset()}
       >
         Start again
-      </Button>
-      <Grid container>
-        <Grid item xs={6}>
-          <h2>You could reduce this by 75%</h2>
-          <h3>
+      </Button> */}
+      <div className="flex flex-wrap items-center">
+        <div className="md:w-5/12 w-full md:mb-0 mb-8">
+          <h1 className="font-brand text-white text-4xl mb-6">
+            You could reduce this by 75%
+          </h1>
+          <p className="text-2xl text-white">
             A low carbon heating system - such as a heat pump - could reduce
             this by 75%. By 2035, this should move towards 100% as the UK
-            transitions to fully renewable electricity
-          </h3>
-        </Grid>
-        <Grid item xs={6} width="100%" sx={{ overflowX: "hidden" }}>
+            transitions to fully renewable electricity.
+          </p>
+        </div>
+        <div className="md:w-7/12 w-full md:pl-12 px-7">
           <EquivalentsSlider
             equivalents={equivalents}
-            banner="With a heat pump that would equal"
+            banner="With a heat pump that would equal:"
             shareEnabled={true}
             applyReduction={true}
-            className="lightBackground"
+            className="bg-white"
           />
-        </Grid>
-        <Grid item xs={12} justifyContent="flex-end" alignItems="flex-end">
+        </div>
+        {/* <Grid item xs={12} justifyContent="flex-end" alignItems="flex-end">
           <Button
             className="btn btn--primary"
             variant="contained"
@@ -101,8 +103,8 @@ export function ReportReduction(props: {
           >
             Learn more
           </Button>
-        </Grid>
-      </Grid>
+        </Grid> */}
+      </div>
     </div>
   );
 }
