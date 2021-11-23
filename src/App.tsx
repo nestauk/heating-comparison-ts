@@ -170,16 +170,6 @@ export default function App() {
             </>
           )}
         </main>
-        <footer className="w-full bg-white">
-          <div className="max-w-screen-lg mx-auto p-5 flex items-center justify-between">
-            <p>
-              Find out more about Nesta's
-              <br />
-              Sustainable Future mission
-            </p>
-            <p className="font-bold text-2xl text-brand-blue">Logo</p>
-          </div>
-        </footer>
       </div>
     </StyledEngineProvider>
   );
