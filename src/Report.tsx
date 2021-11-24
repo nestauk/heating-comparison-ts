@@ -71,10 +71,7 @@ export function ReportReduction(props: {
       <div className="mb-4">
         <a
           className="text-white cursor-pointer hover:underline"
-          onClick={() => {
-            setBgClass("bg-brand-bg");
-            reset();
-          }}
+          onClick={() => reset()}
         >
           &lsaquo; Back
         </a>

@@ -45,6 +45,7 @@ export default function App() {
     setApplyReduction(false);
     setEquivalents(null);
     setCarbon(null);
+    setBgClass("bg-brand-bg");
   };
 
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
