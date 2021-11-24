@@ -13,22 +13,21 @@
   .input-radio:checked + label {
     @apply font-bold;
   }
+}
 
-  /* Slick Carousel Overrides =============================================== */
-  /* TODO: not working in production */
-  .slick-dots button::before {
-    @apply text-sm !important;
-  }
+/* Slick Carousel Overrides =============================================== */
+.slick-dots button::before {
+  font-size: 0.875rem !important;
+}
 
-  .slick-active button::before,
-  .slick-dots button:hover::before {
-    @apply text-brand-blue !important;
-  }
+.slick-active button::before,
+.slick-dots button:hover::before {
+  color: #0000ff !important;
+}
 
-  .slick-prev::before,
-  .slick-next::before {
-    @apply text-gray-400 !important;
-  }
+.slick-prev::before,
+.slick-next::before {
+  color: #c4c4c4 !important;
 }
 
 :root {
