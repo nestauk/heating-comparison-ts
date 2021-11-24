@@ -92,7 +92,7 @@ export default function App() {
   return (
     <StyledEngineProvider injectFirst>
       <div className="App">
-        <main className="max-w-screen-md w-full mx-auto mb-8 md:mb-0 px-5 flex-1 flex flex-col justify-center md:pt-0 pt-8">
+        <main className="max-w-screen-md w-full mx-auto pb-8 md:pb-0 px-5 flex-1 flex flex-col justify-center md:pt-0 pt-8">
           {error ? (
             <div className="mb-6 text-md bg-red-100 text-red-700 px-4 py-3 w-full">
               <strong>Oops!</strong> {error}
@@ -128,7 +128,7 @@ export default function App() {
             ) : (
               <div className="flex flex-wrap items-center">
                 <div className="md:w-5/12 w-full">
-                  <h1 className="font-brand text-brand-blue text-4xl mb-8 md:mt-0 mt-8">
+                  <h1 className="font-brand text-brand-blue text-4xl mb-8 md:mt-0">
                     Estimate your gas usage
                   </h1>
                   <p className="text-2xl text-brand-blue mb-5 ">

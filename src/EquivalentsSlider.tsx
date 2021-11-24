@@ -11,10 +11,17 @@ export function EquivalentsSlider(props: {
   applyReduction: boolean;
   banner: string;
   shareEnabled: boolean;
-  className: string;
+  slideClass: string;
+  shareClass: string;
 }) {
-  const { equivalents, shareEnabled, applyReduction, className, banner } =
-    props;
+  const {
+    equivalents,
+    shareEnabled,
+    applyReduction,
+    slideClass,
+    banner,
+    shareClass,
+  } = props;
   const settings = {
     arrows: true,
     dots: true,
@@ -32,7 +39,7 @@ export function EquivalentsSlider(props: {
             <div className="mx-3 shadow-lg">
               <div
                 className={
-                  className + " px-7 py-5 h-72 md:h-56 flex items-center"
+                  slideClass + " px-7 py-5 h-72 md:h-56 flex items-center"
                 }
               >
                 <div className="w-full">
@@ -60,18 +67,17 @@ export function EquivalentsSlider(props: {
                     )}
                   </div>
 
-                  <p
-                    className={
-                      "text-2xl text-center font-bold " +
-                      (className === "bg-white" ? "text-base" : "text-white")
-                    }
-                  >
+                  <p className="text-2xl text-center font-bold">
                     {`${stat.value} ${stat.desc}`}
                   </p>
                 </div>
               </div>
 
-              <div className="bg-white pl-3 text-gray-500 flex items-center justify-between">
+              <div
+                className={
+                  shareClass + " pl-3 flex items-center justify-between"
+                }
+              >
                 Share this
                 <div>
                   {shareEnabled ? (

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Stat } from "./calculator";
-import { Button, Grid } from "@mui/material";
 import { EquivalentsSlider } from "./EquivalentsSlider";
 import "./Report.css";
 
@@ -14,16 +13,13 @@ export function Report(props: {
 
   return (
     <div>
-      {/* TODO: */}
-      {/* <Button
-        className="btn btn--primary"
-        variant="contained"
-        onClick={() => reset()}
-      >
-        Start again
-      </Button> */}
+      <div className="mb-4">
+        <a className="cursor-pointer hover:underline" onClick={() => reset()}>
+          &lsaquo; Back
+        </a>
+      </div>
 
-      <div className="flex flex-wrap items-center">
+      <div className="flex flex-wrap items-center mb-14">
         <div className="md:w-5/12 w-full md:mb-0 mb-8">
           <h1 className="font-brand text-brand-blue text-4xl mb-6">
             {`Your gas heating produces approx `}
@@ -39,19 +35,20 @@ export function Report(props: {
             banner=""
             shareEnabled={true}
             applyReduction={false}
-            className="bg-brand-green"
+            slideClass="bg-brand-green text-white"
+            shareClass="bg-white text-gray-500"
           />
         </div>
       </div>
 
-      {/* TODO: */}
-      <Button
-        className="btn btn--primary"
-        variant="contained"
-        onClick={() => setApplyReduction(true)}
-      >
-        What can I do?
-      </Button>
+      <div className="text-center">
+        <button
+          className="btn btn--primary"
+          onClick={() => setApplyReduction(true)}
+        >
+          What can I do?
+        </button>
+      </div>
     </div>
   );
 }
@@ -64,18 +61,20 @@ export function ReportReduction(props: {
 
   const redirectUrl = process.env.redirectUrl
     ? process.env.redirectUrl
-    : "www.nesta.org.uk";
+    : "http://www.nesta.org.uk";
 
   return (
     <div className="bg-brand-green">
-      {/* <Button
-        className="btn btn--primary"
-        variant="contained"
-        onClick={() => reset()}
-      >
-        Start again
-      </Button> */}
-      <div className="flex flex-wrap items-center">
+      <div className="mb-4">
+        <a
+          className="text-white cursor-pointer hover:underline"
+          onClick={() => reset()}
+        >
+          &lsaquo; Back
+        </a>
+      </div>
+
+      <div className="flex flex-wrap items-center mb-14">
         <div className="md:w-5/12 w-full md:mb-0 mb-8">
           <h1 className="font-brand text-white text-4xl mb-6">
             You could reduce this by 75%
@@ -92,18 +91,16 @@ export function ReportReduction(props: {
             banner="With a heat pump that would equal:"
             shareEnabled={true}
             applyReduction={true}
-            className="bg-white"
+            slideClass="bg-white"
+            shareClass="bg-brand-yellow text-white"
           />
         </div>
-        {/* <Grid item xs={12} justifyContent="flex-end" alignItems="flex-end">
-          <Button
-            className="btn btn--primary"
-            variant="contained"
-            href={redirectUrl}
-          >
-            Learn more
-          </Button>
-        </Grid> */}
+      </div>
+
+      <div className="text-center">
+        <a href={redirectUrl} className="btn btn--primary">
+          Learn more
+        </a>
       </div>
     </div>
   );
