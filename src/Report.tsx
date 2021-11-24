@@ -56,19 +56,25 @@ export function Report(props: {
 export function ReportReduction(props: {
   equivalents: Stat[];
   reset: () => void;
+  setBgClass: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { equivalents, reset } = props;
+  const { equivalents, reset, setBgClass } = props;
 
   const redirectUrl = process.env.redirectUrl
     ? process.env.redirectUrl
     : "http://www.nesta.org.uk";
 
+  setBgClass("bg-brand-green");
+
   return (
-    <div className="bg-brand-green">
+    <div>
       <div className="mb-4">
         <a
           className="text-white cursor-pointer hover:underline"
-          onClick={() => reset()}
+          onClick={() => {
+            setBgClass("bg-brand-bg");
+            reset();
+          }}
         >
           &lsaquo; Back
         </a>

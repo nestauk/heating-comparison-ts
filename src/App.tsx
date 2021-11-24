@@ -22,6 +22,7 @@ export default function App() {
   const [carbon, setCarbon] = useState(null as number | null);
   const [error, setError] = useState(null as string | null);
   const [applyReduction, setApplyReduction] = useState(false);
+  const [bgColor, setBgClass] = useState("bg-brand-bg");
 
   const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
     const carbon = await estimateEmissions(premisesInfo);
@@ -91,7 +92,7 @@ export default function App() {
 
   return (
     <StyledEngineProvider injectFirst>
-      <div className="App">
+      <div className={"App " + bgColor}>
         <main className="max-w-screen-md w-full mx-auto pb-8 md:pb-0 px-5 flex-1 flex flex-col justify-center md:pt-0 pt-8">
           {error ? (
             <div className="mb-6 text-md bg-red-100 text-red-700 px-4 py-3 w-full">
@@ -160,7 +161,11 @@ export default function App() {
                     reset={reset}
                   />
                 ) : (
-                  <ReportReduction equivalents={equivalents} reset={reset} />
+                  <ReportReduction
+                    equivalents={equivalents}
+                    reset={reset}
+                    setBgClass={setBgClass}
+                  />
                 )
               ) : (
                 <Alert severity="error">
