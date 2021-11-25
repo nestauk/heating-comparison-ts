@@ -50,6 +50,7 @@ export default function App() {
     if (!usage.value && !(usage.value > 0) ) {
       setError('Invalid usage value. Return to input and enter a non-zero value');
     } else { 
+      setError(null);
       let usageVal;
       switch (usage.period) {
         case Period.Week: {

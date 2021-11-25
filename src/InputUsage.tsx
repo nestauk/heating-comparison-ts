@@ -9,7 +9,7 @@ export function InputUsage(props: any) {
       handleSubmitUsageInfo,
     } = props;
   
-    const [ usageUnits, setUsageUnits ] = useState(Unit.kWh);
+    const [ usageUnits, setUsageUnits ] = useState(Unit.GBP);
     const [ usagePeriod, setUsagePeriod ] = useState(Period.Month);
   
     const [ usageValue, setUsageValue ] = useState(0);
@@ -36,7 +36,7 @@ export function InputUsage(props: any) {
                   <RadioGroup
                     row
                     aria-label="usage-units"
-                    defaultValue="gbp"
+                    defaultValue={usageUnits}
                     value={usageUnits}
                     name="usage-units-radio-group"
                     onChange={handleChangeUnits}
@@ -72,7 +72,7 @@ export function InputUsage(props: any) {
                   <RadioGroup
                     row
                     aria-label="usage-units"
-                    defaultValue={Period.Month}
+                    defaultValue={usagePeriod}
                     value={usagePeriod}
                     name="usage-period-radio-group"
                     onChange={handleChangePeriod}
