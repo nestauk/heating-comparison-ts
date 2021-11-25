@@ -50,6 +50,7 @@ export type UsageInfo = {
 export type Stat = {
   name: string,
   desc: string,
+  singular: string,
   value: number,
   raw: number,
   iconCountTotal: number,
@@ -66,40 +67,37 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
     const recycling =  ((carbonKg/2.9)/52);
     const lights =  ((carbonKg/0.00181)/24)/365;
     const burgers = carbonKg/1.74;
-    // const fridge = carbonKg/1670;
+    const fridge = carbonKg/1670;
     const stats = [
-          { name: "Flights", desc: "Transatlantic flights",
+          { name: "Flights", desc: "transatlantic flights", singular: "transatlantic flight",
             raw: flights,
             iconChar: '✈️' },
-          { name: "Drives", desc: "Drives from Lands End to John O'Groats",
+          { name: "Drives", desc: "drives from Lands End to John O'Groats", singular: "drives from Lands End to John O'Groats",
             raw: drives,  
             iconChar: '🚘'},
-          { name: "Netflix", desc: "Years of TV streaming",
+          { name: "Netflix", desc: "years of TV streaming", singular: "year of TV streaming",
             raw: netflix,  
             iconChar: '📺' },
-          { name: "Recycling", desc: "Years of recycling packaging",
+          { name: "Recycling", desc: "years of recycling packaging", singular: "year of recycling packaging",
             raw: recycling,
             iconChar: '♻️' },
-          { name: "Lightbulbs", desc: "Years of running a 10w lightbulb",
+          { name: "Lightbulbs", desc: "years of running a 10w lightbulb", singular: "years of running a 10w lightbulb",
             raw: lights, 
             iconChar: '💡', },
-          { name: "Burgers", desc: "Quarter-pounders",
+          { name: "Burgers", desc: "quarter-pounders", singular: "quarter-pounder",
             raw: burgers,  
             iconChar: '🍔' },
+          { name: "Fridge", desc: "lifetimes of a fridge", singular: "lifetime of a fridge",
+            raw: fridge, 
+            iconChar: '❄️' },
         ] as Stat[];
     const allStats = stats.map(stat => {
+      const value = Math.round(stat.raw);
+      const description = value > 1 ? stat.desc : stat.singular;
       const icons = getIconCounts(stat.raw);
-      return { ...stat, value: Math.round(stat.raw), ...icons };
+      return { ...stat, value, ...icons };
     });
-    // if (fridge > 0) {
-    //   stats.push({ 
-    //     name: "Fridge", desc: "Lifetimes of a fridge",
-    //     value: fridge, iconCountTotal: getIconCountTotal(fridge), 
-    //     iconChar: '❄️' , iconCountActive: getIconCountActive(fridge)
-    //   });
-    // } 
-    // TODO - swap the fridge test out for a filter that removes any stats that come out with zero value
-    return allStats;
+    return allStats.filter(stat => stat.value > 0);
 };
 
 export const calculateCarbon = (usage: number) => {
