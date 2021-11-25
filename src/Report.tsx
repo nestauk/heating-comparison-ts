@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Stat } from "./calculator";
 import { EquivalentsSlider } from "./EquivalentsSlider";
 import "./Report.css";
@@ -14,9 +14,12 @@ export function Report(props: {
   return (
     <div>
       <div className="mb-4">
-        <a className="cursor-pointer hover:underline" onClick={() => reset()}>
-          &lsaquo; Back
-        </a>
+        <button
+          className="btn btn--secondary"
+          onClick={() => reset()}
+        >
+          Start Again
+        </button>
       </div>
 
       <div className="flex flex-wrap items-center mb-14">
@@ -69,12 +72,12 @@ export function ReportReduction(props: {
   return (
     <div>
       <div className="mb-4">
-        <a
-          className="text-white cursor-pointer hover:underline"
+      <button
+          className="btn btn--secondary"
           onClick={() => reset()}
         >
-          &lsaquo; Back
-        </a>
+          Start Again
+        </button>
       </div>
 
       <div className="flex flex-wrap items-center mb-14">

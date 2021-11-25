@@ -1,7 +1,6 @@
 import { Unit, Period, UsageInfo } from './calculator';
 import React, { useState } from "react";
-import { Button, FormControl, Grid, TextField, MenuItem, 
-  Select, InputLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { Button, FormControl, Grid, TextField, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
 
 export function InputUsage(props: any) {
