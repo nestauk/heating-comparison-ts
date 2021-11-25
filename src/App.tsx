@@ -96,8 +96,8 @@ export default function App() {
           ?
             <Grid container flexWrap='wrap'>
               <Grid item xs={12} sm={6}>
-                <h1>How much gas do you use?</h1>
-                <h3>Enter the information from your latest bill or smart meter</h3>
+                <div className="font-brand text-brand-blue text-4xl mb-8">How much gas do you use?</div>
+                <div className="text-2xl text-brand-blue mb-5" >Enter the information from your latest bill or smart meter</div>
                 <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(true)}>Help me estimate</Button>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -109,8 +109,8 @@ export default function App() {
           : 
             <Grid container flexWrap='wrap'>
               <Grid item xs={12} sm={6}>
-                <h1>How much gas do you use?</h1>
-                <h3>Tell us about your property and we'll estimate</h3>
+                <div className="font-brand text-brand-blue text-4xl mb-8">How much gas do you use?</div>
+                <div className="text-2xl text-brand-blue mb-5" >Tell us about your property and we'll estimate</div>
                 <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(false)}>I know my usage</Button>
               </Grid>
               <Grid item xs={12} sm={6}>
