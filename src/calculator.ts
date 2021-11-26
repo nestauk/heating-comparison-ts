@@ -22,7 +22,7 @@ palatial = '10+ rooms'
 export enum PremiseType {
   Detached = "Detached",
   SemiDetached = "Semi-Detached",
-  Terraced = "Terraced",
+  Terraced = "Terrace",
   Bungalow = "Bungalow",
   Flat = "Flat",
 }
@@ -64,7 +64,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
     const flights = carbonKg/926;
     const netflix =  (((carbonKg/0.056)/24) /365);
     const drives = carbonKg/165;
-    const recycling =  ((carbonKg/2.9)/52);
+    const recycling =  ((carbonKg/3.1)/52);
     const lights =  ((carbonKg/0.00181)/24)/365;
     const burgers = carbonKg/1.74;
     const fridge = carbonKg/1670;
@@ -95,7 +95,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
       const value = Math.round(stat.raw);
       const description = value > 1 ? stat.desc : stat.singular;
       const icons = getIconCounts(stat.raw);
-      return { ...stat, value, ...icons };
+      return { ...stat, value, desc: description, ...icons };
     });
     return allStats.filter(stat => stat.value > 0);
 };

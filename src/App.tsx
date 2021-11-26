@@ -44,11 +44,10 @@ export default function App() {
     setBgClass("bg-brand-bg");
   };
 
-
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
     setError(null);
     if (!usage.value && !(usage.value > 0) ) {
-      setError('Invalid usage value. Return to input and enter a non-zero value');
+      setError('Invalid usage, please enter a non-zero value');
     } else { 
       setError(null);
       let usageVal;
@@ -66,12 +65,14 @@ export default function App() {
             break;
         }
         default: {
-            setError('Invalid usage period. Return to input and select a value');
+            setError('Invalid usage period');
             return;
         }
       }
-      const carbon = 
-        calculateCarbon(usageVal);
+
+      const carbon = calculateCarbon(usageVal);
+      if (carbon < 1100 ||  carbon > 10000 ) 
+        throw Error(`This seems unusual, check your figure, is it definitely in ${usage.units} and for ${usage.units}`);     
       console.log(JSON.stringify(carbon));
       setCarbon(carbon);
       const equivalents = 
