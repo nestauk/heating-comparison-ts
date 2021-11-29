@@ -40,6 +40,8 @@ describe("Usage input, typical bill amount", () => {
       const report = wrapper.find(Report).at(0);
       console.log(report.debug());
       expect(report).toBeDefined;
+      // TODO - currently this test does not produce the conditions to display
+      // the report or validate it appears
   });
 });
 
