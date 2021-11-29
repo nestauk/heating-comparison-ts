@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react";
 import { calculateEquivalents, calculateCarbon, PremisesInfo,
-         Period, UsageInfo, Stat } from './calculator';
+         Period, UsageInfo, Stat, Unit } from './calculator';
 import { useState } from "react";
 import { Button, Grid, Alert } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -9,6 +9,7 @@ import { Report, ReportReduction } from './Report';
 import { EstimateUsage } from './EstimateUsage';
 import { InputUsage } from './InputUsage';
 import { estimateEmissions } from './estimateEmissions';
+import { UNIT_SEP } from 'papaparse';
 
 export default function App() {
 
@@ -69,10 +70,16 @@ export default function App() {
             return;
         }
       }
+      if (usage.units !== Unit.kWh) {
+        // unit will be £ so convert to kwh
+        // deduct average annual charge then divide by average price per kwh
+        usageVal = (usageVal - 94.81)/0.034;
+        console.log(`Bill amount converted to annual kwh usage: ${usageVal}`);
+      }
 
       const carbon = calculateCarbon(usageVal);
       if (carbon < 1100 ||  carbon > 10000 ) 
-        throw Error(`This seems unusual, check your figure, is it definitely in ${usage.units} and for ${usage.units}`);     
+        setError(`This seems unusual, check your figure, is it definitely in ${usage.units} and for ${usage.units}`);     
       console.log(JSON.stringify(carbon));
       setCarbon(carbon);
       const equivalents = 

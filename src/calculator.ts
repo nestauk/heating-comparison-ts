@@ -52,6 +52,7 @@ export type Stat = {
   desc: string,
   singular: string,
   value: number,
+  withReduction: number,
   raw: number,
   iconCountTotal: number,
   iconCountActive: number,
@@ -94,8 +95,10 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
     const allStats = stats.map(stat => {
       const value = Math.round(stat.raw);
       const description = value > 1 ? stat.desc : stat.singular;
-      const icons = getIconCounts(stat.raw);
-      return { ...stat, value, desc: description, ...icons };
+      const withReduction = Math.round(stat.raw * 0.25);
+      const iconCountTotal = getSimpleIconCount(value);
+      const iconCountActive = getSimpleIconCount(withReduction)
+      return { ...stat, value, withReduction, desc: description, iconCountActive, iconCountTotal } as Stat;
     });
     return allStats.filter(stat => stat.value > 0);
 };
@@ -109,16 +112,20 @@ export const calculateCarbon = (usage: number) => {
 
 
 const getIconCounts = (value: number): { } => {
+
+  const withReduction = Math.round(value * 0.25);
+  const iconCountTotal = getSimpleIconCount(value);
+  const iconCountActive = getSimpleIconCount(withReduction)
+  return { iconCountActive,  iconCountTotal};
+}
+
+const getSimpleIconCount = (value: number): { } => {
   let icons;
   if (value >= 10)  {
     const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
-    icons = Math.round( value / divisor);
+    return Math.round( value / divisor);
   } else {
-    icons = value;
+    return value;
   }
-  const withReduction = icons * 0.25;
-  const activeIcons = ( withReduction > 1) ? Math.round(withReduction) : 1;  
-  return { iconCountActive: activeIcons, iconCountTotal: Math.round(icons)};
 }
-
 

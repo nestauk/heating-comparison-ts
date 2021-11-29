@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SocialMediaButtons from "./SocialMediaButtons";
 import React from "react";
+import { stat } from "fs";
 
 export function EquivalentsSlider(props: {
   equivalents: Stat[];
@@ -68,7 +69,10 @@ export function EquivalentsSlider(props: {
                   </div>
 
                   <p className="text-2xl text-center font-bold">
-                    {`${stat.value} ${stat.desc}`}
+                    { applyReduction ?
+                    `${stat.withReduction} ${stat.desc}` : 
+                    `${stat.value} ${stat.desc}`
+                    }
                   </p>
                 </div>
               </div>
