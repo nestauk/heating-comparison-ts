@@ -111,16 +111,7 @@ export const calculateCarbon = (usage: number) => {
 };
 
 
-const getIconCounts = (value: number): { } => {
-
-  const withReduction = Math.round(value * 0.25);
-  const iconCountTotal = getSimpleIconCount(value);
-  const iconCountActive = getSimpleIconCount(withReduction)
-  return { iconCountActive,  iconCountTotal};
-}
-
 const getSimpleIconCount = (value: number): { } => {
-  let icons;
   if (value >= 10)  {
     const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
     return Math.round( value / divisor);

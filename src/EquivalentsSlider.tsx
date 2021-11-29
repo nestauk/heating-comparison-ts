@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SocialMediaButtons from "./SocialMediaButtons";
 import React from "react";
-import { stat } from "fs";
 
 export function EquivalentsSlider(props: {
   equivalents: Stat[];
@@ -86,7 +85,7 @@ export function EquivalentsSlider(props: {
                 <div>
                   {shareEnabled ? (
                     <SocialMediaButtons
-                      description={`description ${stat.desc}`}
+                      description={`My gas heating is equivalent to ${stat.value} ${stat.desc}. Check out yours`}
                       image={"./logo.svg"}
                     />
                   ) : null}

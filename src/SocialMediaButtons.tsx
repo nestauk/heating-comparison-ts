@@ -5,27 +5,28 @@ import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton,
       
 export default function SocialMediaButtons( props: { image?: string, description?: string }) { 
     const { image, description } = props; 
+    const url = process.env.PUBLIC_URL || "www.nesta.org.uk";
 
     return (
         <>
             <FacebookShareButton 
-                url={"http://www.nesta.org.uk"}
+                url={url}
                 quote={description}
                 hashtag="#gasheatingclimatechange"
                 className="socialMediaButton">
                 <FacebookIcon size={36} />
             </FacebookShareButton>
             <TwitterShareButton
-                url={"http://www.nesta.org.uk"}
+                url={url}
                 title={description}
-                hashtags={['#gasheatingclimatechange']}
+                hashtags={['gasheatingclimatechange']}
                 className="socialMediaButton">
                 <TwitterIcon size={36} />
             </TwitterShareButton>
             <WhatsappShareButton
-                url={"http://www.nesta.org.uk"}
+                url={url}
                 title={description}
-                separator=":: "
+                separator=""
                 className="socialMediaButton" >
                 <WhatsappIcon size={36} />
             </WhatsappShareButton>

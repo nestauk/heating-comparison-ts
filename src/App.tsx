@@ -9,7 +9,6 @@ import { Report, ReportReduction } from './Report';
 import { EstimateUsage } from './EstimateUsage';
 import { InputUsage } from './InputUsage';
 import { estimateEmissions } from './estimateEmissions';
-import { UNIT_SEP } from 'papaparse';
 
 export default function App() {
 

@@ -1,4 +1,4 @@
-import { PremisesInfo, PremiseType } from './calculator'
+import { PremisesInfo } from './calculator'
 
 type Estimate = {
     Index: number
