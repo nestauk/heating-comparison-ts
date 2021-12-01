@@ -110,7 +110,7 @@ export default function App() {
 
   return ( 
     <StyledEngineProvider injectFirst>
-      <Box sx={{ border: 3, bgClass, padding: 5 }}>
+      <Box sx={{ border: 3, bgClass, padding: 5, minHeight: 400 }}>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If carbon is not yet known, this is the start - collect usage info, or allow flag unknown usage*/}
       { (!carbon)
@@ -125,7 +125,10 @@ export default function App() {
                   <h3>Enter the information from your latest bill or smart meter</h3>
                 </Grid>
                 <Grid item xs={12} >
-                  &nbsp;
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
                 </Grid>
                 <Grid item xs={12} >
                   <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(true)}>Help me estimate</Button>
