@@ -24,11 +24,11 @@ export function Report(props: {
 
       <div className="flex flex-wrap items-center mb-14">
         <div className="md:w-5/12 w-full md:mb-0 mb-8">
-          <h1 className="font-brand text-brand-blue text-4xl mb-6">
+          <h1>
             {`Your gas heating produces approx `}
             <u>{carbon}kg</u> of CO<sub>2</sub> per year
           </h1>
-          <p className="text-2xl text-brand-blue">
+          <p>
             That's as much carbon as...
           </p>
         </div>
@@ -59,15 +59,12 @@ export function Report(props: {
 export function ReportReduction(props: {
   equivalents: Stat[];
   reset: () => void;
-  setBgClass: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { equivalents, reset, setBgClass } = props;
+  const { equivalents, reset } = props;
 
   const redirectUrl = process.env.REDIRECT_URL
     ? process.env.REDIRECT_URL
     : "http://www.nesta.org.uk";
-
-  setBgClass("bg-brand-green");
 
   return (
     <div>
@@ -104,7 +101,7 @@ export function ReportReduction(props: {
       </div>
 
       <div className="text-center">
-        <a href={redirectUrl} className="btn btn--primary">
+        <a href={redirectUrl} className="btn btn--secondary">
           Learn more
         </a>
       </div>

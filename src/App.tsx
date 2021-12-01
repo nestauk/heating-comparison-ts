@@ -3,7 +3,7 @@ import React from "react";
 import { calculateEquivalents, calculateCarbon, PremisesInfo,
          Period, UsageInfo, Stat, Unit } from './calculator';
 import { useState } from "react";
-import { Button, Grid, Alert } from '@mui/material';
+import { Box, Button, Grid, Alert } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { Report, ReportReduction } from './Report';
 import { EstimateUsage } from './EstimateUsage';
@@ -12,12 +12,20 @@ import { estimateEmissions } from './estimateEmissions';
 
 export default function App() {
 
+  const lightBackground = {
+    backgroundColor: "white",
+  }
+
+  const darkBackground = {
+    backgroundColor: "green",
+  }
+
   const [ usageUnknown, setUsageUnknown ] = useState(false);
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbon, setCarbon ] = useState(null as number | null );
   const [ error, setError ] = useState(null as string | null);
   const [ applyReduction, setApplyReduction ] = useState(false);
-  const [ bgColor, setBgClass ] = useState("bg-brand-bg");
+  const [ bgClass, setBgClass ] = useState(lightBackground);
 
   const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
     const carbon = await estimateEmissions(premisesInfo);
@@ -41,8 +49,10 @@ export default function App() {
     setApplyReduction(false);
     setEquivalents(null);
     setCarbon(null);
-    setBgClass("bg-brand-bg");
+    setBgClass(lightBackground);
   };
+
+
 
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
     setError(null);
@@ -100,7 +110,7 @@ export default function App() {
 
   return ( 
     <StyledEngineProvider injectFirst>
-      <div className={"App " + bgColor}>
+      <Box sx={{ border: 3, bgClass, padding: 5 }}>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If carbon is not yet known, this is the start - collect usage info, or allow flag unknown usage*/}
       { (!carbon)
@@ -110,9 +120,17 @@ export default function App() {
           ?
             <Grid container flexWrap='wrap'>
               <Grid item xs={12} sm={6}>
-                <div className="font-brand text-brand-blue text-4xl mb-8">How much gas do you use?</div>
-                <div className="text-2xl text-brand-blue mb-5" >Enter the information from your latest bill or smart meter</div>
-                <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(true)}>Help me estimate</Button>
+                <Grid item xs={12}>
+                  <h1>How much gas do you use?</h1>
+                  <h3>Enter the information from your latest bill or smart meter</h3>
+                </Grid>
+                <Grid item xs={12} >
+                  &nbsp;
+                  &nbsp;
+                </Grid>
+                <Grid item xs={12} >
+                  <Button className="btn btn--secondary" variant="contained" onClick={() => flagUsageUnknown(true)}>Help me estimate</Button>
+                </Grid>
               </Grid>
               <Grid item xs={12} sm={6}>
                   <InputUsage
@@ -123,9 +141,17 @@ export default function App() {
           : 
             <Grid container flexWrap='wrap'>
               <Grid item xs={12} sm={6}>
-                <div className="font-brand text-brand-blue text-4xl mb-8">How much gas do you use?</div>
-                <div className="text-2xl text-brand-blue mb-5" >Tell us about your property and we'll estimate</div>
-                <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(false)}>I know my usage</Button>
+                <Grid item xs={12}>
+                  <h1>How much gas do you use?</h1>
+                  <h3>Tell us about your property and we'll estimate</h3>
+                </Grid>
+                <Grid item xs={12} >
+                  &nbsp;
+                  &nbsp;
+                </Grid>
+                <Grid item xs={12}>
+                  <Button className="btn btn--secondary" variant="contained" onClick={() => flagUsageUnknown(false)}>I know my usage</Button>
+                </Grid>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <EstimateUsage onSubmit={handleSubmitPremisesInfo}/>
@@ -148,12 +174,11 @@ export default function App() {
             <ReportReduction
               equivalents={equivalents}
               reset={reset}
-              setBgClass={setBgClass}
             />
           : <Alert severity="error">Could not generated comparisons for these carbon emissions</Alert>}
         </>
       }
-    </div>
+    </Box>
     </StyledEngineProvider> 
   ); 
 }
