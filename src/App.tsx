@@ -129,7 +129,7 @@ export default function App() {
                   &nbsp;
                 </Grid>
                 <Grid item xs={12} >
-                  <Button className="btn btn--secondary" variant="contained" onClick={() => flagUsageUnknown(true)}>Help me estimate</Button>
+                  <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(true)}>Help me estimate</Button>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -150,7 +150,7 @@ export default function App() {
                   &nbsp;
                 </Grid>
                 <Grid item xs={12}>
-                  <Button className="btn btn--secondary" variant="contained" onClick={() => flagUsageUnknown(false)}>I know my usage</Button>
+                  <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(false)}>I know my usage</Button>
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={6}>

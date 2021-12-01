@@ -84,7 +84,7 @@ export function InputUsage(props: any) {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Button className="btn btn--secondary" variant="contained" 
+                <Button className="btn btn--primary" variant="contained" 
                     onClick={() => handleSubmitUsageInfo({
                                     period: usagePeriod, 
                                     units: usageUnits,
