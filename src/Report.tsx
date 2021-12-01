@@ -79,10 +79,10 @@ export function ReportReduction(props: {
       <Grid item xs={12} className="darkBackground" sx={{ padding: 2 }}>
         <div className="flex flex-wrap items-center mb-14">
             <div className="md:w-5/12 w-full md:mb-0 mb-8">
-            <h1 className="font-brand text-white text-4xl mb-6">
+            <h1>
                 You could reduce this by 75%
             </h1>
-            <p className="text-2xl text-white">
+            <p>
                 A low carbon heating system - such as a heat pump - could reduce
                 this by 75%. By 2035, this should move towards 100% as the UK
                 transitions to fully renewable electricity.
