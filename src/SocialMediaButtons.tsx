@@ -12,7 +12,7 @@ export default function SocialMediaButtons( props: { image?: string, description
             <FacebookShareButton 
                 url={url}
                 quote={description}
-                hashtag="#gasheatingclimatechange"
+                hashtag="gasheatingclimatechange"
                 className="socialMediaButton">
                 <FacebookIcon size={36} />
             </FacebookShareButton>

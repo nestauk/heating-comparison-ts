@@ -63,8 +63,8 @@ export function ReportReduction(props: {
 }) {
   const { equivalents, reset, setBgClass } = props;
 
-  const redirectUrl = process.env.redirectUrl
-    ? process.env.redirectUrl
+  const redirectUrl = process.env.REDIRECT_URL
+    ? process.env.REDIRECT_URL
     : "http://www.nesta.org.uk";
 
   setBgClass("bg-brand-green");

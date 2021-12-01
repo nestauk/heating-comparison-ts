@@ -46,18 +46,24 @@ export default function App() {
 
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
     setError(null);
+    console.log(`Processing usage info: ${JSON.stringify(usage)}`);
+    if (usage.period === Period.Quarter) console.log(`Match`); 
     if (!usage.value && !(usage.value > 0) ) {
       setError('Invalid usage, please enter a non-zero value');
     } else { 
       setError(null);
       let usageVal;
-      switch (usage.period) {
+      switch (String(usage.period)) {
         case Period.Week: {
             usageVal = usage.value * 52;
             break;
         }
         case Period.Month: {
           usageVal = usage.value * 12;
+          break;
+        }
+        case Period.Quarter: {
+          usageVal = usage.value * 4;
           break;
         }
         case Period.Year: {
