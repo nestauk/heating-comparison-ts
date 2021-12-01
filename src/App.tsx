@@ -118,14 +118,13 @@ export default function App() {
           // If usage flagged as unknown, collect premises info to enable emissions estimation
           (!usageUnknown) 
           ?
-            <Grid container flexWrap='wrap'>
+            <Grid container spacing={2} flexWrap='wrap'>
               <Grid item xs={12} sm={6}>
                 <Grid item xs={12}>
                   <h1>How much gas do you use?</h1>
                   <h3>Enter the information from your latest bill or smart meter</h3>
                 </Grid>
                 <Grid item xs={12} >
-                  &nbsp;
                   &nbsp;
                 </Grid>
                 <Grid item xs={12} >
@@ -139,7 +138,7 @@ export default function App() {
               </Grid>
             </Grid>
           : 
-            <Grid container flexWrap='wrap'>
+            <Grid container spacing={2} flexWrap='wrap'>
               <Grid item xs={12} sm={6}>
                 <Grid item xs={12}>
                   <h1>How much gas do you use?</h1>

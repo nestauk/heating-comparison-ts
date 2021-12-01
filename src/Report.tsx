@@ -94,7 +94,7 @@ export function ReportReduction(props: {
                 banner="With a heat pump that would equal:"
                 shareEnabled={true}
                 applyReduction={true}
-                slideClass="bg-white"
+                slideClass="bg-white text-black"
                 shareClass="bg-brand-yellow text-white"
             />
             </div>
