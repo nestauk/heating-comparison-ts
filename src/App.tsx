@@ -12,20 +12,11 @@ import { estimateEmissions } from './estimateEmissions';
 
 export default function App() {
 
-  const lightBackground = {
-    backgroundColor: "white",
-  }
-
-  const darkBackground = {
-    backgroundColor: "green",
-  }
-
   const [ usageUnknown, setUsageUnknown ] = useState(false);
   const [ equivalents, setEquivalents ] = useState(null as Stat[] | null);
   const [ carbon, setCarbon ] = useState(null as number | null );
   const [ error, setError ] = useState(null as string | null);
   const [ applyReduction, setApplyReduction ] = useState(false);
-  const [ bgClass, setBgClass ] = useState(lightBackground);
 
   const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
     const carbon = await estimateEmissions(premisesInfo);
@@ -49,7 +40,6 @@ export default function App() {
     setApplyReduction(false);
     setEquivalents(null);
     setCarbon(null);
-    setBgClass(lightBackground);
   };
 
 
@@ -110,7 +100,8 @@ export default function App() {
 
   return ( 
     <StyledEngineProvider injectFirst>
-      <Box sx={{ border: 3, bgClass, padding: 5, minHeight: 400 }}>
+      <Box sx={{ border: 3, padding: 5, minHeight: 400 }} 
+       className={applyReduction ? "darkBackground" : "lightBackground"}>
       {error ? <Alert severity="error">{error}</Alert> : null}
       {/* If carbon is not yet known, this is the start - collect usage info, or allow flag unknown usage*/}
       { (!carbon)

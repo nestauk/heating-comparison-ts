@@ -72,7 +72,8 @@ export function ReportReduction(props: {
 
   return (
     <>
-    <Grid container flexWrap="wrap" justifyItems="center" direction="row"  spacing={4} sx={{ padding: 2 }}>
+    <Grid container flexWrap="wrap" justifyItems="center" direction="row"  
+      spacing={4} sx={{ padding: 2 }}>
         <Grid item xs={12} sm={6}>
                 <h1>
                     You could reduce this by 75%
@@ -93,18 +94,20 @@ export function ReportReduction(props: {
                 shareClass="bg-brand-yellow text-white"
             />
         </Grid>
-        <Grid item xs={12} minHeight="10">
+    </Grid>
+    <Grid container>
+      <Grid item xs={12} minHeight="10">
             &nbsp;
-        </Grid>
+      </Grid>
     </Grid>
     <Grid container flexDirection="row" justifyContent="space-between" >
             <button
-            className="btn btn--primary"
+            className="btn btn--secondary"
             onClick={() => reset()}
             >
             Start Again
             </button>
-            <a href={redirectUrl} className="btn btn--primary">
+            <a href={redirectUrl} className="btn btn--secondary">
             Learn more
             </a>
     </Grid>
