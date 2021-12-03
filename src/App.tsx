@@ -47,9 +47,8 @@ export default function App() {
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
     setError(null);
     console.log(`Processing usage info: ${JSON.stringify(usage)}`);
-    if (usage.period === Period.Quarter) console.log(`Match`); 
     if (!usage.value && !(usage.value > 0) ) {
-      setError('Invalid usage, please enter a non-zero value');
+      setError('Invalid gas usage, please enter a non-zero value');
     } else { 
       setError(null);
       let usageVal;

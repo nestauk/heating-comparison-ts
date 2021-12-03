@@ -57,6 +57,7 @@ export type Stat = {
   iconCountTotal: number,
   iconCountActive: number,
   iconChar: string,
+  displayText:  Function, // (withReduction: boolean) => string;,
 }
 
 
@@ -73,7 +74,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
           { name: "Flights", desc: "transatlantic flights", singular: "transatlantic flight",
             raw: flights,
             iconChar: '✈️' },
-          { name: "Drives", desc: "drives from Lands End to John O'Groats", singular: "drives from Lands End to John O'Groats",
+          { name: "Drives", desc: "drives from Lands End to John O'Groats", singular: "drive from Lands End to John O'Groats",
             raw: drives,  
             iconChar: '🚘'},
           { name: "Netflix", desc: "years of TV streaming", singular: "year of TV streaming",
@@ -82,7 +83,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
           { name: "Recycling", desc: "years of recycling packaging", singular: "year of recycling packaging",
             raw: recycling,
             iconChar: '♻️' },
-          { name: "Lightbulbs", desc: "years of running a 10w lightbulb", singular: "years of running a 10w lightbulb",
+          { name: "Lightbulbs", desc: "years of running a 10w lightbulb", singular: "year of running a 10w lightbulb",
             raw: lights, 
             iconChar: '💡', },
           { name: "Burgers", desc: "quarter-pounders", singular: "quarter-pounder",
@@ -94,11 +95,21 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
         ] as Stat[];
     const allStats = stats.map(stat => {
       const value = Math.round(stat.raw);
-      const description = value > 1 ? stat.desc : stat.singular;
       const withReduction = Math.round(stat.raw * 0.25);
       const iconCountTotal = getSimpleIconCount(value);
       const iconCountActive = getSimpleIconCount(withReduction)
-      return { ...stat, value, withReduction, desc: description, iconCountActive, iconCountTotal } as Stat;
+      const displayText: Function  = (withReduction: boolean) => {
+        const figure = withReduction ? withReduction : value;
+        if (figure > 1) {
+          return `${figure} ${stat.desc}`;
+        }
+        else if (figure === 1) {
+          return `${figure} ${stat.singular}`;
+        } else {
+          return `less than one ${stat.singular}`;
+        }
+      };
+      return { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
     });
     return allStats.filter(stat => stat.value > 0);
 };
