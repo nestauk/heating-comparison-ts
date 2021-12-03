@@ -5,7 +5,9 @@ import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton,
       
 export default function SocialMediaButtons( props: { image?: string, description?: string }) { 
     const { image, description } = props; 
-    const url = process.env.PUBLIC_URL || "www.nesta.org.uk";
+    const url_root = process.env.PUBLIC_URL || "www.nesta.org.uk";
+    // const url = url_root + '/project-updates/carbon-calculator';
+    const url = "https://nesta.staging.torchbox.com/project-updates/carbon-calculator-staging-page/";
 
     return (
         <>
