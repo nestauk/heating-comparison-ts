@@ -32,6 +32,7 @@ export default function App() {
   };
 
   const flagUsageUnknown = (flag: boolean) => {
+    setError(null);
     setUsageUnknown(flag);
   };
 
@@ -48,7 +49,7 @@ export default function App() {
     setError(null);
     console.log(`Processing usage info: ${JSON.stringify(usage)}`);
     if (!usage.value && !(usage.value > 0) ) {
-      setError('Invalid gas usage, please enter a non-zero value');
+      setError('Please check you entered your gas usage');
     } else { 
       setError(null);
       let usageVal;

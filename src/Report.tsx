@@ -46,7 +46,7 @@ export function Report(props: {
                 className="btn btn--primary"
                 onClick={() => reset()}
             >
-                Start Again
+                Start again
             </button>
 
             <button
@@ -105,7 +105,7 @@ export function ReportReduction(props: {
             className="btn btn--secondary"
             onClick={() => reset()}
             >
-            Start Again
+            Start again
             </button>
             <a href={redirectUrl} className="btn btn--secondary">
             Learn more
