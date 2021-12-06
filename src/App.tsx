@@ -27,8 +27,6 @@ export default function App() {
     setEquivalents(equivalents);
     setError(null);
     setUsageUnknown(false);
-    console.log(`Got premises info ${JSON.stringify(premisesInfo)}
-      , set carbon ${carbon} and equivalents ${JSON.stringify(equivalents)}`);
   };
 
   const flagUsageUnknown = (flag: boolean) => {
@@ -47,7 +45,6 @@ export default function App() {
 
   const handleSubmitUsageInfo = (usage: UsageInfo) => {
     setError(null);
-    console.log(`Processing usage info: ${JSON.stringify(usage)}`);
     if (!usage.value && !(usage.value > 0) ) {
       setError('Please check you entered your gas usage');
     } else { 
@@ -79,22 +76,17 @@ export default function App() {
         // unit will be £ so convert to kwh
         // deduct average annual charge then divide by average price per kwh
         usageVal = (usageVal - 94.81)/0.034;
-        console.log(`Bill amount converted to annual kwh usage: ${usageVal}`);
       }
 
       const carbon = calculateCarbon(usageVal);
       if (carbon < 1100 ||  carbon > 10000 ) 
         setError(`This seems unusual, check your figure, is it definitely in ${usage.units} and for ${usage.units}`);     
-      console.log(JSON.stringify(carbon));
       setCarbon(carbon);
       const equivalents = 
         calculateEquivalents(carbon);
-      console.log(JSON.stringify(equivalents));
       setApplyReduction(false);
       setEquivalents(equivalents);
       setError(null);
-      console.log(`Got usage info ${JSON.stringify(usage)}
-      , set carbon ${carbon} and equivalents ${JSON.stringify(equivalents)}`);
     }
   }
 

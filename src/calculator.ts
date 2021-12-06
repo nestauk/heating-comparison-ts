@@ -121,14 +121,12 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
       };
       return { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
     });
-    console.log(allStats);
     return allStats.filter(stat => stat.value > 0);
 };
 
 export const calculateCarbon = (usage: number) => {
 
     const carbon = Math.round(usage*0.18316);
-    console.log(`Calculated carbon emissions in kg for ${usage} as ${JSON.stringify(carbon)}`);
     return carbon;
 };
 

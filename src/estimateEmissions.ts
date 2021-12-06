@@ -23,7 +23,6 @@ export const estimateEmissions = async (premisesInfo: PremisesInfo): Promise<num
 
   try {
     const value = data.filter(isMatch)[0].EmissionsMean * 1000;
-    console.debug(`Got emissions estimate of: ${JSON.stringify(value)} kg`);
 
     return value;
   } catch (err) {

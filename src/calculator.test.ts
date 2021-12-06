@@ -54,7 +54,6 @@ test('Statistics that are zero before reduction are not included', async () => {
         {desc: "quarter-pounders", iconChar: "🍔", iconCountActive: 4, iconCountTotal: 17, name: "Burgers", raw: 1714.367816091954, singular: "quarter-pounder", value: 1714, withReduction: 429},
         {desc: "lifetimes of a fridge", iconChar: "❄️", iconCountActive: 0, iconCountTotal: 2, name: "Fridge", raw: 1.7862275449101797, singular: "lifetime of a fridge", value: 2, withReduction: 0}]
     const eq = calculateEquivalents(700);
-    console.log(eq);
     expect(eq).toBeDefined;
     // has certain stats which are non zero
     expect(eq).toHaveLength(6);
