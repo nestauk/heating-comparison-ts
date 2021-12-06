@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         "bran-bg": "#fdf7f7",
         "brand-blue": "#0000ff",
-        "brand-green": "#18A48C",
+        "brand-green": "#00745C",
         "brand-yellow": "#FDB633",
       },
       fontFamily: {

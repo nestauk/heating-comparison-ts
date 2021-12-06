@@ -96,8 +96,18 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
     const allStats = stats.map(stat => {
       const value = Math.round(stat.raw);
       const withReduction = Math.round(stat.raw * 0.25);
-      const iconCountTotal = getSimpleIconCount(value);
-      const iconCountActive = getSimpleIconCount(withReduction)
+      let iconCountTotal;
+      let iconCountActive;
+
+      if (value >= 10)  {
+        const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
+        iconCountTotal = Math.round( value / divisor);
+        iconCountActive = Math.round( withReduction / divisor);
+      } else {
+        iconCountTotal = value;
+        iconCountActive = withReduction;
+      }
+
       const displayText: Function  = (withReduction: boolean) => {
         const figure = withReduction ? withReduction : value;
         if (figure > 1) {
@@ -111,6 +121,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
       };
       return { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
     });
+    console.log(allStats);
     return allStats.filter(stat => stat.value > 0);
 };
 
@@ -121,13 +132,4 @@ export const calculateCarbon = (usage: number) => {
     return carbon;
 };
 
-
-const getSimpleIconCount = (value: number): { } => {
-  if (value >= 10)  {
-    const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
-    return Math.round( value / divisor);
-  } else {
-    return value;
-  }
-}
 

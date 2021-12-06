@@ -76,3 +76,43 @@ test('Statistics that are zero before reduction are not included', async () => {
       );
 
 });
+
+test('Establish equivalents for typical carbon 2', async () => {
+    const expected = [
+        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 1, iconCountTotal: 3, name: "Flights", raw: 3.2213822894168467, singular: "transatlantic flight", value: 3, withReduction: 1 },
+        {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 5, iconCountTotal: 20, name: "Drives", raw: 20.363636363636363, singular: "drive from Lands End to John O'Groats", value: 20, withReduction: 5},
+        {desc: "years of TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 6, name: "Netflix", raw: 6.080805609915199, singular: "year of TV streaming", value: 6, withReduction: 2},
+        {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 5, iconCountTotal: 19, name: "Recycling", raw: 18.504962779156326, singular: "year of recycling packaging", value: 19, withReduction: 5},
+        {desc: "years of running a 10w lightbulb", iconChar: "💡", iconCountActive: 5, iconCountTotal: 21, name: "Lightbulbs", raw: 211.91251040641794, singular: "year of running a 10w lightbulb", value: 212, withReduction: 53},
+        {desc: "quarter-pounders", iconChar: "🍔", iconCountActive: 4, iconCountTotal: 17, name: "Burgers", raw: 1714.367816091954, singular: "quarter-pounder", value: 1714, withReduction: 429},
+        {desc: "lifetimes of a fridge", iconChar: "❄️", iconCountActive: 0, iconCountTotal: 2, name: "Fridge", raw: 1.7862275449101797, singular: "lifetime of a fridge", value: 2, withReduction: 0}]
+    const eq = calculateEquivalents(3360);
+    expect(eq).toBeDefined;
+    // expect(eq[0]).toEqual(expect.objectContaining(expected[0]));
+    expect(eq[1]).toEqual(expect.objectContaining(expected[1]));
+    // expect(eq[2]).toEqual(expect.objectContaining(expected[2]));
+    // expect(eq[3]).toEqual(expect.objectContaining(expected[3]));
+    expect(eq[4]).toEqual(expect.objectContaining(expected[4]));
+    // expect(eq[5]).toEqual(expect.objectContaining(expected[5]));
+    // expect(eq[6]).toEqual(expect.objectContaining(expected[6]));
+});
+
+test('Establish equivalents for typical carbon 3', async () => {
+    const expected = [
+        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 1, iconCountTotal: 3, name: "Flights", raw: 3.2213822894168467, singular: "transatlantic flight", value: 3, withReduction: 1 },
+        {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 1, iconCountTotal: 4, name: "Drives", raw: 36.084848484848486, singular: "drive from Lands End to John O'Groats", value: 36, withReduction: 9},
+        {desc: "years of TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 6, name: "Netflix", raw: 6.080805609915199, singular: "year of TV streaming", value: 6, withReduction: 2},
+        {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 5, iconCountTotal: 19, name: "Recycling", raw: 18.504962779156326, singular: "year of recycling packaging", value: 19, withReduction: 5},
+        {desc: "years of running a 10w lightbulb", iconChar: "💡", iconCountActive: 5, iconCountTotal: 19, name: "Lightbulbs", raw: 188.13542218522164, singular: "year of running a 10w lightbulb", value: 188, withReduction: 47},
+        {desc: "quarter-pounders", iconChar: "🍔", iconCountActive: 4, iconCountTotal: 17, name: "Burgers", raw: 1714.367816091954, singular: "quarter-pounder", value: 1714, withReduction: 429},
+        {desc: "lifetimes of a fridge", iconChar: "❄️", iconCountActive: 0, iconCountTotal: 2, name: "Fridge", raw: 1.7862275449101797, singular: "lifetime of a fridge", value: 2, withReduction: 0}]
+    const eq = calculateEquivalents(5954);
+    expect(eq).toBeDefined;
+    expect(eq[0]).toEqual(expect.objectContaining(expected[0]));
+    expect(eq[1]).toEqual(expect.objectContaining(expected[1]));
+    // expect(eq[2]).toEqual(expect.objectContaining(expected[2]));
+    // expect(eq[3]).toEqual(expect.objectContaining(expected[3]));
+    // expect(eq[4]).toEqual(expect.objectContaining(expected[4]));
+    // expect(eq[5]).toEqual(expect.objectContaining(expected[5]));
+    // expect(eq[6]).toEqual(expect.objectContaining(expected[6]));
+});
