@@ -86,7 +86,6 @@ export function EquivalentsSlider(props: {
                   {shareEnabled ? (
                     <SocialMediaButtons
                       description={`My gas heating is equivalent to ${stat.value} ${stat.desc}. Check out yours`}
-                      image={"./logo.svg"}
                     />
                   ) : null}
                 </div>

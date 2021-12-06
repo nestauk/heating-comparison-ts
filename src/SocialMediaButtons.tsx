@@ -3,11 +3,9 @@ import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton,
     WhatsappIcon, WhatsappShareButton } from "react-share";
 
       
-export default function SocialMediaButtons( props: { image?: string, description?: string }) { 
-    const { image, description } = props; 
+export default function SocialMediaButtons( props: { description?: string }) { 
+    const { description } = props; 
     const url = process.env.PUBLIC_URL || "www.nesta.org.uk";
-    // const url = url_root + '/project-updates/carbon-calculator';
-    // const url = "https://nesta.staging.torchbox.com/project-updates/carbon-calculator-staging-page/";
 
     return (
         <>

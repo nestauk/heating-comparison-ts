@@ -38,7 +38,7 @@ describe("Usage input, typical bill amount", () => {
       wrapper.update();
 
       const report = wrapper.find(Report).at(0);
-      console.log(report.debug());
+
       expect(report).toBeDefined;
       // TODO - currently this test does not produce the conditions to display
       // the report or validate it appears
