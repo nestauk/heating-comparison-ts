@@ -18,7 +18,7 @@ export function Report(props: {
           <Grid item xs={12} sm={6}>
               <h1>
                   {`Your gas heating produces approx `}
-                  <u>{carbon}kg</u> of CO<sub>2</sub> per year
+                  <u>{carbon}kg</u> of CO<sub>2</sub>e per year
               </h1>
               <p>&nbsp;</p>
               <p>
@@ -79,9 +79,7 @@ export function ReportReduction(props: {
                     You could reduce this by 75%
                 </h1>
                 <p>
-                    A low carbon heating system - such as a heat pump - could reduce
-                    this by 75%. By 2035, this should move towards 100% as the UK
-                    transitions to fully renewable electricity.
+                A low carbon heating system such as a heat pump could reduce your home's heating carbon emissions by 75% today. By 2035, this should move towards 100% as the UK transitions to fully renewable electricity.
                 </p>
         </Grid>
         <Grid item xs={12} sm={6}>
