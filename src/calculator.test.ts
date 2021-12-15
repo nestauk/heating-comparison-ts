@@ -35,24 +35,13 @@ test('Display text function handles reductions to zero and singular or plural', 
     // calculates correctly
     expect(eq[0]).toEqual(expect.objectContaining(expected));
     // singular display text without reduction
-    expect(eq[0].displayText(false)).toEqual("1 transatlantic flight");
+    expect(eq[0].displayText(1)).toEqual("1 transatlantic flight");
     // display text when reduction reduces to zero
-    expect(eq[0].displayText(true)).toEqual("less than one transatlantic flight");
+    expect(eq[0].displayText(0)).toEqual("less than one transatlantic flight");
 });
 
 
 test('Statistics that are zero before reduction are not included', async () => {
-    const expected =  [
-    
-    //{"desc": "transatlantic flights", "displayText": [Function displayText], "iconChar": "✈️", "iconCountActive": 0, "iconCountTotal": 1, "name": "Flights", "raw": 0.755939524838013, "singular": "transatlantic flight", "value": 1, "withReduction": 0}
-
-        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 0, iconCountTotal: 1, name: "Flights", raw: 1.079913606911447, singular: "transatlantic flight", value: 1, withReduction: 0 },
-        {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 5, iconCountTotal: 18, name: "Drives", raw: 18.078787878787878, singular: "drive from Lands End to John O'Groats", value: 18, withReduction: 5},
-        {desc: "years of TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 6, name: "Netflix", raw: 6.080805609915199, singular: "year of TV streaming", value: 6, withReduction: 2},
-        {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 5, iconCountTotal: 19, name: "Recycling", raw: 18.504962779156326, singular: "year of recycling packaging", value: 19, withReduction: 5},
-        {desc: "years of running a 10w lightbulb", iconChar: "💡", iconCountActive: 5, iconCountTotal: 19, name: "Lightbulbs", raw: 188.13542218522164, singular: "year of running a 10w lightbulb", value: 188, withReduction: 47},
-        {desc: "quarter-pounders", iconChar: "🍔", iconCountActive: 4, iconCountTotal: 17, name: "Burgers", raw: 1714.367816091954, singular: "quarter-pounder", value: 1714, withReduction: 429},
-        {desc: "lifetimes of a fridge", iconChar: "❄️", iconCountActive: 0, iconCountTotal: 2, name: "Fridge", raw: 1.7862275449101797, singular: "lifetime of a fridge", value: 2, withReduction: 0}]
     const eq = calculateEquivalents(700);
     expect(eq).toBeDefined();
     // has certain stats which are non zero

@@ -69,8 +69,8 @@ export function EquivalentsSlider(props: {
 
                   <p className="text-2xl text-center font-bold">
                     { applyReduction ?
-                    `${stat.withReduction} ${stat.desc}` : 
-                    `${stat.value} ${stat.desc}`
+                    `${stat.displayText(stat.withReduction)}` : 
+                    `${stat.displayText(stat.value)}`
                     }
                   </p>
                 </div>
@@ -85,7 +85,7 @@ export function EquivalentsSlider(props: {
                 <div>
                   {shareEnabled ? (
                     <SocialMediaButtons
-                      description={`My gas heating is equivalent to ${stat.value} ${stat.desc}. Check out yours`}
+                      description={`My gas heating is equivalent to ${stat.displayText(stat.value)}. Check out yours`}
                     />
                   ) : null}
                 </div>

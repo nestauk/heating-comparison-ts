@@ -108,8 +108,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
         iconCountActive = withReduction;
       }
 
-      const displayText: Function  = (withReduction: boolean) => {
-        const figure = withReduction ? withReduction : value;
+      const displayText: Function  = (figure: number) => {
         if (figure > 1) {
           return `${figure} ${stat.desc}`;
         }
