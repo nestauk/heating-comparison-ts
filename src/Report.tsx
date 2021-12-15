@@ -66,10 +66,6 @@ export function ReportReduction(props: {
 }) {
   const { equivalents, reset } = props;
 
-  const redirectUrl = process.env.REDIRECT_URL
-    ? process.env.REDIRECT_URL
-    : "http://www.nesta.org.uk";
-
   return (
     <>
     <Grid container flexWrap="wrap" justifyItems="center" direction="row"  
