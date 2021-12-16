@@ -95,13 +95,15 @@ export function ReportReduction(props: {
       </Grid>
     </Grid>
     <Grid container flexDirection="row" justifyContent="space-between" >
-            <p/>
             <button
             className="btn btn--secondary"
             onClick={() => reset()}
             >
             Start again
             </button>
+            <a href={redirectUrl} className="btn btn--secondary">
+            Learn more
+            </a>
     </Grid>
     </>
   );
