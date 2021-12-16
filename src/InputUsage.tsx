@@ -28,7 +28,7 @@ export function InputUsage(props: any) {
     return (
             <Grid container>
               <Grid item xs={12}>
-                
+                &nbsp;
               </Grid>
               <Grid item xs={12}>
                 Enter bill amount (£) or usage (kWh)
@@ -82,6 +82,9 @@ export function InputUsage(props: any) {
                     <FormControlLabel value={Period.Year} control={<Radio />} label="Year" />
                   </RadioGroup>
                 </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                  <p>&nbsp;</p>
               </Grid>
               <Grid item xs={12}>
                 <Button className="btn btn--primary" variant="contained" 

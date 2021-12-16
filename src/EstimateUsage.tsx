@@ -26,6 +26,9 @@ export function EstimateUsage(props: any) {
   
     return (
         <Grid container>
+           <Grid item xs={12}>
+             &nbsp;
+           </Grid>
             <Grid item xs={12}>
                 <FormControl component="fieldset" className="formControl">
                     <InputLabel id="premise-age-label" >
@@ -88,6 +91,9 @@ export function EstimateUsage(props: any) {
                         <MenuItem value="10+ rooms">10+ rooms</MenuItem>
                     </Select>
                     </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                  <p>&nbsp;</p>
               </Grid>
               <Grid item xs={12}>
                 <Button className="btn btn--primary" onClick={() => onSubmit(premisesInfo)}>
