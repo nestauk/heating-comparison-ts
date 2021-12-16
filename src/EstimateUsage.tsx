@@ -27,7 +27,7 @@ export function EstimateUsage(props: any) {
     return (
         <Grid container>
            <Grid item xs={12}>
-             &nbsp;
+             <p>&nbsp;</p>
            </Grid>
             <Grid item xs={12}>
                 <FormControl component="fieldset" className="formControl">
@@ -93,7 +93,7 @@ export function EstimateUsage(props: any) {
                     </FormControl>
               </Grid>
               <Grid item xs={12}>
-                  <p>&nbsp;</p>
+                  &nbsp;
               </Grid>
               <Grid item xs={12}>
                 <Button className="btn btn--primary" onClick={() => onSubmit(premisesInfo)}>
