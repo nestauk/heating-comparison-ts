@@ -9,7 +9,6 @@ export function Report(props: {
   carbon: number;
   reset: () => void;
   setApplyReduction: React.Dispatch<React.SetStateAction<boolean>>;
-  setLearnMore: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { equivalents, carbon, setApplyReduction, reset } = props;
 
@@ -64,9 +63,8 @@ export function Report(props: {
 export function ReportReduction(props: {
   equivalents: Stat[];
   reset: () => void;
-  setLearnMore: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { equivalents, reset, setLearnMore } = props;
+  const { equivalents, reset } = props;
 
   return (
     <>
@@ -97,17 +95,12 @@ export function ReportReduction(props: {
       </Grid>
     </Grid>
     <Grid container flexDirection="row" justifyContent="space-between" >
+            <p/>
             <button
             className="btn btn--secondary"
             onClick={() => reset()}
             >
             Start again
-            </button>
-            <button
-            className="btn btn--secondary"
-            onClick={() => setLearnMore(true)}
-            >
-            Learn more
             </button>
     </Grid>
     </>

@@ -9,7 +9,6 @@ import { Report, ReportReduction } from './Report';
 import { EstimateUsage } from './EstimateUsage';
 import { InputUsage } from './InputUsage';
 import { estimateEmissions } from './estimateEmissions';
-import { LearnMore } from './learnMore';
 
 export default function App() {
 
@@ -18,7 +17,6 @@ export default function App() {
   const [ carbon, setCarbon ] = useState(null as number | null );
   const [ error, setError ] = useState(null as string | null);
   const [ applyReduction, setApplyReduction ] = useState(false);
-  const [ learnMore, setLearnMore ] = useState(false);
 
   const handleSubmitPremisesInfo = async (premisesInfo: PremisesInfo) => {
     const carbon = await estimateEmissions(premisesInfo);
@@ -41,7 +39,6 @@ export default function App() {
     setApplyReduction(false);
     setEquivalents(null);
     setCarbon(null);
-    setLearnMore(false);
   };
 
 
@@ -148,10 +145,7 @@ export default function App() {
         : 
         <>
           {/* Once stats are present show report */}
-          { learnMore ? 
-          <LearnMore />
-          : null}
-          { (equivalents && !learnMore)
+          { (equivalents)
           ?
             /* Once user has clicked to apply the reduction show report with reduction */
             (!applyReduction) ?
@@ -159,14 +153,12 @@ export default function App() {
               equivalents={equivalents}
               carbon={carbon}
               setApplyReduction={setApplyReduction}
-              setLearnMore={setLearnMore}
               reset={reset}
             />
             :
             <ReportReduction
               equivalents={equivalents}
               reset={reset}
-              setLearnMore={setLearnMore}
             />
           : <Alert severity="error">Could not generated comparisons for these carbon emissions</Alert>}
         </>
