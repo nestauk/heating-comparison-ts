@@ -5,8 +5,8 @@ import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton,
       
 export default function SocialMediaButtons( props: { description?: string }) { 
     const { description } = props; 
-    const url = process.env.REDIRECT_URL
-    ? process.env.REDIRECT_URL
+    const url = window.__RUNTIME_CONFIG__.CALC_URL
+    ? window.__RUNTIME_CONFIG__.CALC_URL
     : "http://www.nesta.org.uk";
 
     return (

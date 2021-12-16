@@ -65,6 +65,18 @@ export function ReportReduction(props: {
   reset: () => void;
 }) {
   const { equivalents, reset } = props;
+  const redirectUrl = window.__RUNTIME_CONFIG__.LEARN_MORE_URL
+  ? window.__RUNTIME_CONFIG__.LEARN_MORE_URL
+  : "http://www.nesta.org.uk";
+
+  const handleRedirect = () => {
+    
+    console.log(`Redirecting to ${redirectUrl}`);
+    if (typeof Window !== "undefined") {
+      window!.top!.location.href = redirectUrl; 
+    }
+    
+  }
 
   return (
     <>
@@ -101,9 +113,12 @@ export function ReportReduction(props: {
             >
             Start again
             </button>
-            <a href={redirectUrl} className="btn btn--secondary">
+            <button
+            className="btn btn--secondary"
+            onClick={() => handleRedirect()}
+            >
             Learn more
-            </a>
+            </button>
     </Grid>
     </>
   );
