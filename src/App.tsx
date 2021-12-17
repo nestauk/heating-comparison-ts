@@ -75,6 +75,10 @@ export default function App() {
       if (usage.units !== Unit.kWh) {
         // unit will be £ so convert to kwh
         // deduct average annual charge then divide by average price per kwh
+        if (usageVal < 100) {
+          setError('Amount seems too low - just your standing charge will make your bill £7/month or more');
+          return;
+        }
         usageVal = (usageVal - 94.81)/0.034;
       }
 
