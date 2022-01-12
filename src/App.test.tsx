@@ -17,7 +17,6 @@ test("renders button to help estimate", () => {
 
 describe("Usage input, typical bill amount", () => {
   it("Should capture usage correctly and report", async () => {
-      const usage = { value: 95, period: Period.Month, units: Unit.GBP };
 
       const wrapper = mount(
         <App/>
@@ -26,7 +25,6 @@ describe("Usage input, typical bill amount", () => {
       const usageInput = inputUsage.find(TextField).at(0);
       const unitInput = inputUsage.find(RadioGroup).at(0);
       const periodInput = inputUsage.find(RadioGroup).at(1);
-      const button = inputUsage.find(Button).at(1);
       usageInput.simulate('change', {target: {value: 95}});
       unitInput.simulate('change', {target: {value: Unit.GBP}});
       periodInput.simulate('change', {target: {value: Period.Quarter}});
@@ -39,8 +37,8 @@ describe("Usage input, typical bill amount", () => {
 
       const report = wrapper.find(Report).at(0);
 
-      expect(report).toBeDefined;
-      // TODO - currently this test does not produce the conditions to display
+      expect(report).toBeDefined();
+      // Note this test does not produce the conditions to display
       // the report or validate it appears
   });
 });
