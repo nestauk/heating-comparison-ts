@@ -1,3 +1,5 @@
+import { resourceLimits } from "worker_threads";
+
 export enum Period {
   Year = 'Year',
   Quarter = 'Quarter',
@@ -98,14 +100,22 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
       const withReduction = Math.round(stat.raw * 0.25);
       let iconCountTotal;
       let iconCountActive;
+      // console.log(JSON.stringify(`${JSON.stringify(stat)}, value: ${value}`));
 
-      if (value >= 10)  {
+      if (value >= 20)  {
+        // use powers of 10 as scale for icon counts as if it were a bar chart
         const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
+        console.log(divisor);
         iconCountTotal = Math.round( value / divisor);
         iconCountActive = Math.round( withReduction / divisor);
       } else {
         iconCountTotal = value;
         iconCountActive = withReduction;
+      }
+      if (iconCountTotal >=10) {
+        // over 10 icons problematic to display
+        iconCountTotal = 10; // use max 10 icons
+        iconCountActive = 3; // effective equivalent to Math.round(stat.raw * 0.25) where using 10;
       }
 
       const displayText: Function  = (figure: number) => {
@@ -118,7 +128,10 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
           return `less than one ${stat.singular}`;
         }
       };
-      return { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
+
+      const result = { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
+      console.log(JSON.stringify(`in: ${JSON.stringify(stat)}, value: ${value}, result: ${JSON.stringify(result)}`));
+      return result; 
     });
     return allStats.filter(stat => stat.value > 0);
 };
