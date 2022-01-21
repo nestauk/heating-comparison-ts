@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.App, .root {
+.App, .root, body {
   background-color:#fff;
   align-items: flex-start;
   justify-content: flex-start;
-  font-family: "Averta",sans-serif;
+  font-family: "Averta";
   font-size: 18px;
   line-height: 1.8;
   color: #0f294a;
@@ -26,7 +26,7 @@ h2 {
 }
 h3 {
   font-size: 1em;
-  font-family: "Averta" sans-serif;
+  font-family: "Averta";
   color: black;
 }
 p {

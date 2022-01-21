@@ -10,7 +10,7 @@ module.exports = {
         "brand-yellow": "#FDB633",
       },
       fontFamily: {
-        brand: ['"zosia"', "sans-serif"],
+        brand: ['"zosia"', "Averta", "sans-serif"],
       },
     },
   },
