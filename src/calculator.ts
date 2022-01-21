@@ -98,12 +98,11 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
       const withReduction = Math.round(stat.raw * 0.25);
       let iconCountTotal;
       let iconCountActive;
-      // console.log(JSON.stringify(`${JSON.stringify(stat)}, value: ${value}`));
+
 
       if (value >= 20)  {
         // use powers of 10 as scale for icon counts as if it were a bar chart
         const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
-        console.log(divisor);
         iconCountTotal = Math.round( value / divisor);
         iconCountActive = Math.round( withReduction / divisor);
       } else {
@@ -127,9 +126,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
         }
       };
 
-      const result = { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
-      console.log(JSON.stringify(`in: ${JSON.stringify(stat)}, value: ${value}, result: ${JSON.stringify(result)}`));
-      return result; 
+      return { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
     });
     return allStats.filter(stat => stat.value > 0);
 };

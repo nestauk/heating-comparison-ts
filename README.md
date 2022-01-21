@@ -29,4 +29,4 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run build && aws s3 sync build/ s3://gas-heating-carbon-calc`
+### `npm run build && aws s3 sync build/ s3://nesta-home-heating-carbon-calculator`

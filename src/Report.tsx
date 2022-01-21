@@ -70,8 +70,6 @@ export function ReportReduction(props: {
   : "http://www.nesta.org.uk";
 
   const handleRedirect = () => {
-    
-    console.log(`Redirecting to ${redirectUrl}`);
     if (typeof Window !== "undefined") {
       window!.top!.location.href = redirectUrl; 
     }
