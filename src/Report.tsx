@@ -26,8 +26,6 @@ export function Report(props: {
               </p>
               <p>&nbsp;</p>
               <p>&nbsp;</p>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
           </Grid>
           <Grid item xs={12} sm={6}>
               <EquivalentsSlider

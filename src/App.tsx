@@ -137,8 +137,6 @@ export default function App() {
                 <Grid item xs={12} >
                   <p>&nbsp;</p>
                   <p>&nbsp;</p>
-                  <p>&nbsp;</p>
-                  <p>&nbsp;</p>
                 </Grid>
                 <Grid item xs={12}>
                   <Button className="btn btn--primary" variant="contained" onClick={() => flagUsageUnknown(false)}>I know my usage</Button>
