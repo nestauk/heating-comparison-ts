@@ -30,6 +30,7 @@ h3 {
   color: black;
 }
 p {
+  font-family: "Averta";
   font-size: 1em;
 }
 
@@ -106,6 +107,7 @@ p {
 }
 
 .btn--primary {
+  font-family: "Averta";
   background-color:#eb003b;
   color:#fff;
   -webkit-clip-path:polygon(100% 100%, 10px 100%, 0% calc(100% - 10px), 0% 0%, calc(100% - 10px) 0%, 100% 10px);
@@ -117,6 +119,7 @@ p {
 } 
 
 .btn--secondary { 
+  font-family: "Averta";
   position:relative;
   background-color:#00745C;
   color: white;
