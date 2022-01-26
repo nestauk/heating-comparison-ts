@@ -63,7 +63,7 @@ export type Stat = {
 
 export const calculateEquivalents = (carbonKg: number): Stat[] => {
     
-    const flights = carbonKg/926;
+    const flights = carbonKg/311.7;
     const netflix =  (((carbonKg/0.056)/24) /365);
     const drives = carbonKg/165;
     const recycling =  ((carbonKg/3.1)/52);
@@ -109,8 +109,8 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
         iconCountTotal = value;
         iconCountActive = withReduction;
       }
-      if (iconCountTotal >=10) {
-        // over 10 icons problematic to display
+      if (iconCountTotal >=12) {
+        // over 12 icons problematic to display
         iconCountTotal = 10; // use max 10 icons
         iconCountActive = 3; // effective equivalent to Math.round(stat.raw * 0.25) where using 10;
       }

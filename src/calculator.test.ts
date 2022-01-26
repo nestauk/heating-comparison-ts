@@ -9,7 +9,7 @@ test('Calculate carbon emissions for typical usage 1', async () => {
 
 test('Establish equivalents for typical carbon 1', async () => {
     const expected = [
-        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 1, iconCountTotal: 3, name: "Flights", raw: 3.2213822894168467, singular: "transatlantic flight", value: 3, withReduction: 1 },
+        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 2, iconCountTotal: 10, name: "Flights", raw: 9.570099454603787, singular: "transatlantic flight", value: 10, withReduction: 2 },
         {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 3, iconCountTotal: 10, name: "Drives", raw: 18.078787878787878, singular: "drive from Lands End to John O'Groats", value: 18, withReduction: 5},
         {desc: "years of constant TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 6, name: "Netflix", raw: 6.080805609915199, singular: "year of constant TV streaming", value: 6, withReduction: 2},
         {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 3, iconCountTotal: 10, name: "Recycling", raw: 18.504962779156326, singular: "year of recycling packaging", value: 19, withReduction: 5},
@@ -29,8 +29,8 @@ test('Establish equivalents for typical carbon 1', async () => {
 
 test('Display text function handles reductions to zero and singular or plural', async () => {
     const expected = 
-        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 0, iconCountTotal: 1, name: "Flights", raw: 1.079913606911447, singular: "transatlantic flight", value: 1, withReduction: 0 };
-    const eq = calculateEquivalents(1000);
+        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 0, iconCountTotal: 1, name: "Flights", raw: 1.2832852101379533, singular: "transatlantic flight", value: 1, withReduction: 0 };
+    const eq = calculateEquivalents(400);
     expect(eq).toBeDefined();
     // calculates correctly
     expect(eq[0]).toEqual(expect.objectContaining(expected));
@@ -67,26 +67,27 @@ test('Statistics that are zero before reduction are not included', async () => {
 
 test('Establish equivalents for typical carbon 2', async () => {
     const expected = [
-        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 1, iconCountTotal: 4, name: "Flights", raw: 3.6285097192224622, singular: "transatlantic flight", value: 4, withReduction: 1 },
-        {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 3, iconCountTotal: 10, name: "Drives", raw: 20.363636363636363, singular: "drive from Lands End to John O'Groats", value: 20, withReduction: 5},
+        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 3, iconCountTotal: 10, name: "Flights", raw: 13.98780879050369, singular: "transatlantic flight", value: 14, withReduction: 3 },
+        {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 3, iconCountTotal: 10, name: "Drives", raw: 26.424242424242426, singular: "drive from Lands End to John O'Groats", value: 26, withReduction: 7},
         {desc: "years of constant TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 7, name: "Netflix", raw: 6.8493150684931505, singular: "year of constant TV streaming", value: 7, withReduction: 2},
         {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 3, iconCountTotal: 10, name: "Recycling", raw: 20.843672456575682, singular: "year of recycling packaging", value: 21, withReduction: 5},
         {desc: "years of running a 10w lightbulb", iconChar: "💡", iconCountActive: 3, iconCountTotal: 10, name: "Lightbulbs", raw: 211.91251040641794, singular: "year of running a 10w lightbulb", value: 212, withReduction: 53}
     ];
-    const eq = calculateEquivalents(3360);
+    const eq = calculateEquivalents(4360);
     expect(eq).toBeDefined();
+    // figures with value over 12 are scaled to a scale of 10 therefore the flights are on a scale of 10 for icons
     expect(eq[0]).toEqual(expect.objectContaining(expected[0]));
     expect(eq[1]).toEqual(expect.objectContaining(expected[1]));
-    expect(eq[2]).toEqual(expect.objectContaining(expected[2]));
-    expect(eq[3]).toEqual(expect.objectContaining(expected[3]));
-    expect(eq[4]).toEqual(expect.objectContaining(expected[4]));
+    expect(eq[2]).toEqual(expect.objectContaining({name: "Netflix"}));
+    expect(eq[3]).toEqual(expect.objectContaining({name: "Recycling"}));
+    expect(eq[4]).toEqual(expect.objectContaining({name: "Lightbulbs"}));
     expect(eq[5]).toEqual(expect.objectContaining({name: "Burgers"}));
     expect(eq[6]).toEqual(expect.objectContaining({name: "Fridge"}));
 });
 
 test('Establish equivalents for typical carbon 3', async () => {
     const expected = [
-        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 2, iconCountTotal: 6, name: "Flights", raw: 6.429805615550756, singular: "transatlantic flight", value: 6, withReduction: 2 },
+        {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 3, iconCountTotal: 10, name: "Flights", raw: 19.101700352903432, singular: "transatlantic flight", value: 19, withReduction: 5 },
         {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 1, iconCountTotal: 4, name: "Drives", raw: 36.084848484848486, singular: "drive from Lands End to John O'Groats", value: 36, withReduction: 9},
     ]
     const eq = calculateEquivalents(5954);
