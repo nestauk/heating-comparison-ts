@@ -80,7 +80,7 @@ export const calculateEquivalents = (carbonKg: number): Stat[] => {
           { name: "Netflix", desc: "years of constant TV streaming", singular: "year of constant TV streaming",
             raw: netflix,  
             iconChar: '📺' },
-          { name: "Recycling", desc: "years of recycling packaging", singular: "year of recycling packaging",
+          { name: "Recycling", desc: "years of not recycling packaging", singular: "year of not recycling packaging",
             raw: recycling,
             iconChar: '♻️' },
           { name: "Lightbulbs", desc: "years of running a 10w lightbulb", singular: "year of running a 10w lightbulb",

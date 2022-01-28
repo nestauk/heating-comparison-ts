@@ -12,7 +12,7 @@ test('Establish equivalents for typical carbon 1', async () => {
         {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 2, iconCountTotal: 10, name: "Flights", raw: 9.570099454603787, singular: "transatlantic flight", value: 10, withReduction: 2 },
         {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 3, iconCountTotal: 10, name: "Drives", raw: 18.078787878787878, singular: "drive from Lands End to John O'Groats", value: 18, withReduction: 5},
         {desc: "years of constant TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 6, name: "Netflix", raw: 6.080805609915199, singular: "year of constant TV streaming", value: 6, withReduction: 2},
-        {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 3, iconCountTotal: 10, name: "Recycling", raw: 18.504962779156326, singular: "year of recycling packaging", value: 19, withReduction: 5},
+        {desc: "years of not recycling packaging", iconChar: "♻️", iconCountActive: 3, iconCountTotal: 10, name: "Recycling", raw: 18.504962779156326, singular: "year of not recycling packaging", value: 19, withReduction: 5},
         {desc: "years of running a 10w lightbulb", iconChar: "💡", iconCountActive: 3, iconCountTotal: 10, name: "Lightbulbs", raw: 188.13542218522164, singular: "year of running a 10w lightbulb", value: 188, withReduction: 47},
         {desc: "quarter-pounders", iconChar: "🍔", iconCountActive: 3, iconCountTotal: 10, name: "Burgers", raw: 1714.367816091954, singular: "quarter-pounder", value: 1714, withReduction: 429},
         {desc: "lifetimes of a fridge", iconChar: "❄️", iconCountActive: 0, iconCountTotal: 2, name: "Fridge", raw: 1.7862275449101797, singular: "lifetime of a fridge", value: 2, withReduction: 0}]
@@ -70,7 +70,7 @@ test('Establish equivalents for typical carbon 2', async () => {
         {desc: "transatlantic flights", iconChar: "✈️", iconCountActive: 3, iconCountTotal: 10, name: "Flights", raw: 13.98780879050369, singular: "transatlantic flight", value: 14, withReduction: 3 },
         {desc: "drives from Lands End to John O'Groats", iconChar: "🚘", iconCountActive: 3, iconCountTotal: 10, name: "Drives", raw: 26.424242424242426, singular: "drive from Lands End to John O'Groats", value: 26, withReduction: 7},
         {desc: "years of constant TV streaming", iconChar: "📺", iconCountActive: 2, iconCountTotal: 7, name: "Netflix", raw: 6.8493150684931505, singular: "year of constant TV streaming", value: 7, withReduction: 2},
-        {desc: "years of recycling packaging", iconChar: "♻️", iconCountActive: 3, iconCountTotal: 10, name: "Recycling", raw: 20.843672456575682, singular: "year of recycling packaging", value: 21, withReduction: 5},
+        {desc: "years of not recycling packaging", iconChar: "♻️", iconCountActive: 3, iconCountTotal: 10, name: "Recycling", raw: 20.843672456575682, singular: "year of not recycling packaging", value: 21, withReduction: 5},
         {desc: "years of running a 10w lightbulb", iconChar: "💡", iconCountActive: 3, iconCountTotal: 10, name: "Lightbulbs", raw: 211.91251040641794, singular: "year of running a 10w lightbulb", value: 212, withReduction: 53}
     ];
     const eq = calculateEquivalents(4360);
