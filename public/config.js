@@ -1,4 +1,4 @@
 window.__RUNTIME_CONFIG__ = {
-    "LEARN_MORE_URL": "https://nesta.staging.torchbox.com/project-updates/gas-heat-pumps/",
-    "CALC_URL": "https://nesta.staging.torchbox.com/project-updates/carbon-calculator/",
+    "CALC_URL": "https://www.nesta.org.uk/project-updates/how-much-your-gas-boiler-costing-earth/",
+    "LEARN_MORE_URL": "https://www.nesta.org.uk/project-updates/cut-your-homes-carbon-emissions-by-getting-a-heat-pump/",
   }
