@@ -14,14 +14,14 @@ export default function SocialMediaButtons( props: { description?: string }) {
             <FacebookShareButton 
                 url={url}
                 quote={description}
-                hashtag="gasheatingclimatechange"
+                hashtag="NestaCarbonCalc"
                 className="socialMediaButton">
                 <FacebookIcon size={36} />
             </FacebookShareButton>
             <TwitterShareButton
                 url={url}
                 title={description}
-                hashtags={['gasheatingclimatechange']}
+                hashtags={['NestaCarbonCalc']}
                 className="socialMediaButton">
                 <TwitterIcon size={36} />
             </TwitterShareButton>
