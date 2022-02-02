@@ -7,35 +7,6 @@
     filter: grayscale(100%);
 }
 
-.darkBackground {
-    background-color: #18A48c;
-    color: white;
-}
-.darkBackground h1 {
-    color: white;
-}
-.darkBackground h2 {
-    color: white;
-}
-.darkBackground h3 {
-    color: white;
-}
-
-.lightBackground {
-    background-color: white;
-    color: #0f294a;
-}
-
-.lightBackground h1 {
-    color: blue;
-}
-.lightBackground h2 {
-    color: blue;
-}
-.lightBackground h3 {
-    color: blue;
-}
-
 
 .icons {
     font-size: 32px;

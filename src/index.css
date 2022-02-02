@@ -1,47 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  .input-text,
-  .input-select {
-    @apply border-2 border-black px-2 py-1;
-  }
-  .input-radio + label {
-    @apply ml-1 mr-5;
-  }
-  .input-radio:checked + label {
-    @apply font-bold;
-  }
-}
-
-/* Slick Carousel Overrides =============================================== */
-.slick-dots button::before {
-  font-size: 0.875rem !important;
-}
-
-.slick-active button::before,
-.slick-dots button:hover::before {
-  color: #0000ff !important;
-}
-
-.slick-prev::before,
-.slick-next::before {
-  color: #c4c4c4 !important;
-}
-
-:root {
-  --bg: #fdf7f7;
-  --black: #0f294a;
-}
-
 body {
-  font-family: "Averta", sans-serif;
-  font-size: 16px;
+  margin: 0;
+  font-family: "Averta", 
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  background: var(--bg);
-  color: var(--black);
-  font-size: 16px;
 }

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Stat } from "./calculator";
+import { Grid } from "@mui/material";
 import { EquivalentsSlider } from "./EquivalentsSlider";
 import "./Report.css";
 
@@ -12,99 +13,111 @@ export function Report(props: {
   const { equivalents, carbon, setApplyReduction, reset } = props;
 
   return (
-    <div>
-      <div className="mb-4">
-        <a className="cursor-pointer hover:underline" onClick={() => reset()}>
-          &lsaquo; Back
-        </a>
-      </div>
+    <>
+    <Grid container flexWrap="wrap" justifyItems="center" direction="row" spacing={4} sx={{ padding: 2 }}>
+          <Grid item xs={12} sm={6}>
+              <h1>
+                  {`Your gas heating produces approx `}
+                  <u>{carbon}kg</u> of CO<sub>2</sub> per year
+              </h1>
+              <p>&nbsp;</p>
+              <p>
+                  That's as much carbon as...
+              </p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+              <EquivalentsSlider
+                  equivalents={equivalents}
+                  banner=""
+                  shareEnabled={true}
+                  applyReduction={false}
+                  slideClass="bg-brand-green text-white"
+                  shareClass="bg-white text-gray-500" />
+          </Grid>
+          <Grid item xs={12} minHeight="10">
+            &nbsp;
+          </Grid>
+    </Grid>
+    <Grid container flexDirection="row" justifyContent="space-between" >
 
-      <div className="flex flex-wrap items-center mb-14">
-        <div className="md:w-5/12 w-full md:mb-0 mb-8">
-          <h1 className="font-brand text-brand-blue text-4xl mb-6">
-            {`Your gas heating produces approx `}
-            <u>{carbon}kg</u> of CO<sub>2</sub> per year
-          </h1>
-          <p className="text-2xl text-brand-blue">
-            That's as much carbon as...
-          </p>
-        </div>
-        <div className="md:w-7/12 w-full md:pl-12 px-7">
-          <EquivalentsSlider
-            equivalents={equivalents}
-            banner=""
-            shareEnabled={true}
-            applyReduction={false}
-            slideClass="bg-brand-green text-white"
-            shareClass="bg-white text-gray-500"
-          />
-        </div>
-      </div>
+            <button
+                className="btn btn--primary"
+                onClick={() => reset()}
+            >
+                Start again
+            </button>
 
-      <div className="text-center">
-        <button
-          className="btn btn--primary"
-          onClick={() => setApplyReduction(true)}
-        >
-          What can I do?
-        </button>
-      </div>
-    </div>
+            <button
+                className="btn btn--primary"
+                onClick={() => setApplyReduction(true)}
+            >
+                What can I do?
+            </button>
+     </Grid>
+    </>
   );
 }
 
 export function ReportReduction(props: {
   equivalents: Stat[];
   reset: () => void;
-  setBgClass: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { equivalents, reset, setBgClass } = props;
+  const { equivalents, reset } = props;
+  const redirectUrl = window.__RUNTIME_CONFIG__.LEARN_MORE_URL
+  ? window.__RUNTIME_CONFIG__.LEARN_MORE_URL
+  : "http://www.nesta.org.uk";
 
-  const redirectUrl = process.env.redirectUrl
-    ? process.env.redirectUrl
-    : "http://www.nesta.org.uk";
-
-  setBgClass("bg-brand-green");
+  const handleRedirect = () => {
+    if (typeof Window !== "undefined") {
+      window!.top!.location.href = redirectUrl; 
+    }
+    
+  }
 
   return (
-    <div>
-      <div className="mb-4">
-        <a
-          className="text-white cursor-pointer hover:underline"
-          onClick={() => reset()}
-        >
-          &lsaquo; Back
-        </a>
-      </div>
-
-      <div className="flex flex-wrap items-center mb-14">
-        <div className="md:w-5/12 w-full md:mb-0 mb-8">
-          <h1 className="font-brand text-white text-4xl mb-6">
-            You could reduce this by 75%
-          </h1>
-          <p className="text-2xl text-white">
-            A low carbon heating system - such as a heat pump - could reduce
-            this by 75%. By 2035, this should move towards 100% as the UK
-            transitions to fully renewable electricity.
-          </p>
-        </div>
-        <div className="md:w-7/12 w-full md:pl-12 px-7">
-          <EquivalentsSlider
-            equivalents={equivalents}
-            banner="With a heat pump that would equal:"
-            shareEnabled={true}
-            applyReduction={true}
-            slideClass="bg-white"
-            shareClass="bg-brand-yellow text-white"
-          />
-        </div>
-      </div>
-
-      <div className="text-center">
-        <a href={redirectUrl} className="btn btn--primary">
-          Learn more
-        </a>
-      </div>
-    </div>
+    <>
+    <Grid container flexWrap="wrap" justifyItems="center" direction="row"  
+      spacing={4} sx={{ padding: 2 }}>
+        <Grid item xs={12} sm={6}>
+                <h1>
+                    You could reduce the emissions your home heating generates by 75%
+                </h1>
+                <p>
+                A low-carbon heating system such as a heat pump could reduce your home heating's carbon emissions by 75% today. By 2035, as the UK transitions to fully-renewable electricity, emissions from your home heating could approach zero.
+                </p>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+            <EquivalentsSlider
+                equivalents={equivalents}
+                banner="With a heat pump that would equal:"
+                shareEnabled={true}
+                applyReduction={true}
+                slideClass="bg-white text-black"
+                shareClass="bg-brand-yellow text-white"
+            />
+        </Grid>
+    </Grid>
+    <Grid container>
+      <Grid item xs={12} minHeight="10">
+            &nbsp;
+      </Grid>
+    </Grid>
+    <Grid container flexDirection="row" justifyContent="space-between" >
+            <button
+            className="btn btn--secondary"
+            onClick={() => reset()}
+            >
+            Start again
+            </button>
+            <button
+            className="btn btn--secondary"
+            onClick={() => handleRedirect()}
+            >
+            Learn more
+            </button>
+    </Grid>
+    </>
   );
 }

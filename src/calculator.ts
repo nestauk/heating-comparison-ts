@@ -22,7 +22,7 @@ palatial = '10+ rooms'
 export enum PremiseType {
   Detached = "Detached",
   SemiDetached = "Semi-Detached",
-  Terraced = "Terraced",
+  Terraced = "Terrace",
   Bungalow = "Bungalow",
   Flat = "Flat",
 }
@@ -50,77 +50,91 @@ export type UsageInfo = {
 export type Stat = {
   name: string,
   desc: string,
+  singular: string,
   value: number,
+  withReduction: number,
   raw: number,
   iconCountTotal: number,
   iconCountActive: number,
   iconChar: string,
+  displayText:  Function, // (withReduction: boolean) => string;,
 }
 
 
 export const calculateEquivalents = (carbonKg: number): Stat[] => {
     
-    const flights = carbonKg/926;
+    const flights = carbonKg/311.7;
     const netflix =  (((carbonKg/0.056)/24) /365);
     const drives = carbonKg/165;
-    const recycling =  ((carbonKg/2.9)/52);
+    const recycling =  ((carbonKg/3.1)/52);
     const lights =  ((carbonKg/0.00181)/24)/365;
     const burgers = carbonKg/1.74;
-    // const fridge = carbonKg/1670;
+    const fridge = carbonKg/1670;
     const stats = [
-          { name: "Flights", desc: "Transatlantic flights",
+          { name: "Flights", desc: "transatlantic flights", singular: "transatlantic flight",
             raw: flights,
             iconChar: '✈️' },
-          { name: "Drives", desc: "Drives from Lands End to John O'Groats",
+          { name: "Drives", desc: "drives from Lands End to John O'Groats", singular: "drive from Lands End to John O'Groats",
             raw: drives,  
             iconChar: '🚘'},
-          { name: "Netflix", desc: "Years of TV streaming",
+          { name: "Netflix", desc: "years of constant TV streaming", singular: "year of constant TV streaming",
             raw: netflix,  
             iconChar: '📺' },
-          { name: "Recycling", desc: "Years of recycling packaging",
+          { name: "Recycling", desc: "years of not recycling packaging", singular: "year of not recycling packaging",
             raw: recycling,
             iconChar: '♻️' },
-          { name: "Lightbulbs", desc: "Years of running a 10w lightbulb",
+          { name: "Lightbulbs", desc: "years of running a 10w lightbulb", singular: "year of running a 10w lightbulb",
             raw: lights, 
             iconChar: '💡', },
-          { name: "Burgers", desc: "Quarter-pounders",
+          { name: "Burgers", desc: "quarter-pounders", singular: "quarter-pounder",
             raw: burgers,  
             iconChar: '🍔' },
+          { name: "Fridge", desc: "lifetimes of a fridge", singular: "lifetime of a fridge",
+            raw: fridge, 
+            iconChar: '❄️' },
         ] as Stat[];
     const allStats = stats.map(stat => {
-      const icons = getIconCounts(stat.raw);
-      return { ...stat, value: Math.round(stat.raw), ...icons };
+      const value = Math.round(stat.raw);
+      const withReduction = Math.round(stat.raw * 0.25);
+      let iconCountTotal;
+      let iconCountActive;
+
+
+      if (value >= 20)  {
+        // use powers of 10 as scale for icon counts as if it were a bar chart
+        const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
+        iconCountTotal = Math.round( value / divisor);
+        iconCountActive = Math.round( withReduction / divisor);
+      } else {
+        iconCountTotal = value;
+        iconCountActive = withReduction;
+      }
+      if (iconCountTotal >=12) {
+        // over 12 icons problematic to display
+        iconCountTotal = 10; // use max 10 icons
+        iconCountActive = 3; // effective equivalent to Math.round(stat.raw * 0.25) where using 10;
+      }
+
+      const displayText: Function  = (figure: number) => {
+        if (figure > 1) {
+          return `${figure} ${stat.desc}`;
+        }
+        else if (figure === 1) {
+          return `${figure} ${stat.singular}`;
+        } else {
+          return `less than one ${stat.singular}`;
+        }
+      };
+
+      return { ...stat, value, withReduction, iconCountActive, iconCountTotal, displayText } as Stat;
     });
-    // if (fridge > 0) {
-    //   stats.push({ 
-    //     name: "Fridge", desc: "Lifetimes of a fridge",
-    //     value: fridge, iconCountTotal: getIconCountTotal(fridge), 
-    //     iconChar: '❄️' , iconCountActive: getIconCountActive(fridge)
-    //   });
-    // } 
-    // TODO - swap the fridge test out for a filter that removes any stats that come out with zero value
-    return allStats;
+    return allStats.filter(stat => stat.value > 0);
 };
 
 export const calculateCarbon = (usage: number) => {
 
     const carbon = Math.round(usage*0.18316);
-    console.log(`Calculated carbon emissions in kg for ${usage} as ${JSON.stringify(carbon)}`);
     return carbon;
 };
-
-
-const getIconCounts = (value: number): { } => {
-  let icons;
-  if (value >= 10)  {
-    const divisor = ((Math.pow(10, Math.round(Math.log10(value))))/10);
-    icons = Math.round( value / divisor);
-  } else {
-    icons = value;
-  }
-  const withReduction = icons * 0.25;
-  const activeIcons = ( withReduction > 1) ? Math.round(withReduction) : 1;  
-  return { iconCountActive: activeIcons, iconCountTotal: Math.round(icons)};
-}
 
 

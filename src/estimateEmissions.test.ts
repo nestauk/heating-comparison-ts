@@ -9,5 +9,30 @@ test('Get an estimate with valid criteria', async () => {
     });
     expect(emissions).toBeDefined;
     expect(emissions).toBeGreaterThan(0);
+    expect(emissions).toBe(2130);
+
+});
+
+test('Get an estimate with valid criteria 2', async () => {
+    const emissions = await estimateEmissions({ 
+        type: PremiseType.Bungalow,
+        numRooms: NumRooms.large, 
+        age: PremiseAge.Band5 
+    });
+    expect(emissions).toBeDefined;
+    expect(emissions).toBeGreaterThan(0);
+    expect(emissions).toBe(3360);
+
+});
+
+test('Get an estimate with valid criteria 4', async () => {
+    const emissions = await estimateEmissions({ 
+        type: PremiseType.Terraced,
+        numRooms: NumRooms.large, 
+        age: PremiseAge.Band1 
+    });
+    expect(emissions).toBeDefined;
+    expect(emissions).toBeGreaterThan(0);
+    expect(emissions).toBe(5590);
 
 });

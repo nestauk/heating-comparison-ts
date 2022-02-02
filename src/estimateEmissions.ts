@@ -1,10 +1,28 @@
 import { PremisesInfo } from './calculator'
 
+type Estimate = {
+    Index: number
+    PremiseType: string
+    PremiseAge: string
+    NumRooms: string
+    EmissionsMean: number
+    EmissionsMedian: number
+    NumProperties: number
+    PercentageProperties: number
+}
+
 export const estimateEmissions = async (premisesInfo: PremisesInfo): Promise<number> => {
   
+  const isMatch = (data: Estimate) => {
+    return (
+      data.PremiseType === premisesInfo.type && 
+      data.PremiseAge === premisesInfo.age && 
+      data.NumRooms === premisesInfo.numRooms
+    );
+  };
+
   try {
-    const value = data.filter(data=> data.PremiseType === premisesInfo.type)[0].EmissionsMean * 1000;
-    console.debug(`Got emissions estimate of: ${JSON.stringify(value)} kg`);
+    const value = data.filter(isMatch)[0].EmissionsMean * 1000;
 
     return value;
   } catch (err) {

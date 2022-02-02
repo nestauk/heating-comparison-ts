@@ -1,8 +1,37 @@
-.App,
-.root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.App, .root, body {
+  background-color:#fff;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-family: "Averta";
+  font-size: 18px;
+  line-height: 1.8;
+  color: #0f294a;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: 2em;
+  font-family: "zosia";
+  color:blue;
+}
+h2 {
+  font-size: 1.4em;
+  font-family: "zosia";
+  color:blue;
+}
+h3 {
+  font-size: 1em;
+  font-family: "Averta";
+  color: black;
+}
+p {
+  font-family: "Averta";
+  font-size: 1em;
 }
 
 .MuiGrid-item {
@@ -14,144 +43,111 @@
   margin: 5px;
 }
 
-.btn {
-  padding: 7px 21px;
-  font-size: 21px;
-  line-height: 1.8;
-  font-weight: 700;
-  text-align: center;
-  vertical-align: top;
-  text-decoration: none;
-  position: relative;
-  display: inline-block;
-  border-radius: 0;
-  border: 0;
-  cursor: pointer;
-  overflow: hidden;
+.darkBackground {
+  background-color: #00745C;
+  color: white;
+}
+.darkBackground h1 {
+  color: white;
+}
+.darkBackground h2 {
+  color: white;
+}
+.darkBackground h3 {
+  color: white;
+}
+
+.lightBackground {
+  background-color: white;
+  color: #0f294a;
+}
+
+.lightBackground h1 {
   color: blue;
-  -webkit-transition: color 300ms ease-in-out,
-    background-color 300ms ease-in-out;
-  transition: color 300ms ease-in-out, background-color 300ms ease-in-out;
+}
+.lightBackground h2 {
+  color: blue;
+}
+.lightBackground h3 {
+  color: black;
+}
+
+
+
+.btn {
+  padding:7px 21px 7px 21px;
+  font-size:21px;
+  font-size:1.16667rem;
+  text-align:center;
+  vertical-align:top;
+  text-transform: none;
+  text-decoration:none;
+  position:relative;
+  display:inline-block;
+  border-radius:0;
+  border:0;
+  cursor:pointer;
+  overflow:hidden;
+  color:blue;
+  -webkit-transition:color 300ms ease-in-out,background-color 300ms ease-in-out;
+  transition:color 300ms ease-in-out,background-color 300ms ease-in-out;
+  box-shadow: none;
 }
 
 @media (min-width: 1100px) {
-  .btn {
-    padding: 8.75px 26.25px 8.75px 26.25px;
+  .btn{
+    padding:8.75px 26.25px 8.75px 26.25px
   }
 }
 
 @media (min-width: 1440px) {
-  .btn {
-    padding: 10.5px 31.5px 10.5px 31.5px;
-    background-color: blue;
-    color: #fff;
+  .btn { 
+    padding:10.5px 31.5px 10.5px 31.5px;
   }
 }
 
 .btn--primary {
-  background-color: #eb003b;
-  color: #fff;
-  -webkit-clip-path: polygon(
-    100% 100%,
-    10px 100%,
-    0% calc(100% - 10px),
-    0% 0%,
-    calc(100% - 10px) 0%,
-    100% 10px
-  );
-  clip-path: polygon(
-    100% 100%,
-    10px 100%,
-    0% calc(100% - 10px),
-    0% 0%,
-    calc(100% - 10px) 0%,
-    100% 10px
-  );
+  font-family: "Averta";
+  background-color:#eb003b;
+  color:#fff;
+  -webkit-clip-path:polygon(100% 100%, 10px 100%, 0% calc(100% - 10px), 0% 0%, calc(100% - 10px) 0%, 100% 10px);
+  clip-path:polygon(100% 100%, 10px 100%, 0% calc(100% - 10px), 0% 0%, calc(100% - 10px) 0%, 100% 10px)
 }
 
 .btn--primary:hover {
-  background-color: #0f294a;
-}
+  background-color:#0f294a
+} 
 
-.hero--home .btn--primary {
-  background-color: blue;
-}
-
-.hero--home .btn--primary:hover {
-  background-color: #0f294a;
-}
-.btn--secondary {
-  position: relative;
-  background-color: #fff;
-  color: #0f294a;
-}
+.btn--secondary { 
+  font-family: "Averta";
+  position:relative;
+  background-color:#00745C;
+  color: white;
+} 
 .btn--secondary::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #0f294a;
-  -webkit-clip-path: polygon(
-    calc(100% - 2px) 10px,
-    calc(100% - 2px) 100%,
-    100% 100%,
-    100% 10px,
-    calc(100% - 10px) 0,
-    0% 0%,
-    0% calc(100% - 10px),
-    10px 100%,
-    100% 100%,
-    100% calc(100% - 2px),
-    10px calc(100% - 2px),
-    2px calc(100% - 10px),
-    2px 2px,
-    calc(100% - 10px) 2px
-  );
-  clip-path: polygon(
-    calc(100% - 2px) 10px,
-    calc(100% - 2px) 100%,
-    100% 100%,
-    100% 10px,
-    calc(100% - 10px) 0,
-    0% 0%,
-    0% calc(100% - 10px),
-    10px 100%,
-    100% 100%,
-    100% calc(100% - 2px),
-    10px calc(100% - 2px),
-    2px calc(100% - 10px),
-    2px 2px,
-    calc(100% - 10px) 2px
-  );
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:white;
+  -webkit-clip-path:polygon(calc(100% - 2px) 10px, calc(100% - 2px) 100%, 100% 100%, 100% 10px, calc(100% - 10px) 0, 0% 0%, 0% calc(100% - 10px), 10px 100%, 100% 100%, 100% calc(100% - 2px), 10px calc(100% - 2px), 2px calc(100% - 10px), 2px 2px, calc(100% - 10px) 2px);
+  clip-path:polygon(calc(100% - 2px) 10px, calc(100% - 2px) 100%, 100% 100%, 100% 10px, calc(100% - 10px) 0, 0% 0%, 0% calc(100% - 10px), 10px 100%, 100% 100%, 100% calc(100% - 2px), 10px calc(100% - 2px), 2px calc(100% - 10px), 2px 2px, calc(100% - 10px) 2px)
 }
 
 .btn--secondary:hover {
-  color: blue;
-  border-color: blue;
+  color:grey;
+  border-color:grey
 }
-.btn--secondary:hover::after {
-  background-color: blue;
+.btn--secondary:hover::after{
+  background-color:grey
 }
 .btn--on-image {
-  -webkit-clip-path: polygon(
-    100% 100%,
-    10px 100%,
-    0% calc(100% - 10px),
-    0% 0%,
-    calc(100% - 10px) 0%,
-    100% 10px
-  );
-  clip-path: polygon(
-    100% 100%,
-    10px 100%,
-    0% calc(100% - 10px),
-    0% 0%,
-    calc(100% - 10px) 0%,
-    100% 10px
-  );
+  -webkit-clip-path:polygon(100% 100%, 10px 100%, 0% calc(100% - 10px), 0% 0%, calc(100% - 10px) 0%, 100% 10px);
+  clip-path:polygon(100% 100%, 10px 100%, 0% calc(100% - 10px), 0% 0%, calc(100% - 10px) 0%, 100% 10px)
 }
+
 
 @keyframes App-logo-spin {
   from {
@@ -163,7 +159,7 @@
 }
 
 .socialMediaPopper {
-  top: 300px !important;
+  top: 300px  !important;
   left: unset !important;
   right: 0px !important;
   display: grid;
@@ -172,20 +168,41 @@
   vertical-align: bottom;
 }
 
-@font-face {
-  font-family: "Averta";
-  src: url("./fonts/AvertaDemoPE-Regular.eot");
-  src: url("./fonts/AvertaDemoPE-Regular.woff2") format("woff2"),
-    url("./fonts/AvertaDemoPE-Regular.woff") format("woff");
-}
+
 
 @font-face {
-  font-family: "zosia";
-  src: url("./fonts/Zosia-Display.eot");
-  src: url("./fonts/Zosia-Display.woff2") format("woff2"),
-    url("./fonts/Zosia-Display.woff") format("woff"),
-    url("./fonts/Zosia-Display.ttf") format("truetype"),
-    url("./fonts/Zosia-Display.svg") format("svg");
-  font-weight: normal;
-  font-style: normal;
+  font-family:'Averta';
+  src:url("./fonts/AvertaDemoPE-Regular.eot");
+  src:url("./fonts/AvertaDemoPE-Regular.woff2") format("woff2"),url("./fonts/AvertaDemoPE-Regular.woff") format("woff")
+} 
+
+@font-face {
+  font-family:'zosia';
+  src:url("./fonts/Zosia-Display.eot");
+  src:url("./fonts/Zosia-Display.woff2") format("woff2"),url("./fonts/Zosia-Display.woff") format("woff"),url("./fonts/Zosia-Display.ttf") format("truetype"), url("./fonts/Zosia-Display.svg") format("svg");
+  font-weight:normal;
+  font-style:normal;
 }
+
+
+/* Slick Carousel Overrides =============================================== */
+.slick-dots button::before {
+  font-size: 0.875rem !important;
+}
+
+.slick-active button::before,
+.slick-dots button:hover::before {
+  color: #0000ff !important;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  color: black !important;
+}
+
+
+  
+
+
+
+
