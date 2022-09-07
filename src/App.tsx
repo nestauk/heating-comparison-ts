@@ -79,7 +79,7 @@ export default function App() {
           setError('Amount seems too low - just your standing charge will make your bill £7/month or more');
           return;
         }
-        usageVal = (usageVal - 94.81)/0.034;
+        usageVal = (usageVal - 98.55)/0.07;
       }
 
       const carbon = calculateCarbon(usageVal);
